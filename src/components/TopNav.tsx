@@ -6,6 +6,7 @@ const navItems = [
   { label: 'WORK 案例', href: '#work' },
   { label: 'EXPERIENCE 经历', href: '#experience' },
   { label: 'WORDS 内容', href: '#words' },
+  { label: 'NOW 现在', href: '#now' },
   { label: 'CONTACT 联系', href: '#contact' },
 ]
 

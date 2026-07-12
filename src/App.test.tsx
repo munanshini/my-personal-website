@@ -9,4 +9,10 @@ describe('App', () => {
       screen.getByRole('heading', { name: /AI APPLICATION PRODUCT MANAGER/i }),
     ).toBeInTheDocument()
   })
+
+  it('links the Now navigation to the Now section', () => {
+    render(<App />)
+    expect(screen.getByRole('link', { name: /NOW 现在/i })).toHaveAttribute('href', '#now')
+    expect(document.getElementById('now')).not.toBeNull()
+  })
 })

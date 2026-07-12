@@ -96,6 +96,9 @@ export function Hero({ onOpenAssistant }: HeroProps) {
             <a href="#work" className="rounded-full bg-gray-900 px-5 py-2.5 text-xs font-medium text-white transition-colors hover:bg-gray-700 sm:px-6 sm:text-sm">
               查看精选案例
             </a>
+            <a href="#experience" className="rounded-full border border-gray-900/20 bg-white/60 px-5 py-2.5 text-xs font-medium text-gray-800 backdrop-blur transition-colors hover:bg-white sm:text-sm">
+              查看经历
+            </a>
             <button type="button" onClick={onOpenAssistant} className="flex items-center gap-2 rounded-full border border-gray-900/20 bg-white/60 px-5 py-2.5 text-xs font-medium text-gray-800 backdrop-blur transition-colors hover:bg-white sm:text-sm">
               <Play size={12} className="fill-gray-800" />
               问我的 AI 助手
