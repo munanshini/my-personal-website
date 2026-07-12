@@ -3,7 +3,7 @@ import { SectionHeading } from './SectionHeading'
 
 export function Experience() {
   return (
-    <section id="experience" className="bg-[#f8f7f3] px-5 py-24 text-ink sm:px-8 md:py-32">
+    <section id="experience" className="border-t border-black/10 bg-[#f8f7f3] px-5 py-24 text-ink transition-colors duration-700 sm:px-8 md:py-32">
       <div className="mx-auto max-w-canvas">
         <SectionHeading
           index="02"

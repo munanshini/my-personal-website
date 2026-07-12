@@ -1,0 +1,61 @@
+.border-glow-card {
+  --edge-proximity: 0;
+  --cursor-angle: 45deg;
+  --border-radius: 999px;
+  --glow-padding: 18px;
+  --cone-spread: 30;
+  position: relative;
+  display: grid;
+  isolation: isolate;
+  border: 1px solid rgb(255 255 255 / 15%);
+  border-radius: var(--border-radius);
+  background: var(--card-bg, #111417);
+  overflow: visible;
+  transform: translate3d(0, 0, 0.01px);
+}
+
+.border-glow-card::before,
+.border-glow-card::after,
+.border-glow-card > .edge-light {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.border-glow-card:hover::before,
+.border-glow-card:hover::after,
+.border-glow-card:hover > .edge-light { opacity: 1; }
+
+.border-glow-card:hover {
+  border-color: rgb(255 255 255 / 55%);
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 20%), 0 0 18px rgb(56 189 248 / 35%), 0 0 34px rgb(250 204 21 / 18%);
+}
+
+.border-glow-card::before {
+  border: 1px solid transparent;
+  background: linear-gradient(var(--card-bg) 0 100%) padding-box, linear-gradient(120deg, #38bdf8, #facc15 50%, #f97316) border-box;
+  mask-image: conic-gradient(from var(--cursor-angle) at center, black calc(var(--cone-spread) * 1%), transparent calc((var(--cone-spread) + 15) * 1%), transparent calc((100 - var(--cone-spread) - 15) * 1%), black calc((100 - var(--cone-spread)) * 1%));
+}
+
+.border-glow-card::after {
+  border: 1px solid transparent;
+  background: var(--gradient-one) padding-box, var(--gradient-two) padding-box, var(--gradient-three) padding-box;
+  mask-image: radial-gradient(ellipse at 50% 50%, black 35%, transparent 70%);
+  opacity: 0.3;
+  mix-blend-mode: screen;
+}
+
+.border-glow-card > .edge-light {
+  inset: calc(var(--glow-padding) * -1);
+  z-index: 1;
+  mask-image: conic-gradient(from var(--cursor-angle) at center, black 2.5%, transparent 10%, transparent 90%, black 97.5%);
+  box-shadow: 0 0 18px 1px var(--glow-color, hsl(40deg 80% 80% / 80%));
+  mix-blend-mode: plus-lighter;
+}
+
+.border-glow-inner { position: relative; z-index: 2; display: flex; overflow: hidden; border-radius: inherit; }

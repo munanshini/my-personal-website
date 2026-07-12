@@ -17,6 +17,31 @@ export interface ExperienceItem {
   focus: string
 }
 
+export interface WorkItem extends Project {
+  company: string
+  companyPeriod: string
+  companyFocus: string
+  detailLabel: string
+}
+
+export interface WordItem {
+  index: string
+  type: string
+  title: string
+  description: string
+  accent: string
+  href?: string
+}
+
+export interface NowItem {
+  date: string
+  city: string
+  type: string
+  title: string
+  description: string
+  href?: string
+}
+
 export const projects: Project[] = [
   {
     number: '01',
@@ -76,6 +101,27 @@ export const experiences: ExperienceItem[] = [
     period: '2025.02 — 2026.05',
     focus: '开发者工具 · AI IDE · 智能编码',
   },
+]
+
+export const workItems: WorkItem[] = [
+  { ...projects[2], number: '01', company: '华为', companyPeriod: '2025.02 — 2026.05', companyFocus: '开发者工具 · AI IDE · 智能编码', detailLabel: '查看项目详情' },
+  { ...projects[1], number: '02', company: '深圳市顺丰丰链科技有限责任公司', companyPeriod: '2023.05 — 2024.12', companyFocus: 'B 端供应链数字化 · 智能仓储调度', detailLabel: '查看项目详情' },
+  { ...projects[0], number: '03', company: '深圳市明源云科技有限公司', companyPeriod: '2019.03 — 2023.02', companyFocus: '不动产数字营销 · 营销智能体 · AIGC 商业化', detailLabel: '查看项目详情' },
+]
+
+export const words: WordItem[] = [
+  { index: '01', type: 'ARTICLE', title: 'AI 产品文章', description: '记录模型能力如何进入真实场景，以及产品经理在其中如何做判断。', accent: 'bg-[#e7dfcf]' },
+  { index: '02', type: 'VIDEO', title: '视频与公开表达', description: '把复杂问题讲清楚，分享 AI 产品、体验设计与职业转型中的真实思考。', accent: 'bg-[#d5e0e1]' },
+  { index: '03', type: 'VIBE CODING', title: 'Vibe Coding 实验室', description: '记录个人网站、原型和工具搭建，把想法快速变成可用的产品体验。', accent: 'bg-[#d9d1c8]' },
+]
+
+export const nowItems: NowItem[] = [
+  { date: '2026.07', city: '深圳', type: 'THINKING', title: 'AI 产品如何从 Demo 走到真实工作流', description: '关注能力边界、任务成功标准，以及人机协作中的最后一公里。' },
+  { date: '2026.07', city: '深圳', type: 'MAKING', title: '个人网站 1.0 与 Vibe Coding', description: '持续打磨自己的作品集，也把搭建过程沉淀成可复用的方法。' },
+  { date: '2026.06', city: '深圳', type: 'LIVING', title: '跑步、摄影与保持感受力', description: '在工作之外保持对具体生活的观察，给产品判断留出呼吸。' },
+  { date: '2026.06', city: '深圳', type: 'READING', title: '重新理解 AI 产品的评估体系', description: '从主观体验回到任务成功率、质量门槛和可持续运营。' },
+  { date: '2026.05', city: '深圳', type: 'WRITING', title: '把项目经验整理成公开表达', description: '将复杂工作流转化为能被读者理解和复用的产品语言。' },
+  { date: '2026.05', city: '深圳', type: 'MAKING', title: '为个人网站增加可交互的信息入口', description: '让作品集不只展示结果，也展示持续构建的过程。' },
 ]
 
 export const capabilities = [

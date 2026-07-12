@@ -1,12 +1,12 @@
-import { fireEvent, render, screen } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
+import { render, screen } from '@testing-library/react'
+import { describe, expect, it } from 'vitest'
 import { Hero } from './Hero'
 
 describe('Hero', () => {
-  it('opens the assistant from its visible action', () => {
-    const onOpenAssistant = vi.fn()
-    render(<Hero onOpenAssistant={onOpenAssistant} />)
-    fireEvent.click(screen.getByRole('button', { name: '问我的 AI 助手' }))
-    expect(onOpenAssistant).toHaveBeenCalledOnce()
+  it('renders the portfolio identity without duplicate hero actions', () => {
+    render(<Hero />)
+    expect(screen.getByRole('heading', { name: /AI PRODUCT MGR/i })).toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: '查看精选案例' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: '查看经历' })).not.toBeInTheDocument()
   })
 })

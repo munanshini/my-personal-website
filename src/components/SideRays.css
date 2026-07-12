@@ -1,0 +1,11 @@
+.side-rays-container {
+  position: absolute;
+  inset: 0;
+  z-index: 35;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.side-rays-container canvas {
+  display: block;
+}
