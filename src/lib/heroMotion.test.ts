@@ -16,4 +16,10 @@ describe('hero motion helpers', () => {
       getGridTarget(100, 100, { left: 0, top: 0, width: 100, height: 100 }),
     ).toEqual({ x: 8, y: 8 })
   })
+
+  it('keeps the grid stable before layout has measurable dimensions', () => {
+    expect(
+      getGridTarget(0, 0, { left: 0, top: 0, width: 0, height: 0 }),
+    ).toEqual({ x: 0, y: 0 })
+  })
 })
