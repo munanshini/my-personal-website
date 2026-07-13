@@ -20,6 +20,7 @@ export function TopNav() {
   const [utilityOpen, setUtilityOpen] = useState(false)
   const closeTimer = useRef<number | null>(null)
   const navigationLock = useRef<number | null>(null)
+  const navigationTarget = useRef<string | null>(null)
 
   const openUtility = () => {
     if (closeTimer.current) window.clearTimeout(closeTimer.current)
@@ -36,24 +37,31 @@ export function TopNav() {
   }, [])
 
   useEffect(() => {
-    if (typeof IntersectionObserver === 'undefined') return
-
     const sections = navItems
       .map((item) => document.querySelector(item.href))
       .filter((section): section is Element => section !== null)
 
     if (!sections.length) return
 
-    const ratios = new Map<string, number>()
-    const observer = new IntersectionObserver((entries) => {
-      if (navigationLock.current) return
-      entries.forEach((entry) => ratios.set(`#${entry.target.id}`, entry.isIntersecting ? entry.intersectionRatio : 0))
-      const next = [...ratios.entries()].sort((a, b) => b[1] - a[1])[0]
-      if (next && next[1] > 0) setActiveHref(next[0])
-    }, { threshold: [0.15, 0.3, 0.5, 0.7] })
+    const updateActiveFromScroll = () => {
+      const referenceY = 112
 
-    sections.forEach((section) => observer.observe(section))
-    return () => observer.disconnect()
+      if (navigationLock.current) {
+        const target = navigationTarget.current && document.querySelector(navigationTarget.current)
+        if (!target || target.getBoundingClientRect().top > referenceY) return
+
+        window.clearTimeout(navigationLock.current)
+        navigationLock.current = null
+        navigationTarget.current = null
+      }
+
+      const passed = sections.filter((section) => section.getBoundingClientRect().top <= referenceY)
+      setActiveHref(`#${(passed[passed.length - 1] ?? sections[0]).id}`)
+    }
+
+    window.addEventListener('scroll', updateActiveFromScroll, { passive: true })
+    updateActiveFromScroll()
+    return () => window.removeEventListener('scroll', updateActiveFromScroll)
   }, [])
 
   const selectNavigation = (index: number) => {
@@ -62,7 +70,11 @@ export function TopNav() {
 
     setActiveHref(item.href)
     if (navigationLock.current) window.clearTimeout(navigationLock.current)
-    navigationLock.current = window.setTimeout(() => { navigationLock.current = null }, 720)
+    navigationTarget.current = item.href
+    navigationLock.current = window.setTimeout(() => {
+      navigationLock.current = null
+      navigationTarget.current = null
+    }, 720)
     document.querySelector(item.href)?.scrollIntoView?.({ behavior: 'smooth', block: 'start' })
     window.history.replaceState(null, '', item.href)
   }

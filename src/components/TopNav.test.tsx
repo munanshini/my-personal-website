@@ -8,35 +8,13 @@ describe('TopNav', () => {
     document.body.innerHTML = ''
   })
 
-  it('highlights the section with the strongest visible intersection', async () => {
-    let observeCallback: IntersectionObserverCallback | undefined
-
-    class IntersectionObserverMock {
-      constructor(callback: IntersectionObserverCallback) {
-        observeCallback = callback
-      }
-
-      observe() {}
-
-      disconnect() {}
-    }
-
-    vi.stubGlobal('IntersectionObserver', IntersectionObserverMock)
-    document.body.innerHTML = '<section id="index"></section><section id="work"></section>'
+  it('selects NOW from scroll position', async () => {
+    document.body.innerHTML = '<section id="index"/><section id="work"/><section id="words"/><section id="now"/><section id="contact"/>'
+    const positions = { index: -2400, work: -1700, words: -900, now: -120, contact: 800 }
+    Object.entries(positions).forEach(([id, top]) => vi.spyOn(document.getElementById(id)!, 'getBoundingClientRect').mockReturnValue({ top } as DOMRect))
     render(<TopNav />)
-
-    const indexLink = screen.getByRole('link', { name: 'INDEX 首页' })
-    const workLink = screen.getByRole('link', { name: 'WORK 工作' })
-    expect(indexLink.className).toContain('bg-white')
-    expect(workLink.className).not.toContain('bg-white')
-
-    observeCallback?.([
-      { target: document.getElementById('index')!, isIntersecting: true, intersectionRatio: 0.2 } as unknown as IntersectionObserverEntry,
-      { target: document.getElementById('work')!, isIntersecting: true, intersectionRatio: 0.8 } as unknown as IntersectionObserverEntry,
-    ], {} as IntersectionObserver)
-
-    await waitFor(() => expect(workLink.className).toContain('bg-white'))
-    expect(indexLink.className).not.toContain('bg-white')
+    fireEvent.scroll(window)
+    await waitFor(() => expect(screen.getByRole('link', { name: 'NOW 现在' }).className).toContain('bg-white'))
   })
 
   it('prevents the native hash jump when a desktop navigation item is selected', () => {
