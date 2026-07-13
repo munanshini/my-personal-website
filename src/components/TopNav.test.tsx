@@ -97,6 +97,9 @@ describe('TopNav', () => {
     fireEvent.scroll(window)
 
     await waitFor(() => expect(screen.getByRole('button', { name: '打开菜单' }).className).toContain('text-white'))
+    fireEvent.click(screen.getByRole('button', { name: '打开菜单' }))
+    const darkMenuLink = screen.getAllByRole('link', { name: 'INDEX 首页' }).find((link) => link.className.includes('text-white'))
+    expect(darkMenuLink).toBeDefined()
   })
 
 })
