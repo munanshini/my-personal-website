@@ -22,7 +22,6 @@ export function CustomCursor() {
 
   useEffect(() => {
     if (!enabled) {
-      document.documentElement.classList.remove('custom-cursor-active')
       setPosition({ x: 0, y: 0 })
       setVisible(false)
       setInteractive(false)
@@ -30,7 +29,6 @@ export function CustomCursor() {
       return
     }
 
-    document.documentElement.classList.add('custom-cursor-active')
     const move = (event: PointerEvent) => {
       setPosition({ x: event.clientX, y: event.clientY })
       setInteractive(event.target instanceof Element && Boolean(event.target.closest(interactiveSelector)))
@@ -51,7 +49,6 @@ export function CustomCursor() {
     document.documentElement.addEventListener('pointerleave', hide)
 
     return () => {
-      document.documentElement.classList.remove('custom-cursor-active')
       window.removeEventListener('pointermove', move)
       window.removeEventListener('pointerdown', press)
       window.removeEventListener('pointerup', release)
@@ -74,9 +71,6 @@ export function CustomCursor() {
       style={{ transform: `translate3d(${position.x}px, ${position.y}px, 0)` }}
     >
       <div className="custom-cursor__glow" />
-      <svg className="custom-cursor__arrow" viewBox="0 0 32 32" focusable="false">
-        <path d="M2 2.2 23.8 11.4 14.7 14.8 19.3 24.1 13.9 26.7 9.4 17.3 5.1 21.4Z" />
-      </svg>
     </div>
   )
 }

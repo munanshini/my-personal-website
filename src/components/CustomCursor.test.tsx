@@ -45,17 +45,17 @@ describe('CustomCursor', () => {
     expect(cursor).toHaveAttribute('data-visible', 'true')
     expect(cursor).toHaveStyle({ transform: 'translate3d(120px, 80px, 0)' })
     expect(cursor).toHaveClass('pointer-events-none')
-    expect(document.documentElement).toHaveClass('custom-cursor-active')
+    expect(document.documentElement).not.toHaveClass('custom-cursor-active')
   })
 
-  it('uses the compact system-pointer silhouette from the reference', () => {
+  it('keeps the native system arrow and renders only the glow', () => {
     setDesktopPointer(true)
     render(<CustomCursor />)
 
-    expect(screen.getByTestId('custom-cursor').querySelector('path')).toHaveAttribute(
-      'd',
-      'M2 2.2 23.8 11.4 14.7 14.8 19.3 24.1 13.9 26.7 9.4 17.3 5.1 21.4Z',
-    )
+    const cursor = screen.getByTestId('custom-cursor')
+    expect(cursor.querySelector('svg')).not.toBeInTheDocument()
+    expect(cursor.querySelector('.custom-cursor__glow')).toBeInTheDocument()
+    expect(document.documentElement).not.toHaveClass('custom-cursor-active')
   })
 
   it('marks interactive targets and pressed state', () => {
