@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import App from './App'
+
+afterEach(() => vi.unstubAllGlobals())
 
 describe('App', () => {
   it('renders the AI product manager identity', () => {
@@ -34,5 +36,17 @@ describe('App', () => {
     render(<App />)
 
     expect(screen.getByText('AI 助手')).toBeInTheDocument()
+  })
+
+  it('mounts one global desktop custom cursor', () => {
+    vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({
+      matches: true,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    }))
+
+    render(<App />)
+
+    expect(screen.getAllByTestId('custom-cursor')).toHaveLength(1)
   })
 })

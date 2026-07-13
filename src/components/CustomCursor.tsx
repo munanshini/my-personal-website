@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import './CustomCursor.css'
 
 const pointerQuery = '(hover: hover) and (pointer: fine)'
 const interactiveSelector = 'a, button, input, textarea, select, summary, [role="button"], [role="link"], [data-cursor="interactive"]'
