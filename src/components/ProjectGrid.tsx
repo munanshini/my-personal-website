@@ -10,7 +10,7 @@ const tones = {
 
 export function ProjectGrid({ projects }: { projects: Array<Project | WorkItem> }) {
   return (
-    <section id="work" className="border-t border-black/10 bg-paper px-5 py-24 text-ink transition-colors duration-700 sm:px-8 md:py-32">
+    <section id="work" className="border-t border-black/10 bg-paper px-5 py-16 text-ink transition-colors duration-700 sm:px-8 md:py-32">
       <div className="mx-auto max-w-canvas">
         <SectionHeading
           index="01"
@@ -19,12 +19,12 @@ export function ProjectGrid({ projects }: { projects: Array<Project | WorkItem> 
           description="三个企业级场景，展示我如何从用户问题出发，定义 AI 能力边界，并把产品推进到可使用、可衡量的结果。"
         />
 
-        <div className="mt-16 grid gap-4 lg:grid-cols-2">
+        <div className="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-2">
           {projects.map((project, index) => (
             <article
               key={project.number}
               data-company={'company' in project && project.company === '华为' ? 'huawei' : undefined}
-              className={`group relative min-h-[560px] overflow-hidden rounded-[2rem] p-6 sm:p-8 lg:p-10 ${tones[project.tone]} ${index === 0 ? 'lg:col-span-2 lg:min-h-[650px]' : ''}`}
+              className={`group relative min-h-[440px] overflow-hidden rounded-[2rem] p-5 sm:min-h-[500px] sm:p-6 md:min-h-[560px] md:p-8 lg:p-10 ${tones[project.tone]} ${index === 0 ? 'lg:col-span-2 lg:min-h-[650px]' : ''}`}
             >
               <div className="relative z-10 flex h-full flex-col">
                 <header className={`flex items-start justify-between gap-4 border-b pb-5 text-[10px] font-semibold uppercase tracking-[0.18em] opacity-70 sm:text-xs ${'company' in project && project.company === '华为' ? 'border-current/[.017]' : 'border-current/20'}`}>
@@ -42,7 +42,7 @@ export function ProjectGrid({ projects }: { projects: Array<Project | WorkItem> 
                   </div>
                 )}
 
-                <div className={`grid flex-1 gap-10 py-10 ${index === 0 ? 'lg:grid-cols-[1.1fr_.9fr] lg:items-end' : ''}`}>
+                <div className={`grid flex-1 gap-8 py-8 sm:gap-10 sm:py-10 ${index === 0 ? 'lg:grid-cols-[1.1fr_.9fr] lg:items-end' : ''}`}>
                   <div className="self-end">
                     <h3 className="max-w-4xl text-[clamp(2.8rem,6.5vw,7.5rem)] font-semibold leading-[0.85] tracking-[-0.065em]">
                       {project.title}

@@ -42,7 +42,7 @@ export function Hero() {
     <section
       id="index"
       ref={sectionRef}
-      className="relative h-screen min-h-[720px] w-full overflow-hidden bg-paper"
+      className="relative h-[100svh] min-h-[620px] w-full overflow-hidden bg-paper sm:min-h-[720px]"
       onMouseMove={(event) => {
         mouse.current = { x: event.clientX, y: event.clientY }
       }}
@@ -58,15 +58,15 @@ export function Hero() {
 
       <div className="pointer-events-none absolute inset-0 z-40 bg-gradient-to-t from-paper/70 via-transparent to-paper/10" aria-hidden="true" />
 
-      <div className="absolute bottom-12 left-5 z-50 max-w-[760px] sm:bottom-12 sm:left-8 md:bottom-20 md:left-12 lg:bottom-16 lg:left-[max(3rem,calc((100vw-1700px)/2+3rem))]">
+      <div className="absolute bottom-8 left-5 z-50 max-w-[calc(100%-2.5rem)] sm:bottom-12 sm:left-8 sm:max-w-[760px] md:bottom-20 md:left-12 lg:bottom-16 lg:left-[max(3rem,calc((100vw-1700px)/2+3rem))]">
         <div className="mb-5 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-gray-600 sm:text-[11px]">
           <span className="h-2 w-2 rounded-full bg-signal" />
           AI PRODUCT · EXPERIENCE · DELIVERY
         </div>
-        <h1 className="max-w-[7ch] text-[clamp(5.6rem,10.5vw,10.5rem)] font-black uppercase leading-[0.8] tracking-[-0.09em] text-ink">
+        <h1 className="max-w-[7ch] text-[clamp(4.2rem,18vw,5.6rem)] font-black uppercase leading-[0.8] tracking-[-0.09em] text-ink sm:text-[clamp(5.6rem,10.5vw,10.5rem)]">
           AI<br />Product<br />Mgr<span className="text-signal">.</span>
         </h1>
-        <div className="mt-8 max-w-[34rem]">
+        <div className="mt-5 max-w-[20rem] sm:mt-8 sm:max-w-[34rem]">
           <p className="text-sm font-medium leading-relaxed text-gray-800 sm:text-base">
             你好，我是张楠，一个画过图、懂交互、有审美，写 PROMPT 比写 PRD 多的 AI 产品经理。
           </p>

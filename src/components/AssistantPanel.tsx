@@ -22,9 +22,9 @@ export function AssistantPanel({ open, onClose }: AssistantPanelProps) {
   if (!open) return null
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-[100] flex items-end justify-end p-4 sm:p-6" role="dialog" aria-modal="true" aria-label="个人 AI 助手">
+    <div className="pointer-events-none fixed inset-0 z-[100] flex items-end justify-end p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:p-6" role="dialog" aria-modal="true" aria-label="个人 AI 助手">
       <button type="button" className="pointer-events-auto absolute inset-0 cursor-default" onClick={onClose} aria-label="关闭 AI 助手背景" />
-      <aside className="pointer-events-auto relative z-10 flex max-h-[min(58vh,560px)] w-full max-w-[380px] flex-col overflow-hidden rounded-[2rem] bg-[#111417] p-5 text-white shadow-2xl sm:p-6">
+      <aside className="pointer-events-auto relative z-10 flex max-h-[min(70svh,560px)] w-full max-w-[380px] flex-col overflow-hidden rounded-[2rem] bg-[#111417] p-4 text-white shadow-2xl sm:max-h-[min(58vh,560px)] sm:p-6">
         <header className="flex items-center justify-between border-b border-white/15 pb-5">
           <div className="flex items-center gap-3">
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-black"><Sparkles size={16} /></span>

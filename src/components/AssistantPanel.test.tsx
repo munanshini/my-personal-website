@@ -11,6 +11,11 @@ describe('AssistantPanel', () => {
     expect(screen.getByRole('complementary').className).toContain('max-w-[380px]')
   })
 
+  it('uses compact mobile assistant spacing', () => {
+    render(<AssistantPanel open onClose={vi.fn()} />)
+    expect(screen.getByRole('dialog').className).toContain('p-3')
+  })
+
   it('renders a local preset answer without an external request', () => {
     render(<AssistantPanel open onClose={vi.fn()} />)
     fireEvent.click(screen.getByRole('button', { name: '你做过哪些 AI 项目？' }))
