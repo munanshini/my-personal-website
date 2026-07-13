@@ -27,6 +27,18 @@ describe('TopNav', () => {
     expect(click.defaultPrevented).toBe(true)
   })
 
+  it('keeps an upward navigation target active while smooth scrolling is locked', () => {
+    document.body.innerHTML = '<section id="index"/><section id="work"/><section id="words"/><section id="now"/><section id="contact"/>'
+    const positions = { index: -2400, work: -1700, words: -900, now: -120, contact: -20 }
+    Object.entries(positions).forEach(([id, top]) => vi.spyOn(document.getElementById(id)!, 'getBoundingClientRect').mockReturnValue({ top } as DOMRect))
+    render(<TopNav />)
+
+    fireEvent.click(screen.getByRole('link', { name: 'NOW 现在' }))
+    fireEvent.scroll(window)
+
+    expect(screen.getByRole('link', { name: 'NOW 现在' }).className).toContain('bg-white')
+  })
+
   it('shows the corrected phone number in the Open to Work panel', () => {
     render(<TopNav />)
     fireEvent.click(screen.getByRole('button', { name: /open to work/i }))

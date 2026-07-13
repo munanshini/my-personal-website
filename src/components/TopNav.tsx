@@ -20,7 +20,6 @@ export function TopNav() {
   const [utilityOpen, setUtilityOpen] = useState(false)
   const closeTimer = useRef<number | null>(null)
   const navigationLock = useRef<number | null>(null)
-  const navigationTarget = useRef<string | null>(null)
 
   const openUtility = () => {
     if (closeTimer.current) window.clearTimeout(closeTimer.current)
@@ -55,14 +54,7 @@ export function TopNav() {
     const updateActiveFromScroll = () => {
       const referenceY = 112
 
-      if (navigationLock.current) {
-        const target = navigationTarget.current && document.querySelector(navigationTarget.current)
-        if (!target || target.getBoundingClientRect().top > referenceY) return
-
-        window.clearTimeout(navigationLock.current)
-        navigationLock.current = null
-        navigationTarget.current = null
-      }
+      if (navigationLock.current) return
 
       const passed = sections.filter((section) => section.getBoundingClientRect().top <= referenceY)
       setActiveHref(`#${(passed[passed.length - 1] ?? sections[0]).id}`)
@@ -79,10 +71,8 @@ export function TopNav() {
 
     setActiveHref(item.href)
     if (navigationLock.current) window.clearTimeout(navigationLock.current)
-    navigationTarget.current = item.href
     navigationLock.current = window.setTimeout(() => {
       navigationLock.current = null
-      navigationTarget.current = null
     }, 720)
     document.querySelector(item.href)?.scrollIntoView?.({ behavior: 'smooth', block: 'start' })
     window.history.replaceState(null, '', item.href)
