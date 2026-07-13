@@ -117,7 +117,7 @@ export function TopNav() {
             </button></SpotlightCard>
           {utilityOpen && (
             <div className="absolute right-0 top-full mt-3 w-[360px] rounded-3xl border border-black/10 bg-white p-5 text-ink shadow-2xl">
-              <a href="/张楠-AI产品经理2026简历初版.pdf" download className="flex items-center justify-between rounded-2xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white hover:bg-gray-700">
+              <a href="/张楠-AI产品经理2026简历初版.pdf" download className="flex items-center justify-between rounded-2xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-700 hover:shadow-lg hover:shadow-gray-900/20">
                 简历 PDF 下载 <span aria-hidden="true">↓</span>
               </a>
               <div className="mt-5 divide-y divide-black/10 border-y border-black/10 text-sm">
@@ -150,12 +150,12 @@ export function TopNav() {
               key={item.href}
               href={item.href}
               onClick={() => setMenuOpen(false)}
-              className={`block py-3 text-left text-base font-medium transition-colors ${isDarkContext ? 'text-white hover:text-white/70' : 'text-gray-900 hover:text-gray-500'}`}
+              className={`block border-b py-4 text-left text-base font-medium transition-colors last:border-b-0 ${isDarkContext ? 'border-white/10 text-white hover:text-white/70' : 'border-black/10 text-gray-900 hover:text-gray-500'}`}
             >
               {item.label}
             </a>
           ))}
-          <a href="/张楠-AI产品经理2026简历初版.pdf" download onClick={() => setMenuOpen(false)} className="mt-4 flex items-center justify-between rounded-2xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white">
+          <a href="/张楠-AI产品经理2026简历初版.pdf" download onClick={() => setMenuOpen(false)} className="mt-6 flex items-center justify-between rounded-2xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-700 hover:shadow-lg hover:shadow-gray-900/20">
             简历 PDF 下载 <span aria-hidden="true">↓</span>
           </a>
         </div>

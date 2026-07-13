@@ -78,13 +78,21 @@ describe('TopNav', () => {
     expect(screen.queryByText('zn525347603@gmail.com')).not.toBeInTheDocument()
   })
 
-  it('removes the mobile music row and menu separators', () => {
+  it('keeps subtle separators and spacing in the mobile menu', () => {
     render(<TopNav />)
     fireEvent.click(screen.getByRole('button', { name: '打开菜单' }))
 
     expect(screen.queryByText('MUSIC 音乐')).not.toBeInTheDocument()
-    const indexLink = screen.getAllByRole('link', { name: 'INDEX 首页' }).find((link) => link.getAttribute('href') === '#index')
-    expect(indexLink?.className).not.toContain('border-b')
+    const indexLink = screen.getAllByRole('link', { name: 'INDEX 首页' }).find((link) => link.getAttribute('href') === '#index' && link.className.includes('py-4'))
+    expect(indexLink?.className).toContain('border-b')
+    expect(indexLink?.className).toContain('py-4')
+  })
+
+  it('adds hover feedback to resume download actions', () => {
+    render(<TopNav />)
+    fireEvent.click(screen.getByRole('button', { name: /open to work/i }))
+
+    expect(screen.getByRole('link', { name: '简历 PDF 下载' }).className).toContain('hover:bg-gray-700')
   })
 
   it('uses light mobile controls in a dark active section', async () => {
