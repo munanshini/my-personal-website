@@ -50,7 +50,7 @@ export function Hero() {
       <TopNav />
       <div
         data-testid="hero-portrait"
-        className="absolute inset-0 z-10 bg-[length:auto_115%] bg-[position:58%_center] bg-no-repeat opacity-[0.78] md:bg-cover md:bg-center"
+        className="absolute inset-0 z-10 bg-[length:auto_100%] bg-[position:58%_center] bg-no-repeat opacity-[0.78] md:bg-cover md:bg-center"
         style={{ backgroundImage: `linear-gradient(90deg, rgba(243,240,233,.98) 0%, rgba(243,240,233,.82) 38%, rgba(243,240,233,.08) 72%), url('${heroPortrait}')` }}
         aria-hidden="true"
       />

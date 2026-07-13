@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { TopNav } from './TopNav'
 
@@ -68,16 +68,35 @@ describe('TopNav', () => {
     expect(screen.queryByText('1576797855')).not.toBeInTheDocument()
   })
 
-  it('keeps music inside the mobile menu and removes contact rows', () => {
+  it('removes mobile music and contact rows while keeping resume access', () => {
     render(<TopNav />)
     fireEvent.click(screen.getByRole('button', { name: '打开菜单' }))
 
-    const musicRow = screen.getByText('MUSIC 音乐').parentElement
-    expect(musicRow).not.toBeNull()
-    expect(within(musicRow as HTMLElement).getByRole('button', { name: /播放背景音乐|关闭背景音乐/ })).toBeInTheDocument()
+    expect(screen.queryByText('MUSIC 音乐')).not.toBeInTheDocument()
     expect(screen.getByRole('link', { name: '简历 PDF 下载' })).toHaveAttribute('download')
     expect(screen.queryByText('15767978588')).not.toBeInTheDocument()
     expect(screen.queryByText('zn525347603@gmail.com')).not.toBeInTheDocument()
+  })
+
+  it('removes the mobile music row and menu separators', () => {
+    render(<TopNav />)
+    fireEvent.click(screen.getByRole('button', { name: '打开菜单' }))
+
+    expect(screen.queryByText('MUSIC 音乐')).not.toBeInTheDocument()
+    const indexLink = screen.getAllByRole('link', { name: 'INDEX 首页' }).find((link) => link.getAttribute('href') === '#index')
+    expect(indexLink?.className).not.toContain('border-b')
+  })
+
+  it('uses light mobile controls in a dark active section', async () => {
+    document.body.innerHTML = '<section id="index"></section><section id="work"></section><section id="words"></section><section id="now"></section><section id="contact"></section>'
+    Object.values({ index: -1800, work: -1200, words: -700, now: -80, contact: 900 }).forEach((top, index) => {
+      const id = ['index', 'work', 'words', 'now', 'contact'][index]
+      vi.spyOn(document.getElementById(id)!, 'getBoundingClientRect').mockReturnValue({ top } as DOMRect)
+    })
+    render(<TopNav />)
+    fireEvent.scroll(window)
+
+    await waitFor(() => expect(screen.getByRole('button', { name: '打开菜单' }).className).toContain('text-white'))
   })
 
 })

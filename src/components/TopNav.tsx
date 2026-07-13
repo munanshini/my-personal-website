@@ -133,9 +133,9 @@ export function TopNav() {
       </div>
 
       <div className="flex items-center gap-3 md:hidden">
-        <button
-          type="button"
-          className="p-1 text-gray-900"
+      <button
+        type="button"
+        className={`p-1 ${isDarkContext ? 'text-white' : 'text-gray-900'}`}
           aria-label={menuOpen ? '关闭菜单' : '打开菜单'}
           onClick={() => setMenuOpen((open) => !open)}
         >
@@ -144,17 +144,13 @@ export function TopNav() {
       </div>
 
       {menuOpen && (
-        <div className="fixed inset-x-4 top-16 z-[-1] rounded-3xl border border-white/70 bg-white/80 p-4 shadow-2xl backdrop-blur-xl md:hidden">
-          <div className="mb-2 flex items-center justify-between border-b border-gray-200/80 pb-3 text-sm font-medium text-gray-800">
-            <span>MUSIC 音乐</span>
-            <MusicToggle />
-          </div>
+        <div className={`fixed inset-x-4 top-16 z-[-1] rounded-3xl border border-white/70 p-4 shadow-2xl backdrop-blur-xl md:hidden ${isDarkContext ? 'bg-[#111417]/95 text-white' : 'bg-white/80 text-gray-900'}`}>
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
               onClick={() => setMenuOpen(false)}
-              className="block border-b border-gray-100 py-3 text-left text-base font-medium text-gray-800 transition-colors hover:text-gray-500"
+              className={`block py-3 text-left text-base font-medium transition-colors ${isDarkContext ? 'text-white hover:text-white/70' : 'text-gray-900 hover:text-gray-500'}`}
             >
               {item.label}
             </a>

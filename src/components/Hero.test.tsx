@@ -34,4 +34,10 @@ describe('Hero', () => {
 
     expect(screen.getByTestId('hero-portrait')).toHaveClass('bg-[position:58%_center]')
   })
+
+  it('keeps the mobile portrait from over-zooming', () => {
+    render(<Hero />)
+
+    expect(screen.getByTestId('hero-portrait')).toHaveClass('bg-[length:auto_100%]')
+  })
 })
