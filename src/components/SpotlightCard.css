@@ -5,3 +5,5 @@
 .spotlight-card--cta { background: rgb(17 24 39); box-shadow: 0 12px 26px rgb(17 24 39 / .18); transition: transform .25s ease, box-shadow .25s ease; }
 .spotlight-card--cta:hover { transform: translateY(-2px); box-shadow: 0 18px 34px rgb(17 24 39 / .28); }
 .spotlight-card--nav { background: rgb(17 24 39); box-shadow: 0 10px 24px rgb(15 23 42 / .22); }
+html[data-dark-context='true'] .spotlight-card--nav,
+html[data-dark-context='true'] .spotlight-card--assistant { outline: 1px solid rgb(255 255 255 / .42); }

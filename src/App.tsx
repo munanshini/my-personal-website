@@ -21,7 +21,7 @@ export default function App() {
         <NowSection items={nowItems} />
         <Contact />
       </main>
-      <SpotlightCard className="spotlight-card--cta fixed bottom-5 right-5 z-[90]" spotlightColor="rgba(56, 189, 248, .40)"><button
+      <SpotlightCard className="spotlight-card--assistant spotlight-card--cta fixed bottom-5 right-5 z-[90]" spotlightColor="rgba(56, 189, 248, .40)"><button
         type="button"
         onClick={() => setAssistantOpen(true)}
         aria-label="问我的 AI 助手"

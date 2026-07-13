@@ -36,6 +36,15 @@ export function TopNav() {
     if (navigationLock.current) window.clearTimeout(navigationLock.current)
   }, [])
 
+  const isDarkContext = activeHref === '#now' || activeHref === '#contact'
+
+  useEffect(() => {
+    document.documentElement.dataset.darkContext = String(isDarkContext)
+    return () => {
+      delete document.documentElement.dataset.darkContext
+    }
+  }, [isDarkContext])
+
   useEffect(() => {
     const sections = navItems
       .map((item) => document.querySelector(item.href))
@@ -81,7 +90,7 @@ export function TopNav() {
 
   return (
     <nav className="fixed inset-x-0 top-0 z-[70] flex items-center justify-between px-5 py-4 sm:px-8 sm:py-5">
-      <a href="#index" className={`flex items-center gap-3 ${activeHref === '#now' ? 'text-white' : 'text-ink'}`} aria-label="返回首页">
+      <a href="#index" className={`flex items-center gap-3 ${isDarkContext ? 'text-white' : 'text-ink'}`} aria-label="返回首页">
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 256 256" fill="none" aria-hidden="true">
           <path d="M 256 64 L 256 128 L 192.5 128 L 160 95 L 128 64 L 96 95 L 63.5 128 L 64 128 L 128 192 L 128 256 L 64.5 256 L 32 223 L 0 192 L 0 64 L 64 0 L 192 0 Z M 256 192 L 256 256 L 192.5 256 L 160 223 L 128 192 L 128 128 L 192 128 Z" fill="currentColor" />
         </svg>
