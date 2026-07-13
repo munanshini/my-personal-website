@@ -17,4 +17,10 @@ describe('ProjectGrid', () => {
 
     expect(screen.getByText('华为').closest('article')).toHaveAttribute('data-company', 'huawei')
   })
+
+  it('keeps Huawei dividers at the second reduced alpha level', () => {
+    render(<ProjectGrid projects={workItems} />)
+
+    expect(screen.getByText('华为').closest('article')?.innerHTML).toContain('border-current/[.017]')
+  })
 })

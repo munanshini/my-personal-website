@@ -63,15 +63,15 @@ export function Hero() {
           <span className="h-2 w-2 rounded-full bg-signal" />
           AI PRODUCT · EXPERIENCE · DELIVERY
         </div>
-        <h1 className="max-w-[7ch] text-[clamp(5.6rem,10.5vw,10.5rem)] font-black uppercase leading-[0.8] tracking-[-0.08em] text-ink">
+        <h1 className="max-w-[7ch] text-[clamp(5.6rem,10.5vw,10.5rem)] font-black uppercase leading-[0.8] tracking-[-0.09em] text-ink">
           AI<br />Product<br />Mgr<span className="text-signal">.</span>
         </h1>
         <div className="mt-8 max-w-[34rem]">
           <p className="text-sm font-medium leading-relaxed text-gray-800 sm:text-base">
-            你好我是张楠，一个画过图懂交互有审美，写 PROMPT 比写 PRD 多的ai产品经理。
+            你好，我是张楠，一个画过图、懂交互、有审美，写 PROMPT 比写 PRD 多的 AI 产品经理。
           </p>
           <p className="mt-3 text-sm font-medium leading-relaxed text-gray-800 sm:text-base">
-            相信好工具是优雅好用且被反复打磨的，好的产品不是被一次写完的，我们相信通过规划，协调，推进，落实，我们的想法会被最终完美实现。
+            我们相信好工具优雅、好用，并经得起反复打磨；也坚持通过规划、协调、推进与落实，让想法最终被完美实现。
           </p>
         </div>
       </div>

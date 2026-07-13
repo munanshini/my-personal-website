@@ -6,8 +6,14 @@ describe('Hero', () => {
   it('renders the concise product-manager introduction', () => {
     render(<Hero />)
 
-    expect(screen.getByText(/一个画过图懂交互有审美/)).toBeInTheDocument()
+    expect(screen.getByText('你好，我是张楠，一个画过图、懂交互、有审美，写 PROMPT 比写 PRD 多的 AI 产品经理。')).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: /AI PRODUCT MGR/i }).className).toContain('font-black')
+  })
+
+  it('uses the highest loaded weight with tighter hero tracking', () => {
+    render(<Hero />)
+
+    expect(screen.getByRole('heading', { name: /AI PRODUCT MGR/i }).className).toContain('tracking-[-0.09em]')
   })
 
   it('renders the portfolio identity without duplicate hero actions', () => {

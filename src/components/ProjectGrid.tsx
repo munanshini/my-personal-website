@@ -27,13 +27,13 @@ export function ProjectGrid({ projects }: { projects: Array<Project | WorkItem> 
               className={`group relative min-h-[560px] overflow-hidden rounded-[2rem] p-6 sm:p-8 lg:p-10 ${tones[project.tone]} ${index === 0 ? 'lg:col-span-2 lg:min-h-[650px]' : ''}`}
             >
               <div className="relative z-10 flex h-full flex-col">
-                <header className={`flex items-start justify-between gap-4 border-b pb-5 text-[10px] font-semibold uppercase tracking-[0.18em] opacity-70 sm:text-xs ${'company' in project && project.company === '华为' ? 'border-current/[.035]' : 'border-current/20'}`}>
+                <header className={`flex items-start justify-between gap-4 border-b pb-5 text-[10px] font-semibold uppercase tracking-[0.18em] opacity-70 sm:text-xs ${'company' in project && project.company === '华为' ? 'border-current/[.017]' : 'border-current/20'}`}>
                   <span>{project.number} / {project.category}</span>
                   <span>{'companyPeriod' in project ? project.companyPeriod : project.year}</span>
                 </header>
 
                 {'company' in project && (
-                  <div className={`mt-5 flex flex-wrap items-baseline justify-between gap-3 border-b pb-5 ${project.company === '华为' ? 'border-current/[.035]' : 'border-current/15'}`}>
+                  <div className={`mt-5 flex flex-wrap items-baseline justify-between gap-3 border-b pb-5 ${project.company === '华为' ? 'border-current/[.017]' : 'border-current/15'}`}>
                     <div>
                       <p className="text-[10px] font-semibold uppercase tracking-[0.16em] opacity-55">COMPANY</p>
                       <p className="mt-1 text-lg font-semibold tracking-tight">{project.company}</p>
@@ -49,10 +49,10 @@ export function ProjectGrid({ projects }: { projects: Array<Project | WorkItem> 
                     </h3>
                     <p className="mt-7 max-w-2xl text-base leading-7 opacity-75 sm:text-lg">{project.summary}</p>
                   </div>
-                  <div className={`self-end rounded-3xl border bg-white/10 p-5 backdrop-blur-sm sm:p-6 ${'company' in project && project.company === '华为' ? 'border-current/[.052]' : 'border-current/15'}`}>
+                  <div className={`self-end rounded-3xl border bg-white/10 p-5 backdrop-blur-sm sm:p-6 ${'company' in project && project.company === '华为' ? 'border-current/[.026]' : 'border-current/15'}`}>
                     <p className="text-[10px] font-semibold uppercase tracking-[0.18em] opacity-55">MY ROLE</p>
                     <p className="mt-3 text-sm leading-6 opacity-80 sm:text-base">{project.role}</p>
-                    <ul className={`mt-7 space-y-3 border-t pt-5 ${'company' in project && project.company === '华为' ? 'border-current/[.052]' : 'border-current/15'}`}>
+                    <ul className={`mt-7 space-y-3 border-t pt-5 ${'company' in project && project.company === '华为' ? 'border-current/[.026]' : 'border-current/15'}`}>
                       {project.results.map((result) => (
                         <li key={result} className="flex gap-3 text-sm font-medium leading-5">
                           <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-signal" />
@@ -63,10 +63,10 @@ export function ProjectGrid({ projects }: { projects: Array<Project | WorkItem> 
                   </div>
                 </div>
 
-                <footer className={`flex flex-wrap items-end justify-between gap-5 border-t pt-5 ${'company' in project && project.company === '华为' ? 'border-current/[.035]' : 'border-current/20'}`}>
+                <footer className={`flex flex-wrap items-end justify-between gap-5 border-t pt-5 ${'company' in project && project.company === '华为' ? 'border-current/[.017]' : 'border-current/20'}`}>
                   <div className="flex flex-wrap gap-2">
                     {project.tags.map((tag) => (
-                      <span key={tag} className={`rounded-full border px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.1em] ${'company' in project && project.company === '华为' ? 'border-current/[.07]' : 'border-current/20'}`}>{tag}</span>
+                      <span key={tag} className={`rounded-full border px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.1em] ${'company' in project && project.company === '华为' ? 'border-current/[.035]' : 'border-current/20'}`}>{tag}</span>
                     ))}
                   </div>
                   <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] opacity-75 transition-transform group-hover:translate-x-1">
