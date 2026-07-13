@@ -159,10 +159,10 @@ export function TopNav() {
           <a href="/张楠-AI产品经理2026简历初版.pdf" download onClick={() => setMenuOpen(false)} className="mt-4 flex items-center justify-between rounded-2xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white">
             简历 PDF 下载 <span aria-hidden="true">↓</span>
           </a>
-          <div className="mt-4 space-y-2 border-t border-black/10 pt-4 text-xs text-gray-600">
-            <p>电话 · 15767978588</p>
-            <p>邮箱 · zn525347603@gmail.com</p>
-            <p>微信 · 15767978588</p>
+          <div className="mt-4 divide-y divide-black/10 border-t border-black/10 text-xs text-gray-600">
+            <div className="grid grid-cols-[40px_minmax(0,1fr)] items-center gap-2 py-2"><span>电话</span><div className="flex min-w-0 items-center gap-1"><strong className="min-w-0 flex-1 truncate">15767978588</strong><CopyButton value="15767978588" label="电话" /></div></div>
+            <div className="grid grid-cols-[40px_minmax(0,1fr)] items-center gap-2 py-2"><span>邮箱</span><div className="flex min-w-0 items-center gap-1"><strong className="min-w-0 flex-1 truncate">zn525347603@gmail.com</strong><CopyButton value="zn525347603@gmail.com" label="邮箱" /></div></div>
+            <div className="grid grid-cols-[40px_minmax(0,1fr)] items-center gap-2 py-2"><span>微信</span><div className="flex min-w-0 items-center gap-1"><strong className="min-w-0 flex-1 truncate">15767978588</strong><CopyButton value="15767978588" label="微信" /></div></div>
           </div>
         </div>
       )}

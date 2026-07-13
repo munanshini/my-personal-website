@@ -76,4 +76,14 @@ describe('TopNav', () => {
     expect(screen.getAllByRole('button', { name: /播放背景音乐|关闭背景音乐/ })).toHaveLength(2)
     expect(screen.getByRole('link', { name: /简历 PDF 下载/ })).toHaveAttribute('download')
   })
+
+  it('provides copy controls for every mobile contact value', () => {
+    render(<TopNav />)
+
+    fireEvent.click(screen.getByRole('button', { name: '打开菜单' }))
+
+    expect(screen.getByRole('button', { name: '复制电话' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '复制邮箱' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '复制微信' })).toBeInTheDocument()
+  })
 })
