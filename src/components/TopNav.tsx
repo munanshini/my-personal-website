@@ -19,7 +19,16 @@ export function TopNav() {
   const [activeHref, setActiveHref] = useState('#index')
   const [utilityOpen, setUtilityOpen] = useState(false)
   const closeTimer = useRef<number | null>(null)
-  const navigationLock = useRef<number | null>(null)
+  const navigationLock = useRef(false)
+  const navigationSettleTimer = useRef<number | null>(null)
+
+  const scheduleNavigationUnlock = () => {
+    if (navigationSettleTimer.current) window.clearTimeout(navigationSettleTimer.current)
+    navigationSettleTimer.current = window.setTimeout(() => {
+      navigationLock.current = false
+      navigationSettleTimer.current = null
+    }, 160)
+  }
 
   const openUtility = () => {
     if (closeTimer.current) window.clearTimeout(closeTimer.current)
@@ -32,7 +41,7 @@ export function TopNav() {
 
   useEffect(() => () => {
     if (closeTimer.current) window.clearTimeout(closeTimer.current)
-    if (navigationLock.current) window.clearTimeout(navigationLock.current)
+    if (navigationSettleTimer.current) window.clearTimeout(navigationSettleTimer.current)
   }, [])
 
   const isDarkContext = activeHref === '#now' || activeHref === '#contact'
@@ -54,7 +63,10 @@ export function TopNav() {
     const updateActiveFromScroll = () => {
       const referenceY = 112
 
-      if (navigationLock.current) return
+      if (navigationLock.current) {
+        scheduleNavigationUnlock()
+        return
+      }
 
       const passed = sections.filter((section) => section.getBoundingClientRect().top <= referenceY)
       setActiveHref(`#${(passed[passed.length - 1] ?? sections[0]).id}`)
@@ -70,10 +82,8 @@ export function TopNav() {
     if (!item) return
 
     setActiveHref(item.href)
-    if (navigationLock.current) window.clearTimeout(navigationLock.current)
-    navigationLock.current = window.setTimeout(() => {
-      navigationLock.current = null
-    }, 720)
+    navigationLock.current = true
+    scheduleNavigationUnlock()
     document.querySelector(item.href)?.scrollIntoView?.({ behavior: 'smooth', block: 'start' })
     window.history.replaceState(null, '', item.href)
   }

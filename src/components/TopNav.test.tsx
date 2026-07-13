@@ -39,6 +39,27 @@ describe('TopNav', () => {
     expect(screen.getByRole('link', { name: 'NOW 现在' }).className).toContain('bg-white')
   })
 
+  it('keeps a navigation target active while scroll events continue beyond 720ms, then updates after settling', () => {
+    vi.useFakeTimers()
+    document.body.innerHTML = '<section id="index"/><section id="work"/><section id="words"/><section id="now"/><section id="contact"/>'
+    const positions = { index: -2400, work: -1700, words: -900, now: -120, contact: -20 }
+    Object.entries(positions).forEach(([id, top]) => vi.spyOn(document.getElementById(id)!, 'getBoundingClientRect').mockReturnValue({ top } as DOMRect))
+    render(<TopNav />)
+
+    fireEvent.click(screen.getByRole('link', { name: 'NOW 现在' }))
+    for (let elapsed = 0; elapsed < 800; elapsed += 100) {
+      vi.advanceTimersByTime(100)
+      fireEvent.scroll(window)
+    }
+
+    expect(screen.getByRole('link', { name: 'NOW 现在' }).className).toContain('bg-white')
+
+    vi.advanceTimersByTime(160)
+    fireEvent.scroll(window)
+
+    expect(screen.getByRole('link', { name: 'CONTACT 联系' }).className).toContain('bg-white')
+  })
+
   it('shows the corrected phone number in the Open to Work panel', () => {
     render(<TopNav />)
     fireEvent.click(screen.getByRole('button', { name: /open to work/i }))
