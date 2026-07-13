@@ -75,7 +75,7 @@ export function CustomCursor() {
     >
       <div className="custom-cursor__glow" />
       <svg className="custom-cursor__arrow" viewBox="0 0 32 32" focusable="false">
-        <path d="M1.5 1.5 23 10.8l-9 3.2 4.5 9.2-5.2 2.4-4.4-9.1-7.4 7.1Z" />
+        <path d="M2 2.2 23.8 11.4 14.7 14.8 19.3 24.1 13.9 26.7 9.4 17.3 5.1 21.4Z" />
       </svg>
     </div>
   )

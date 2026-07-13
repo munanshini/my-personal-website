@@ -48,6 +48,16 @@ describe('CustomCursor', () => {
     expect(document.documentElement).toHaveClass('custom-cursor-active')
   })
 
+  it('uses the compact system-pointer silhouette from the reference', () => {
+    setDesktopPointer(true)
+    render(<CustomCursor />)
+
+    expect(screen.getByTestId('custom-cursor').querySelector('path')).toHaveAttribute(
+      'd',
+      'M2 2.2 23.8 11.4 14.7 14.8 19.3 24.1 13.9 26.7 9.4 17.3 5.1 21.4Z',
+    )
+  })
+
   it('marks interactive targets and pressed state', () => {
     setDesktopPointer(true)
     render(<><CustomCursor /><button type="button">Action</button></>)
