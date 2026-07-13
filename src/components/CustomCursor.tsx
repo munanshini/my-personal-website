@@ -74,7 +74,6 @@ export function CustomCursor() {
       className="custom-cursor pointer-events-none"
       style={{ transform: `translate3d(${position.x}px, ${position.y}px, 0)` }}
     >
-      <div className="custom-cursor__glow" />
       <img className="custom-cursor__arrow" src={cursorArrow} alt="" draggable="false" />
     </div>
   )

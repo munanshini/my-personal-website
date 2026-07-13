@@ -48,14 +48,14 @@ describe('CustomCursor', () => {
     expect(document.documentElement).toHaveClass('custom-cursor-active')
   })
 
-  it('renders the supplied arrow asset over the glow', () => {
+  it('renders only the supplied compact arrow asset', () => {
     setDesktopPointer(true)
     render(<CustomCursor />)
 
     const cursor = screen.getByTestId('custom-cursor')
     expect(cursor.querySelector('img')).toHaveAttribute('alt', '')
     expect(cursor.querySelector('img')).toHaveClass('custom-cursor__arrow')
-    expect(cursor.querySelector('.custom-cursor__glow')).toBeInTheDocument()
+    expect(cursor.querySelector('.custom-cursor__glow')).not.toBeInTheDocument()
     expect(document.documentElement).toHaveClass('custom-cursor-active')
   })
 
