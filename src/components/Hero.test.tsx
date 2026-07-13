@@ -16,6 +16,12 @@ describe('Hero', () => {
     expect(screen.getByRole('heading', { name: /AI PRODUCT MGR/i }).className).toContain('tracking-[-0.09em]')
   })
 
+  it('keeps the hero at desktop viewport height', () => {
+    render(<Hero />)
+
+    expect(screen.getByRole('heading', { name: /AI PRODUCT MGR/i }).closest('section')?.className).toContain('md:h-screen')
+  })
+
   it('renders the portfolio identity without duplicate hero actions', () => {
     render(<Hero />)
     expect(screen.getByRole('heading', { name: /AI PRODUCT MGR/i })).toBeInTheDocument()

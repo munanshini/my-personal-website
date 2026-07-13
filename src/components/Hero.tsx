@@ -42,7 +42,7 @@ export function Hero() {
     <section
       id="index"
       ref={sectionRef}
-      className="relative h-[100svh] min-h-[620px] w-full overflow-hidden bg-paper sm:min-h-[720px]"
+      className="relative h-[100svh] min-h-[620px] w-full overflow-hidden bg-paper sm:min-h-[720px] md:h-screen"
       onMouseMove={(event) => {
         mouse.current = { x: event.clientX, y: event.clientY }
       }}
