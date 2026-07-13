@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import cursorArrow from '../assets/icon_jiantou.svg'
 import './CustomCursor.css'
 
 const pointerQuery = '(hover: hover) and (pointer: fine)'
@@ -22,6 +23,7 @@ export function CustomCursor() {
 
   useEffect(() => {
     if (!enabled) {
+      document.documentElement.classList.remove('custom-cursor-active')
       setPosition({ x: 0, y: 0 })
       setVisible(false)
       setInteractive(false)
@@ -29,6 +31,7 @@ export function CustomCursor() {
       return
     }
 
+    document.documentElement.classList.add('custom-cursor-active')
     const move = (event: PointerEvent) => {
       setPosition({ x: event.clientX, y: event.clientY })
       setInteractive(event.target instanceof Element && Boolean(event.target.closest(interactiveSelector)))
@@ -49,6 +52,7 @@ export function CustomCursor() {
     document.documentElement.addEventListener('pointerleave', hide)
 
     return () => {
+      document.documentElement.classList.remove('custom-cursor-active')
       window.removeEventListener('pointermove', move)
       window.removeEventListener('pointerdown', press)
       window.removeEventListener('pointerup', release)
@@ -71,6 +75,7 @@ export function CustomCursor() {
       style={{ transform: `translate3d(${position.x}px, ${position.y}px, 0)` }}
     >
       <div className="custom-cursor__glow" />
+      <img className="custom-cursor__arrow" src={cursorArrow} alt="" draggable="false" />
     </div>
   )
 }
