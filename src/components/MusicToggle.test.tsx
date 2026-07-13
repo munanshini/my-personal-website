@@ -9,4 +9,10 @@ describe('MusicToggle', () => {
     expect(screen.getByRole('button', { name: '播放背景音乐' })).toBeInTheDocument()
     expect(screen.queryByText(/music/i)).not.toBeInTheDocument()
   })
+
+  it('keeps a compact labelled audio toggle', () => {
+    render(<MusicToggle />)
+
+    expect(screen.getByRole('button', { name: '播放背景音乐' }).className).toContain('h-8')
+  })
 })
