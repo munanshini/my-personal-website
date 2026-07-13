@@ -133,7 +133,6 @@ export function TopNav() {
       </div>
 
       <div className="flex items-center gap-3 md:hidden">
-        <MusicToggle />
         <button
           type="button"
           className="p-1 text-gray-900"
@@ -146,12 +145,16 @@ export function TopNav() {
 
       {menuOpen && (
         <div className="fixed inset-x-4 top-16 z-[-1] rounded-3xl border border-white/70 bg-white/80 p-4 shadow-2xl backdrop-blur-xl md:hidden">
+          <div className="mb-2 flex items-center justify-between border-b border-gray-200/80 pb-3 text-sm font-medium text-gray-800">
+            <span>MUSIC 音乐</span>
+            <MusicToggle />
+          </div>
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
               onClick={() => setMenuOpen(false)}
-              className="border-b border-gray-100 py-3 text-left text-base font-medium text-gray-800 transition-colors hover:text-gray-500"
+              className="block border-b border-gray-100 py-3 text-left text-base font-medium text-gray-800 transition-colors hover:text-gray-500"
             >
               {item.label}
             </a>
@@ -159,11 +162,6 @@ export function TopNav() {
           <a href="/张楠-AI产品经理2026简历初版.pdf" download onClick={() => setMenuOpen(false)} className="mt-4 flex items-center justify-between rounded-2xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white">
             简历 PDF 下载 <span aria-hidden="true">↓</span>
           </a>
-          <div className="mt-4 divide-y divide-black/10 border-t border-black/10 text-xs text-gray-600">
-            <div className="grid grid-cols-[40px_minmax(0,1fr)] items-center gap-2 py-2"><span>电话</span><div className="flex min-w-0 items-center gap-1"><strong className="min-w-0 flex-1 truncate">15767978588</strong><CopyButton value="15767978588" label="电话" /></div></div>
-            <div className="grid grid-cols-[40px_minmax(0,1fr)] items-center gap-2 py-2"><span>邮箱</span><div className="flex min-w-0 items-center gap-1"><strong className="min-w-0 flex-1 truncate">zn525347603@gmail.com</strong><CopyButton value="zn525347603@gmail.com" label="邮箱" /></div></div>
-            <div className="grid grid-cols-[40px_minmax(0,1fr)] items-center gap-2 py-2"><span>微信</span><div className="flex min-w-0 items-center gap-1"><strong className="min-w-0 flex-1 truncate">15767978588</strong><CopyButton value="15767978588" label="微信" /></div></div>
-          </div>
         </div>
       )}
     </nav>

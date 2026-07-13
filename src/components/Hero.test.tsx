@@ -28,4 +28,10 @@ describe('Hero', () => {
     expect(screen.queryByRole('link', { name: '查看精选案例' })).not.toBeInTheDocument()
     expect(screen.queryByRole('link', { name: '查看经历' })).not.toBeInTheDocument()
   })
+
+  it('marks the portrait for right-weighted mobile composition', () => {
+    render(<Hero />)
+
+    expect(screen.getByTestId('hero-portrait')).toHaveClass('bg-[position:58%_center]')
+  })
 })

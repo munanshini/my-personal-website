@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { TopNav } from './TopNav'
 
@@ -68,22 +68,16 @@ describe('TopNav', () => {
     expect(screen.queryByText('1576797855')).not.toBeInTheDocument()
   })
 
-  it('shows an independent mobile music control and resume link in the menu', () => {
+  it('keeps music inside the mobile menu and removes contact rows', () => {
     render(<TopNav />)
-
     fireEvent.click(screen.getByRole('button', { name: '打开菜单' }))
 
-    expect(screen.getAllByRole('button', { name: /播放背景音乐|关闭背景音乐/ })).toHaveLength(2)
-    expect(screen.getByRole('link', { name: /简历 PDF 下载/ })).toHaveAttribute('download')
+    const musicRow = screen.getByText('MUSIC 音乐').parentElement
+    expect(musicRow).not.toBeNull()
+    expect(within(musicRow as HTMLElement).getByRole('button', { name: /播放背景音乐|关闭背景音乐/ })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: '简历 PDF 下载' })).toHaveAttribute('download')
+    expect(screen.queryByText('15767978588')).not.toBeInTheDocument()
+    expect(screen.queryByText('zn525347603@gmail.com')).not.toBeInTheDocument()
   })
 
-  it('provides copy controls for every mobile contact value', () => {
-    render(<TopNav />)
-
-    fireEvent.click(screen.getByRole('button', { name: '打开菜单' }))
-
-    expect(screen.getByRole('button', { name: '复制电话' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: '复制邮箱' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: '复制微信' })).toBeInTheDocument()
-  })
 })
