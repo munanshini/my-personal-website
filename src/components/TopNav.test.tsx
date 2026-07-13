@@ -1,9 +1,10 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { TopNav } from './TopNav'
 
 describe('TopNav', () => {
   afterEach(() => {
+    vi.useRealTimers()
     vi.unstubAllGlobals()
     document.body.innerHTML = ''
   })
@@ -39,7 +40,7 @@ describe('TopNav', () => {
     expect(screen.getByRole('link', { name: 'NOW 现在' }).className).toContain('bg-white')
   })
 
-  it('keeps a navigation target active while scroll events continue beyond 720ms, then updates after settling', () => {
+  it('updates to the section at rest after smooth scrolling settles without another scroll event', () => {
     vi.useFakeTimers()
     document.body.innerHTML = '<section id="index"/><section id="work"/><section id="words"/><section id="now"/><section id="contact"/>'
     const positions = { index: -2400, work: -1700, words: -900, now: -120, contact: -20 }
@@ -54,8 +55,7 @@ describe('TopNav', () => {
 
     expect(screen.getByRole('link', { name: 'NOW 现在' }).className).toContain('bg-white')
 
-    vi.advanceTimersByTime(160)
-    fireEvent.scroll(window)
+    act(() => vi.advanceTimersByTime(160))
 
     expect(screen.getByRole('link', { name: 'CONTACT 联系' }).className).toContain('bg-white')
   })

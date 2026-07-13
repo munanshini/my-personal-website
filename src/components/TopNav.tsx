@@ -21,12 +21,14 @@ export function TopNav() {
   const closeTimer = useRef<number | null>(null)
   const navigationLock = useRef(false)
   const navigationSettleTimer = useRef<number | null>(null)
+  const syncActiveSection = useRef<() => void>(() => {})
 
   const scheduleNavigationUnlock = () => {
     if (navigationSettleTimer.current) window.clearTimeout(navigationSettleTimer.current)
     navigationSettleTimer.current = window.setTimeout(() => {
       navigationLock.current = false
       navigationSettleTimer.current = null
+      syncActiveSection.current()
     }, 160)
   }
 
@@ -60,21 +62,27 @@ export function TopNav() {
 
     if (!sections.length) return
 
-    const updateActiveFromScroll = () => {
+    syncActiveSection.current = () => {
       const referenceY = 112
+      const passed = sections.filter((section) => section.getBoundingClientRect().top <= referenceY)
+      setActiveHref(`#${(passed[passed.length - 1] ?? sections[0]).id}`)
+    }
 
+    const updateActiveFromScroll = () => {
       if (navigationLock.current) {
         scheduleNavigationUnlock()
         return
       }
 
-      const passed = sections.filter((section) => section.getBoundingClientRect().top <= referenceY)
-      setActiveHref(`#${(passed[passed.length - 1] ?? sections[0]).id}`)
+      syncActiveSection.current()
     }
 
     window.addEventListener('scroll', updateActiveFromScroll, { passive: true })
     updateActiveFromScroll()
-    return () => window.removeEventListener('scroll', updateActiveFromScroll)
+    return () => {
+      window.removeEventListener('scroll', updateActiveFromScroll)
+      syncActiveSection.current = () => {}
+    }
   }, [])
 
   const selectNavigation = (index: number) => {
