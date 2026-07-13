@@ -6,6 +6,8 @@ import { RevealLayer } from './RevealLayer'
 import SideRays from './SideRays'
 import { TopNav } from './TopNav'
 
+const portraitComposition = 'bg-[length:auto_100%] bg-[position:58%_center] md:bg-cover md:bg-center'
+
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
   const mouse = useRef({ x: 0, y: 0 })
@@ -50,12 +52,12 @@ export function Hero() {
       <TopNav />
       <div
         data-testid="hero-portrait"
-        className="absolute inset-0 z-10 bg-[length:auto_100%] bg-[position:58%_center] bg-no-repeat opacity-[0.78] md:bg-cover md:bg-center"
+        className={`absolute inset-0 z-10 bg-no-repeat opacity-[0.78] ${portraitComposition}`}
         style={{ backgroundImage: `linear-gradient(90deg, rgba(243,240,233,.98) 0%, rgba(243,240,233,.82) 38%, rgba(243,240,233,.08) 72%), url('${heroPortrait}')` }}
         aria-hidden="true"
       />
       <SideRays intensity={1.25} opacity={0.42} spread={1.6} />
-      <RevealLayer cursorX={cursor.x} cursorY={cursor.y} image={heroPortraitNatural} />
+      <RevealLayer cursorX={cursor.x} cursorY={cursor.y} image={heroPortraitNatural} className={portraitComposition} />
 
       <div className="pointer-events-none absolute inset-0 z-40 bg-gradient-to-t from-paper/70 via-transparent to-paper/10" aria-hidden="true" />
 

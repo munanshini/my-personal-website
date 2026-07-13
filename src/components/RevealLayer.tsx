@@ -5,9 +5,10 @@ interface RevealLayerProps {
   cursorX: number
   cursorY: number
   image: string
+  className?: string
 }
 
-export function RevealLayer({ cursorX, cursorY, image }: RevealLayerProps) {
+export function RevealLayer({ cursorX, cursorY, image, className = '' }: RevealLayerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [mask, setMask] = useState<string>()
 
@@ -58,8 +59,9 @@ export function RevealLayer({ cursorX, cursorY, image }: RevealLayerProps) {
     <>
       <canvas ref={canvasRef} className="hidden" aria-hidden="true" />
       <div
+        data-testid="hero-portrait-reveal"
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-30 bg-cover bg-center bg-no-repeat"
+        className={`pointer-events-none absolute inset-0 z-30 bg-no-repeat ${className}`}
         style={{
           backgroundImage: `linear-gradient(90deg, rgba(243,240,233,.18), rgba(243,240,233,0)), url('${image}')`,
           maskImage: mask,

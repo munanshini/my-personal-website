@@ -40,4 +40,17 @@ describe('Hero', () => {
 
     expect(screen.getByTestId('hero-portrait')).toHaveClass('bg-[length:auto_100%]')
   })
+
+  it('keeps the hover reveal aligned with the base portrait', () => {
+    render(<Hero />)
+
+    const basePortrait = screen.getByTestId('hero-portrait')
+    const revealPortrait = screen.getByTestId('hero-portrait-reveal')
+
+    expect(revealPortrait).toHaveClass('bg-[length:auto_100%]')
+    expect(revealPortrait).toHaveClass('bg-[position:58%_center]')
+    expect(revealPortrait).toHaveClass('md:bg-cover')
+    expect(revealPortrait).toHaveClass('md:bg-center')
+    expect(basePortrait.className).toContain('bg-[length:auto_100%]')
+  })
 })
