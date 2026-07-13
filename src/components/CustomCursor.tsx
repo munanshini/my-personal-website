@@ -23,6 +23,10 @@ export function CustomCursor() {
   useEffect(() => {
     if (!enabled) {
       document.documentElement.classList.remove('custom-cursor-active')
+      setPosition({ x: 0, y: 0 })
+      setVisible(false)
+      setInteractive(false)
+      setPressed(false)
       return
     }
 
@@ -32,13 +36,17 @@ export function CustomCursor() {
       setInteractive(event.target instanceof Element && Boolean(event.target.closest(interactiveSelector)))
       setVisible(true)
     }
-    const hide = () => setVisible(false)
+    const hide = () => {
+      setVisible(false)
+      setPressed(false)
+    }
     const press = () => setPressed(true)
     const release = () => setPressed(false)
 
     window.addEventListener('pointermove', move)
     window.addEventListener('pointerdown', press)
     window.addEventListener('pointerup', release)
+    window.addEventListener('pointercancel', hide)
     window.addEventListener('blur', hide)
     document.documentElement.addEventListener('pointerleave', hide)
 
@@ -47,6 +55,7 @@ export function CustomCursor() {
       window.removeEventListener('pointermove', move)
       window.removeEventListener('pointerdown', press)
       window.removeEventListener('pointerup', release)
+      window.removeEventListener('pointercancel', hide)
       window.removeEventListener('blur', hide)
       document.documentElement.removeEventListener('pointerleave', hide)
     }

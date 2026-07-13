@@ -1,13 +1,24 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { CustomCursor } from './CustomCursor'
 
 function setDesktopPointer(matches: boolean) {
-  const addEventListener = vi.fn()
-  const removeEventListener = vi.fn()
+  const listeners = new Set<() => void>()
+  const media = {
+    matches,
+    addEventListener: vi.fn((_type: string, listener: () => void) => listeners.add(listener)),
+    removeEventListener: vi.fn((_type: string, listener: () => void) => listeners.delete(listener)),
+  }
   vi.stubGlobal('PointerEvent', MouseEvent)
-  vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({ matches, addEventListener, removeEventListener }))
-  return { addEventListener, removeEventListener }
+  vi.stubGlobal('matchMedia', vi.fn().mockReturnValue(media))
+  return {
+    addEventListener: media.addEventListener,
+    removeEventListener: media.removeEventListener,
+    setMatches(nextMatches: boolean) {
+      media.matches = nextMatches
+      listeners.forEach((listener) => listener())
+    },
+  }
 }
 
 describe('CustomCursor', () => {
@@ -49,13 +60,61 @@ describe('CustomCursor', () => {
     expect(screen.getByTestId('custom-cursor')).toHaveAttribute('data-pressed', 'true')
   })
 
+  it('resets cursor state when pointer capability is disabled and waits for a new move when re-enabled', () => {
+    const media = setDesktopPointer(true)
+    render(<><CustomCursor /><button type="button">Action</button></>)
+
+    fireEvent.pointerMove(screen.getByRole('button', { name: 'Action' }), { clientX: 30, clientY: 40 })
+    fireEvent.pointerDown(window)
+
+    act(() => media.setMatches(false))
+    expect(screen.queryByTestId('custom-cursor')).not.toBeInTheDocument()
+    expect(document.documentElement).not.toHaveClass('custom-cursor-active')
+
+    act(() => media.setMatches(true))
+    const cursor = screen.getByTestId('custom-cursor')
+    expect(cursor).toHaveAttribute('data-visible', 'false')
+    expect(cursor).toHaveAttribute('data-interactive', 'false')
+    expect(cursor).toHaveAttribute('data-pressed', 'false')
+    expect(cursor).toHaveStyle({ transform: 'translate3d(0px, 0px, 0)' })
+
+    fireEvent.pointerMove(window, { clientX: 50, clientY: 60 })
+    expect(cursor).toHaveAttribute('data-visible', 'true')
+  })
+
+  it('hides and releases pressed state when the pointer leaves the document', () => {
+    setDesktopPointer(true)
+    render(<CustomCursor />)
+    fireEvent.pointerMove(window, { clientX: 30, clientY: 40 })
+    fireEvent.pointerDown(window)
+
+    fireEvent.pointerLeave(document.documentElement)
+
+    expect(screen.getByTestId('custom-cursor')).toHaveAttribute('data-visible', 'false')
+    expect(screen.getByTestId('custom-cursor')).toHaveAttribute('data-pressed', 'false')
+  })
+
+  it('hides and releases pressed state when the pointer is cancelled', () => {
+    setDesktopPointer(true)
+    render(<CustomCursor />)
+    fireEvent.pointerMove(window, { clientX: 30, clientY: 40 })
+    fireEvent.pointerDown(window)
+
+    fireEvent.pointerCancel(window)
+
+    expect(screen.getByTestId('custom-cursor')).toHaveAttribute('data-visible', 'false')
+    expect(screen.getByTestId('custom-cursor')).toHaveAttribute('data-pressed', 'false')
+  })
+
   it('hides when the window loses focus', () => {
     setDesktopPointer(true)
     render(<CustomCursor />)
     fireEvent.pointerMove(window, { clientX: 30, clientY: 40 })
+    fireEvent.pointerDown(window)
 
     fireEvent.blur(window)
 
     expect(screen.getByTestId('custom-cursor')).toHaveAttribute('data-visible', 'false')
+    expect(screen.getByTestId('custom-cursor')).toHaveAttribute('data-pressed', 'false')
   })
 })
