@@ -23,4 +23,10 @@ describe('App', () => {
     expect(screen.queryByRole('link', { name: '查看精选案例' })).not.toBeInTheDocument()
     expect(screen.queryByRole('link', { name: '查看经历' })).not.toBeInTheDocument()
   })
+
+  it('wraps the fixed assistant trigger in a glass spotlight card', () => {
+    render(<App />)
+
+    expect(screen.getByRole('button', { name: '问我的 AI 助手' }).parentElement?.className).toContain('spotlight-card--glass')
+  })
 })

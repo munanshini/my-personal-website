@@ -15,4 +15,10 @@ describe('MusicToggle', () => {
 
     expect(screen.getByRole('button', { name: '播放背景音乐' }).className).toContain('h-8')
   })
+
+  it('uses a compact icon-only glass music control', () => {
+    render(<MusicToggle />)
+
+    expect(screen.getByRole('button', { name: '播放背景音乐' }).className).toContain('backdrop-blur')
+  })
 })
