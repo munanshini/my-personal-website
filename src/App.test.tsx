@@ -29,4 +29,10 @@ describe('App', () => {
 
     expect(screen.getByRole('button', { name: '问我的 AI 助手' }).parentElement?.className).toContain('spotlight-card--glass')
   })
+
+  it('shows the compact mobile assistant label in the fixed trigger', () => {
+    render(<App />)
+
+    expect(screen.getByText('AI 助手')).toBeInTheDocument()
+  })
 })

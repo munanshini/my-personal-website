@@ -67,4 +67,13 @@ describe('TopNav', () => {
     expect(screen.getAllByText('15767978588')).toHaveLength(2)
     expect(screen.queryByText('1576797855')).not.toBeInTheDocument()
   })
+
+  it('shows an independent mobile music control and resume link in the menu', () => {
+    render(<TopNav />)
+
+    fireEvent.click(screen.getByRole('button', { name: '打开菜单' }))
+
+    expect(screen.getAllByRole('button', { name: /播放背景音乐|关闭背景音乐/ })).toHaveLength(2)
+    expect(screen.getByRole('link', { name: /简历 PDF 下载/ })).toHaveAttribute('download')
+  })
 })

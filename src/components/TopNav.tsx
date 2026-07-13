@@ -132,17 +132,20 @@ export function TopNav() {
         <MusicToggle />
       </div>
 
-      <button
-        type="button"
-        className="p-1 text-gray-900 md:hidden"
-        aria-label={menuOpen ? '关闭菜单' : '打开菜单'}
-        onClick={() => setMenuOpen((open) => !open)}
-      >
-        {menuOpen ? <X size={22} /> : <Menu size={22} />}
-      </button>
+      <div className="flex items-center gap-3 md:hidden">
+        <MusicToggle />
+        <button
+          type="button"
+          className="p-1 text-gray-900"
+          aria-label={menuOpen ? '关闭菜单' : '打开菜单'}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          {menuOpen ? <X size={22} /> : <Menu size={22} />}
+        </button>
+      </div>
 
       {menuOpen && (
-        <div className="fixed inset-x-0 top-0 z-[-1] flex flex-col gap-1 bg-white px-5 pb-6 pt-16 shadow-lg md:hidden">
+        <div className="fixed inset-x-4 top-16 z-[-1] rounded-3xl border border-white/70 bg-white/80 p-4 shadow-2xl backdrop-blur-xl md:hidden">
           {navItems.map((item) => (
             <a
               key={item.href}
@@ -153,10 +156,14 @@ export function TopNav() {
               {item.label}
             </a>
           ))}
-          <a href="#contact" onClick={() => setMenuOpen(false)} className="mt-4 flex items-center justify-center gap-2 rounded-full bg-gray-900 px-5 py-3 text-sm font-medium text-white">
-            <span className="inline-block h-2 w-2 rounded-full bg-green-400" />
-            OPEN TO WORK
+          <a href="/张楠-AI产品经理2026简历初版.pdf" download onClick={() => setMenuOpen(false)} className="mt-4 flex items-center justify-between rounded-2xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white">
+            简历 PDF 下载 <span aria-hidden="true">↓</span>
           </a>
+          <div className="mt-4 space-y-2 border-t border-black/10 pt-4 text-xs text-gray-600">
+            <p>电话 · 15767978588</p>
+            <p>邮箱 · zn525347603@gmail.com</p>
+            <p>微信 · 15767978588</p>
+          </div>
         </div>
       )}
     </nav>

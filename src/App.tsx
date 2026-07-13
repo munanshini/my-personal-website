@@ -28,7 +28,8 @@ export default function App() {
         className="flex items-center gap-2 rounded-full px-5 py-3.5 text-xs font-semibold text-white sm:px-6 sm:py-4 sm:text-sm"
       >
         <Sparkles size={15} />
-        问我的 AI 助手
+        <span className="sm:hidden">AI 助手</span>
+        <span className="hidden sm:inline">问我的 AI 助手</span>
       </button></SpotlightCard>
       <AssistantPanel open={assistantOpen} onClose={() => setAssistantOpen(false)} />
     </div>
