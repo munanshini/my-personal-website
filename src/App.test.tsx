@@ -38,7 +38,7 @@ describe('App', () => {
     expect(screen.getByText('AI 助手')).toBeInTheDocument()
   })
 
-  it('mounts one global desktop custom cursor', () => {
+  it('does not mount a second DOM cursor on desktop', () => {
     vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({
       matches: true,
       addEventListener: vi.fn(),
@@ -47,6 +47,6 @@ describe('App', () => {
 
     render(<App />)
 
-    expect(screen.getAllByTestId('custom-cursor')).toHaveLength(1)
+    expect(screen.queryByTestId('custom-cursor')).not.toBeInTheDocument()
   })
 })

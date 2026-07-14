@@ -1,49 +1,7 @@
-.custom-cursor__arrow,
-html.custom-cursor-active,
-html.custom-cursor-active body,
-html.custom-cursor-active * {
-  cursor: none !important;
-}
-
-.custom-cursor {
-  position: fixed;
-  top: -1px;
-  left: -1px;
-  z-index: 9999;
-  width: 32px;
-  height: 32px;
-  opacity: 0;
-  transform-origin: 1px 1px;
-  transition: opacity 120ms ease;
-  will-change: transform;
-}
-
-.custom-cursor[data-visible='true'] {
-  opacity: 1;
-}
-
-.custom-cursor__arrow {
-  position: relative;
-  width: 24px;
-  height: 24px;
-  display: block;
-  object-fit: contain;
-  transform-origin: 1px 1px;
-  transition: transform 140ms ease;
-  user-select: none;
-}
-
-.custom-cursor[data-interactive='true'] .custom-cursor__arrow {
-  transform: scale(1.05);
-}
-
-.custom-cursor[data-pressed='true'] .custom-cursor__arrow {
-  transform: scale(.9);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .custom-cursor,
-  .custom-cursor__arrow {
-    transition: none;
+@media (hover: hover) and (pointer: fine) {
+  html,
+  body,
+  body * {
+    cursor: url('../assets/icon_jiantou.svg') 5 5, auto !important;
   }
 }
