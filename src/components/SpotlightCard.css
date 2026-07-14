@@ -6,3 +6,4 @@
 .spotlight-card--cta:hover { transform: translateY(-2px); box-shadow: 0 18px 34px rgb(17 24 39 / .28); }
 .spotlight-card--nav { background: rgb(17 24 39); box-shadow: 0 10px 24px rgb(15 23 42 / .22); }
 .spotlight-card--glass { background: rgb(15 23 42 / .72); backdrop-filter: blur(14px) saturate(130%); outline: 1px solid rgb(255 255 255 / .38); }
+.spotlight-card--assistant.spotlight-card--glass { background: rgb(17 24 39); backdrop-filter: none; outline: 1px solid rgb(255 255 255 / .38); }

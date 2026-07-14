@@ -28,11 +28,11 @@ describe('TopNav', () => {
     expect(click.defaultPrevented).toBe(true)
   })
 
-  it('uses a solid background for the desktop navigation bar', () => {
+  it('keeps the translucent desktop navigation bar', () => {
     render(<TopNav />)
 
     const navCard = screen.getByRole('link', { name: 'INDEX 首页' }).closest('.spotlight-card--nav')
-    expect(navCard).not.toHaveClass('spotlight-card--glass')
+    expect(navCard).toHaveClass('spotlight-card--glass')
   })
 
   it('keeps an upward navigation target active while smooth scrolling is locked', () => {
