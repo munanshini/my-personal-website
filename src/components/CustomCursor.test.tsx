@@ -46,6 +46,8 @@ describe('CustomCursor', () => {
     expect(cursor).toHaveStyle({ transform: 'translate3d(120px, 80px, 0)' })
     expect(cursor).toHaveClass('pointer-events-none')
     expect(document.documentElement).toHaveClass('custom-cursor-active')
+    expect(document.documentElement.style.cursor).toBe('none')
+    expect(document.body.style.cursor).toBe('none')
   })
 
   it('renders only the supplied compact arrow asset', () => {

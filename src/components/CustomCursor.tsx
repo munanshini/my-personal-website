@@ -31,7 +31,13 @@ export function CustomCursor() {
       return
     }
 
+    const rootStyle = document.documentElement.style
+    const bodyStyle = document.body.style
+    const previousRootCursor = rootStyle.cursor
+    const previousBodyCursor = bodyStyle.cursor
     document.documentElement.classList.add('custom-cursor-active')
+    rootStyle.cursor = 'none'
+    bodyStyle.cursor = 'none'
     const move = (event: PointerEvent) => {
       setPosition({ x: event.clientX, y: event.clientY })
       setInteractive(event.target instanceof Element && Boolean(event.target.closest(interactiveSelector)))
@@ -53,6 +59,8 @@ export function CustomCursor() {
 
     return () => {
       document.documentElement.classList.remove('custom-cursor-active')
+      rootStyle.cursor = previousRootCursor
+      bodyStyle.cursor = previousBodyCursor
       window.removeEventListener('pointermove', move)
       window.removeEventListener('pointerdown', press)
       window.removeEventListener('pointerup', release)
