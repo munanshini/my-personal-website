@@ -28,6 +28,13 @@ describe('TopNav', () => {
     expect(click.defaultPrevented).toBe(true)
   })
 
+  it('uses a solid background for the desktop navigation bar', () => {
+    render(<TopNav />)
+
+    const navCard = screen.getByRole('link', { name: 'INDEX 首页' }).closest('.spotlight-card--nav')
+    expect(navCard).not.toHaveClass('spotlight-card--glass')
+  })
+
   it('keeps an upward navigation target active while smooth scrolling is locked', () => {
     document.body.innerHTML = '<section id="index"/><section id="work"/><section id="words"/><section id="now"/><section id="contact"/>'
     const positions = { index: -2400, work: -1700, words: -900, now: -120, contact: -20 }

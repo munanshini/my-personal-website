@@ -105,7 +105,7 @@ export function TopNav() {
         <span className="hidden text-sm font-semibold tracking-[0.16em] sm:block">张楠 · Nan Zhang</span>
       </a>
 
-      <SpotlightCard className="spotlight-card--nav spotlight-card--glass absolute left-1/2 hidden -translate-x-1/2 md:block" spotlightColor="rgba(125, 211, 252, .38)">
+      <SpotlightCard className="spotlight-card--nav absolute left-1/2 hidden -translate-x-1/2 md:block" spotlightColor="rgba(125, 211, 252, .38)">
         <GooeyNav items={navItems} activeIndex={Math.max(0, navItems.findIndex((item) => item.href === activeHref))} onSelect={selectNavigation} />
       </SpotlightCard>
 
