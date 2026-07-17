@@ -4,7 +4,6 @@ import heroPortraitNatural from '../assets/hero-portrait-natural.png'
 import { easeToward } from '../lib/heroMotion'
 import { RevealLayer } from './RevealLayer'
 import SideRays from './SideRays'
-import { TopNav } from './TopNav'
 
 const portraitComposition = 'bg-[length:auto_100%] bg-[position:58%_center] md:bg-cover md:bg-center'
 
@@ -49,7 +48,6 @@ export function Hero() {
         mouse.current = { x: event.clientX, y: event.clientY }
       }}
     >
-      <TopNav />
       <div
         data-testid="hero-portrait"
         className={`absolute inset-0 z-10 bg-no-repeat opacity-[0.78] ${portraitComposition}`}

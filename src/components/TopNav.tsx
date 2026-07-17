@@ -1,36 +1,26 @@
 import { Menu, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import wechatQr from '../assets/wechat-qr.jpg'
+import { siteNavItems, sitePageHash, type SitePage } from '../lib/siteRoute'
 import { CopyButton } from './CopyButton'
 import { GooeyNav } from './GooeyNav'
 import { MusicToggle } from './MusicToggle'
 import { SpotlightCard } from './SpotlightCard'
 
-const navItems = [
-  { label: 'INDEX 首页', href: '#index' },
-  { label: 'WORK 工作', href: '#work' },
-  { label: 'WORDS 内容', href: '#words' },
-  { label: 'NOW 现在', href: '#now' },
-  { label: 'CONTACT 联系', href: '#contact' },
-]
+interface TopNavProps {
+  currentPage: SitePage
+  onNavigate: (page: SitePage) => void
+}
 
-export function TopNav() {
+export function TopNav({ currentPage, onNavigate }: TopNavProps) {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [activeHref, setActiveHref] = useState('#index')
   const [utilityOpen, setUtilityOpen] = useState(false)
   const closeTimer = useRef<number | null>(null)
-  const navigationLock = useRef(false)
-  const navigationSettleTimer = useRef<number | null>(null)
-  const syncActiveSection = useRef<() => void>(() => {})
-
-  const scheduleNavigationUnlock = () => {
-    if (navigationSettleTimer.current) window.clearTimeout(navigationSettleTimer.current)
-    navigationSettleTimer.current = window.setTimeout(() => {
-      navigationLock.current = false
-      navigationSettleTimer.current = null
-      syncActiveSection.current()
-    }, 160)
-  }
+  const activeIndex = siteNavItems.findIndex((item) => item.page === currentPage)
+  const items = siteNavItems.map((item) => ({
+    label: item.label,
+    href: sitePageHash(item.page),
+  }))
 
   const openUtility = () => {
     if (closeTimer.current) window.clearTimeout(closeTimer.current)
@@ -43,62 +33,16 @@ export function TopNav() {
 
   useEffect(() => () => {
     if (closeTimer.current) window.clearTimeout(closeTimer.current)
-    if (navigationSettleTimer.current) window.clearTimeout(navigationSettleTimer.current)
-  }, [])
-
-  const isDarkContext = activeHref === '#now' || activeHref === '#contact'
-
-  useEffect(() => {
-    document.documentElement.dataset.darkContext = String(isDarkContext)
-    return () => {
-      delete document.documentElement.dataset.darkContext
-    }
-  }, [isDarkContext])
-
-  useEffect(() => {
-    const sections = navItems
-      .map((item) => document.querySelector(item.href))
-      .filter((section): section is Element => section !== null)
-
-    if (!sections.length) return
-
-    syncActiveSection.current = () => {
-      const referenceY = 112
-      const passed = sections.filter((section) => section.getBoundingClientRect().top <= referenceY)
-      setActiveHref(`#${(passed[passed.length - 1] ?? sections[0]).id}`)
-    }
-
-    const updateActiveFromScroll = () => {
-      if (navigationLock.current) {
-        scheduleNavigationUnlock()
-        return
-      }
-
-      syncActiveSection.current()
-    }
-
-    window.addEventListener('scroll', updateActiveFromScroll, { passive: true })
-    updateActiveFromScroll()
-    return () => {
-      window.removeEventListener('scroll', updateActiveFromScroll)
-      syncActiveSection.current = () => {}
-    }
   }, [])
 
   const selectNavigation = (index: number) => {
-    const item = navItems[index]
-    if (!item) return
-
-    setActiveHref(item.href)
-    navigationLock.current = true
-    scheduleNavigationUnlock()
-    document.querySelector(item.href)?.scrollIntoView?.({ behavior: 'smooth', block: 'start' })
-    window.history.replaceState(null, '', item.href)
+    const item = siteNavItems[index]
+    if (item) onNavigate(item.page)
   }
 
   return (
     <nav className="fixed inset-x-0 top-0 z-[70] flex items-center justify-between px-5 py-4 sm:px-8 sm:py-5">
-      <a href="#index" className={`flex items-center gap-3 ${isDarkContext ? 'text-white' : 'text-ink'}`} aria-label="返回首页">
+      <a href={sitePageHash('index')} onClick={(event) => { event.preventDefault(); onNavigate('index') }} className="flex items-center gap-3 text-ink" aria-label="返回首页">
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 256 256" fill="none" aria-hidden="true">
           <path d="M 256 64 L 256 128 L 192.5 128 L 160 95 L 128 64 L 96 95 L 63.5 128 L 64 128 L 128 192 L 128 256 L 64.5 256 L 32 223 L 0 192 L 0 64 L 64 0 L 192 0 Z M 256 192 L 256 256 L 192.5 256 L 160 223 L 128 192 L 128 128 L 192 128 Z" fill="currentColor" />
         </svg>
@@ -106,7 +50,7 @@ export function TopNav() {
       </a>
 
       <SpotlightCard className="spotlight-card--nav spotlight-card--glass absolute left-1/2 hidden -translate-x-1/2 md:block" spotlightColor="rgba(125, 211, 252, .38)">
-        <GooeyNav items={navItems} activeIndex={Math.max(0, navItems.findIndex((item) => item.href === activeHref))} onSelect={selectNavigation} />
+        <GooeyNav items={items} activeIndex={activeIndex} onSelect={selectNavigation} />
       </SpotlightCard>
 
       <div className="hidden items-center gap-3 md:flex">
@@ -135,7 +79,7 @@ export function TopNav() {
       <div className="flex items-center gap-3 md:hidden">
       <button
         type="button"
-        className={`p-1 ${isDarkContext ? 'text-white' : 'text-gray-900'}`}
+        className="p-1 text-gray-900"
           aria-label={menuOpen ? '关闭菜单' : '打开菜单'}
           onClick={() => setMenuOpen((open) => !open)}
         >
@@ -144,13 +88,17 @@ export function TopNav() {
       </div>
 
       {menuOpen && (
-        <div className={`fixed inset-x-4 top-16 z-[-1] rounded-3xl border border-white/70 p-4 shadow-2xl backdrop-blur-xl md:hidden ${isDarkContext ? 'bg-[#111417]/95 text-white' : 'bg-white/80 text-gray-900'}`}>
-          {navItems.map((item) => (
+        <div className="fixed inset-x-4 top-16 z-[-1] rounded-3xl border border-white/70 bg-white/80 p-4 text-gray-900 shadow-2xl backdrop-blur-xl md:hidden">
+          {siteNavItems.map((item) => (
             <a
-              key={item.href}
-              href={item.href}
-              onClick={() => setMenuOpen(false)}
-              className={`block border-b py-4 text-left text-base font-medium transition-colors last:border-b-0 ${isDarkContext ? 'border-white/10 text-white hover:text-white/70' : 'border-black/10 text-gray-900 hover:text-gray-500'}`}
+              key={item.page}
+              href={sitePageHash(item.page)}
+              onClick={(event) => {
+                event.preventDefault()
+                onNavigate(item.page)
+                setMenuOpen(false)
+              }}
+              className="block border-b border-black/10 py-4 text-left text-base font-medium text-gray-900 transition-colors last:border-b-0 hover:text-gray-500"
             >
               {item.label}
             </a>

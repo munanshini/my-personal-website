@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { Sparkles } from 'lucide-react'
 import { AssistantPanel } from './components/AssistantPanel'
 import { Contact } from './components/Contact'
@@ -8,21 +8,28 @@ import { Hero } from './components/Hero'
 import { NowSection } from './components/NowSection'
 import { ProjectGrid } from './components/ProjectGrid'
 import { SpotlightCard } from './components/SpotlightCard'
+import { TopNav } from './components/TopNav'
 import { nowItems, workItems, words } from './data/portfolio'
+import { useHashRoute } from './hooks/useHashRoute'
+import type { SitePage } from './lib/siteRoute'
+
+const pages: Record<SitePage, ReactNode> = {
+  index: <Hero />,
+  work: <ProjectGrid projects={workItems} />,
+  words: <ContentFeed items={words} />,
+  now: <NowSection items={nowItems} />,
+  contact: <Contact />,
+}
 
 export default function App() {
   const [assistantOpen, setAssistantOpen] = useState(false)
+  const { page, navigate } = useHashRoute()
 
   return (
-    <div className="min-h-screen bg-white" style={{ fontFamily: 'Inter, sans-serif' }}>
+    <div className="min-h-screen bg-paper text-ink">
       <CustomCursor />
-      <Hero />
-      <main>
-        <ProjectGrid projects={workItems} />
-        <ContentFeed items={words} />
-        <NowSection items={nowItems} />
-        <Contact />
-      </main>
+      <TopNav currentPage={page} onNavigate={navigate} />
+      {pages[page]}
       <SpotlightCard className="spotlight-card--assistant spotlight-card--cta spotlight-card--glass fixed bottom-5 right-5 z-[90]" spotlightColor="rgba(56, 189, 248, .40)"><button
         type="button"
         onClick={() => setAssistantOpen(true)}

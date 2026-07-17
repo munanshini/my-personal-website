@@ -1,6 +1,11 @@
 import { render, screen } from '@testing-library/react'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from './App'
+
+beforeEach(() => {
+  window.history.replaceState(null, '', '#index')
+  vi.stubGlobal('scrollTo', vi.fn())
+})
 
 afterEach(() => vi.unstubAllGlobals())
 
@@ -12,10 +17,12 @@ describe('App', () => {
     ).toBeInTheDocument()
   })
 
-  it('links the Now navigation to the Now section', () => {
+  it('renders only the page selected by the hash', () => {
+    window.history.replaceState(null, '', '#words')
     render(<App />)
-    expect(screen.getByRole('link', { name: /NOW 现在/i })).toHaveAttribute('href', '#now')
-    expect(document.getElementById('now')).not.toBeNull()
+    expect(document.getElementById('words')).not.toBeNull()
+    expect(document.getElementById('work')).toBeNull()
+    expect(document.getElementById('now')).toBeNull()
   })
 
   it('keeps one global assistant trigger and uses the Chinese name in the header', () => {
