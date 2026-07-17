@@ -117,7 +117,7 @@ export function TopNav() {
             </button></SpotlightCard>
           {utilityOpen && (
             <div className="absolute right-0 top-full mt-3 w-[360px] rounded-3xl border border-black/10 bg-white p-5 text-ink shadow-2xl">
-              <a href="/张楠-AI产品经理2026简历初版.pdf" download className="flex items-center justify-between rounded-2xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-700 hover:shadow-lg hover:shadow-gray-900/20">
+              <a href="/张楠-ai产品经理.pdf" download className="flex items-center justify-between rounded-2xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-700 hover:shadow-lg hover:shadow-gray-900/20">
                 简历 PDF 下载 <span aria-hidden="true">↓</span>
               </a>
               <div className="mt-5 divide-y divide-black/10 border-y border-black/10 text-sm">
@@ -155,7 +155,7 @@ export function TopNav() {
               {item.label}
             </a>
           ))}
-          <a href="/张楠-AI产品经理2026简历初版.pdf" download onClick={() => setMenuOpen(false)} className="mt-6 flex items-center justify-between rounded-2xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-700 hover:shadow-lg hover:shadow-gray-900/20">
+          <a href="/张楠-ai产品经理.pdf" download onClick={() => setMenuOpen(false)} className="mt-6 flex items-center justify-between rounded-2xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-700 hover:shadow-lg hover:shadow-gray-900/20">
             简历 PDF 下载 <span aria-hidden="true">↓</span>
           </a>
         </div>
