@@ -5,8 +5,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        paper: '#f3f0e9',
-        ink: '#111111',
+        paper: 'rgb(var(--color-page) / <alpha-value>)',
+        surface: 'rgb(var(--color-surface) / <alpha-value>)',
+        ink: 'rgb(var(--color-text) / <alpha-value>)',
+        muted: 'rgb(var(--color-muted) / <alpha-value>)',
+        line: 'rgb(var(--color-line) / <alpha-value>)',
         signal: '#e44832',
       },
       maxWidth: {

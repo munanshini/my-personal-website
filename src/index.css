@@ -1,5 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
 
+:root,
+:root[data-theme='light'] {
+  color-scheme: light;
+  --color-page: 243 240 233;
+  --color-surface: 250 248 243;
+  --color-text: 17 20 23;
+  --color-muted: 103 105 106;
+  --color-line: 17 20 23;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-page: 11 13 15;
+  --color-surface: 18 21 25;
+  --color-text: 243 240 233;
+  --color-muted: 167 165 160;
+  --color-line: 243 240 233;
+}
+
+html,
+body {
+  background: rgb(var(--color-page));
+  color: rgb(var(--color-text));
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
