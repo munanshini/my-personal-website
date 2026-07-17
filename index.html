@@ -6,16 +6,30 @@
     <meta name="description" content="AI 应用产品经理个人作品集" />
     <title>AI Product Manager · Portfolio</title>
     <script>
-      try {
-        const savedTheme = localStorage.getItem('portfolio-theme')
-        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-        document.documentElement.dataset.theme =
-          savedTheme === 'light' || savedTheme === 'dark'
-            ? savedTheme
-            : systemDark ? 'dark' : 'light'
-      } catch {
-        document.documentElement.dataset.theme = 'light'
-      }
+      (() => {
+        let theme
+
+        try {
+          const savedTheme = localStorage.getItem('portfolio-theme')
+          if (savedTheme === 'light' || savedTheme === 'dark') theme = savedTheme
+        } catch {}
+
+        if (!theme) {
+          try {
+            theme = window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+          } catch {
+            theme = 'light'
+          }
+        }
+
+        try {
+          document.documentElement.dataset.theme = theme
+        } catch {}
+
+        try {
+          document.documentElement.style.colorScheme = theme
+        } catch {}
+      })()
     </script>
   </head>
   <body>
