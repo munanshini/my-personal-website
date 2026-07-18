@@ -55,4 +55,13 @@ describe('Hero', () => {
     expect(revealPortrait).toHaveClass('md:bg-center')
     expect(basePortrait.className).toContain('bg-[length:auto_100%]')
   })
+
+  it('uses theme-semantic contrast for the portrait veil and copy', () => {
+    render(<Hero />)
+
+    expect(screen.getByTestId('hero-portrait').getAttribute('style')).toContain('rgb(var(--color-page) / .98)')
+    expect(screen.getByText('AI PRODUCT · EXPERIENCE · DELIVERY')).toHaveClass('text-muted')
+    expect(screen.getByText('你好，我是张楠，一个画过图、懂交互、有审美，写 PROMPT 比写 PRD 多的 AI 产品经理。')).toHaveClass('text-ink')
+    expect(screen.getByText(/Shenzhen · China/i)).toHaveClass('text-muted')
+  })
 })

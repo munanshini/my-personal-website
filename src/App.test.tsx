@@ -21,10 +21,11 @@ afterEach(() => vi.unstubAllGlobals())
 
 describe('App', () => {
   it('renders the AI product manager identity', () => {
-    renderApp()
+    const { container } = renderApp()
     expect(
       screen.getByRole('heading', { name: /AI PRODUCT MGR/i }),
     ).toBeInTheDocument()
+    expect(container.firstElementChild).toHaveClass('page-shell')
   })
 
   it.each([

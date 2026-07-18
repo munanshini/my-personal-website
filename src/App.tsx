@@ -27,7 +27,7 @@ export default function App() {
   const { page, navigate } = useHashRoute()
 
   return (
-    <div className="min-h-screen bg-paper text-ink">
+    <div className="page-shell min-h-screen bg-paper text-ink">
       <CustomCursor />
       <TopNav currentPage={page} onNavigate={navigate} />
       <PageTransition page={page}>{pages[page]}</PageTransition>
