@@ -8,7 +8,7 @@ interface SectionHeadingProps {
 
 export function SectionHeading({ index, eyebrow, title, description, inverse = false }: SectionHeadingProps) {
   return (
-    <div className="grid gap-6 border-t border-line/15 pt-5 md:grid-cols-[180px_1fr]">
+    <div className={`grid gap-6 border-t pt-5 md:grid-cols-[180px_1fr] ${inverse ? 'border-white/15' : 'border-line/15'}`}>
       <div className={`flex items-start gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] ${inverse ? 'text-white/60' : 'text-muted'}`}>
         <span className="text-signal">{index}</span>
         {eyebrow}
