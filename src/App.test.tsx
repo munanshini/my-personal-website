@@ -65,7 +65,7 @@ describe('App', () => {
     expect(screen.queryByRole('link', { name: '查看经历' })).not.toBeInTheDocument()
   })
 
-  it('wraps the fixed assistant trigger in a glass spotlight card', () => {
+  it('wraps the assistant trigger in a glass spotlight card', () => {
     renderApp()
 
     expect(screen.getByRole('button', { name: '问我的 AI 助手' }).parentElement?.className).toContain('spotlight-card--glass')
@@ -75,11 +75,13 @@ describe('App', () => {
     renderApp()
     const assistantCard = screen.getByRole('button', { name: '问我的 AI 助手' }).parentElement
 
-    expect(assistantCard).not.toHaveClass('fixed', 'bottom-5', 'right-5')
+    expect(assistantCard).not.toHaveClass('fixed')
+    expect(assistantCard).not.toHaveClass('bottom-5')
+    expect(assistantCard).not.toHaveClass('right-5')
     expect(assistantCard).toHaveClass('mx-auto', 'w-fit', 'md:fixed', 'md:bottom-5', 'md:right-5')
   })
 
-  it('shows the compact mobile assistant label in the fixed trigger', () => {
+  it('shows the compact mobile assistant label in the assistant trigger', () => {
     renderApp()
 
     expect(screen.getByText('AI 助手')).toBeInTheDocument()
