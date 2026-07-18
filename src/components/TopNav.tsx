@@ -6,6 +6,7 @@ import { CopyButton } from './CopyButton'
 import { GooeyNav } from './GooeyNav'
 import { MusicToggle } from './MusicToggle'
 import { SpotlightCard } from './SpotlightCard'
+import { ThemeToggle } from './ThemeToggle'
 
 interface TopNavProps {
   currentPage: SitePage
@@ -60,26 +61,27 @@ export function TopNav({ currentPage, onNavigate }: TopNavProps) {
               OPEN TO WORK
             </button></SpotlightCard>
           {utilityOpen && (
-            <div className="absolute right-0 top-full mt-3 w-[360px] rounded-3xl border border-black/10 bg-white p-5 text-ink shadow-2xl">
+            <div className="absolute right-0 top-full mt-3 w-[360px] rounded-3xl border border-line/15 bg-surface/80 p-5 text-ink shadow-2xl backdrop-blur-xl">
               <a href="/张楠-ai产品经理.pdf" download className="flex items-center justify-between rounded-2xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-700 hover:shadow-lg hover:shadow-gray-900/20">
                 简历 PDF 下载 <span aria-hidden="true">↓</span>
               </a>
-              <div className="mt-5 divide-y divide-black/10 border-y border-black/10 text-sm">
-                <div className="grid grid-cols-[64px_minmax(0,1fr)] items-center gap-3 py-3"><span className="text-gray-500">电话</span><div className="flex min-w-0 items-center gap-2"><strong className="min-w-0 flex-1 truncate">15767978588</strong><CopyButton value="15767978588" label="电话" /></div></div>
-                <div className="grid grid-cols-[64px_minmax(0,1fr)] items-center gap-3 py-3"><span className="text-gray-500">邮箱</span><div className="flex min-w-0 items-center gap-2"><strong className="min-w-0 flex-1 truncate text-[13px]">zn525347603@gmail.com</strong><CopyButton value="zn525347603@gmail.com" label="邮箱" /></div></div>
-                <div className="grid grid-cols-[64px_minmax(0,1fr)] items-center gap-3 py-3"><span className="text-gray-500">微信</span><div className="flex min-w-0 items-center gap-2"><strong className="min-w-0 flex-1 truncate">15767978588</strong><CopyButton value="15767978588" label="微信" /></div></div>
+              <div className="mt-5 divide-y divide-line/15 border-y border-line/15 text-sm">
+                <div className="grid grid-cols-[64px_minmax(0,1fr)] items-center gap-3 py-3"><span className="text-muted">电话</span><div className="flex min-w-0 items-center gap-2"><strong className="min-w-0 flex-1 truncate">15767978588</strong><CopyButton value="15767978588" label="电话" /></div></div>
+                <div className="grid grid-cols-[64px_minmax(0,1fr)] items-center gap-3 py-3"><span className="text-muted">邮箱</span><div className="flex min-w-0 items-center gap-2"><strong className="min-w-0 flex-1 truncate text-[13px]">zn525347603@gmail.com</strong><CopyButton value="zn525347603@gmail.com" label="邮箱" /></div></div>
+                <div className="grid grid-cols-[64px_minmax(0,1fr)] items-center gap-3 py-3"><span className="text-muted">微信</span><div className="flex min-w-0 items-center gap-2"><strong className="min-w-0 flex-1 truncate">15767978588</strong><CopyButton value="15767978588" label="微信" /></div></div>
               </div>
               <img src={wechatQr} alt="张楠的微信二维码" className="mx-auto mt-5 h-32 w-32 rounded-xl object-cover" />
             </div>
           )}
         </div>
+        <ThemeToggle className="flex h-8 w-8 items-center justify-center rounded-full border border-line/15 bg-surface/80 text-ink shadow-sm backdrop-blur transition-colors hover:bg-surface" />
         <MusicToggle />
       </div>
 
       <div className="flex items-center gap-3 md:hidden">
       <button
         type="button"
-        className="p-1 text-gray-900"
+        className="p-1 text-ink"
           aria-label={menuOpen ? '关闭菜单' : '打开菜单'}
           onClick={() => setMenuOpen((open) => !open)}
         >
@@ -88,7 +90,7 @@ export function TopNav({ currentPage, onNavigate }: TopNavProps) {
       </div>
 
       {menuOpen && (
-        <div className="fixed inset-x-4 top-16 z-[-1] rounded-3xl border border-white/70 bg-white/80 p-4 text-gray-900 shadow-2xl backdrop-blur-xl md:hidden">
+        <div className="fixed inset-x-4 top-16 z-[-1] rounded-3xl border border-line/15 bg-surface/80 p-4 text-ink shadow-2xl backdrop-blur-xl md:hidden">
           {siteNavItems.map((item) => (
             <a
               key={item.page}
@@ -98,11 +100,12 @@ export function TopNav({ currentPage, onNavigate }: TopNavProps) {
                 onNavigate(item.page)
                 setMenuOpen(false)
               }}
-              className="block border-b border-black/10 py-4 text-left text-base font-medium text-gray-900 transition-colors last:border-b-0 hover:text-gray-500"
+              className="block border-b border-line/15 py-4 text-left text-base font-medium text-ink transition-colors last:border-b-0 hover:text-muted"
             >
               {item.label}
             </a>
           ))}
+          <ThemeToggle className="mt-5 flex h-10 w-10 items-center justify-center rounded-full border border-line/15 bg-surface/80 text-ink shadow-sm transition-colors hover:bg-surface" />
           <a href="/张楠-ai产品经理.pdf" download onClick={() => setMenuOpen(false)} className="mt-6 flex items-center justify-between rounded-2xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-700 hover:shadow-lg hover:shadow-gray-900/20">
             简历 PDF 下载 <span aria-hidden="true">↓</span>
           </a>

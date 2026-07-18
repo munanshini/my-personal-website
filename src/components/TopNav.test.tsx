@@ -1,10 +1,15 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { SitePage } from '../lib/siteRoute'
+import { ThemeProvider } from '../theme/ThemeProvider'
 import { TopNav } from './TopNav'
 
 function renderNav(currentPage: SitePage = 'index', onNavigate = vi.fn()) {
-  return render(<TopNav currentPage={currentPage} onNavigate={onNavigate} />)
+  return render(
+    <ThemeProvider>
+      <TopNav currentPage={currentPage} onNavigate={onNavigate} />
+    </ThemeProvider>,
+  )
 }
 
 describe('TopNav', () => {
@@ -78,6 +83,14 @@ describe('TopNav', () => {
     fireEvent.click(screen.getByRole('button', { name: /open to work/i }))
 
     expect(screen.getByRole('link', { name: '简历 PDF 下载' }).className).toContain('hover:bg-gray-700')
+  })
+
+  it('shows a theme toggle in desktop navigation and the mobile menu', () => {
+    renderNav()
+
+    expect(screen.getByRole('button', { name: '切换到深色模式' })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: '打开菜单' }))
+    expect(screen.getAllByRole('button', { name: '切换到深色模式' })).toHaveLength(2)
   })
 
 })

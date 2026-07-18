@@ -6,6 +6,7 @@ import { ContentFeed } from './components/ContentFeed'
 import { CustomCursor } from './components/CustomCursor'
 import { Hero } from './components/Hero'
 import { NowSection } from './components/NowSection'
+import { PageTransition } from './components/PageTransition'
 import { ProjectGrid } from './components/ProjectGrid'
 import { SpotlightCard } from './components/SpotlightCard'
 import { TopNav } from './components/TopNav'
@@ -29,7 +30,7 @@ export default function App() {
     <div className="min-h-screen bg-paper text-ink">
       <CustomCursor />
       <TopNav currentPage={page} onNavigate={navigate} />
-      {pages[page]}
+      <PageTransition page={page}>{pages[page]}</PageTransition>
       <SpotlightCard className="spotlight-card--assistant spotlight-card--cta spotlight-card--glass fixed bottom-5 right-5 z-[90]" spotlightColor="rgba(56, 189, 248, .40)"><button
         type="button"
         onClick={() => setAssistantOpen(true)}

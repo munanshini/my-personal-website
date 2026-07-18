@@ -1,6 +1,6 @@
 .gooey-nav-container { position: relative; }
 .gooey-nav-items { position: relative; z-index: 2; display: flex; gap: .25rem; padding: .375rem; }
-.gooey-nav-items a { position: relative; padding: .45rem .8rem; border-radius: 999px; color: rgb(209 213 219); font-size: .75rem; font-weight: 500; transition: color .25s ease; white-space: nowrap; }
-.gooey-nav-items a.active { color: rgb(17 24 39); }
-.gooey-pill { position: absolute; z-index: 1; border-radius: 999px; background: #fff; transition: transform .48s cubic-bezier(.22,1,.36,1), width .48s cubic-bezier(.22,1,.36,1), height .48s cubic-bezier(.22,1,.36,1); }
-.gooey-pill::after { content: ''; position: absolute; inset: -5px; border-radius: inherit; background: rgb(255 255 255 / .5); filter: blur(7px); opacity: .45; }
+.gooey-nav-items a { position: relative; padding: .45rem .8rem; border-radius: 999px; color: rgb(var(--color-text) / .68); font-size: .75rem; font-weight: 500; transition: color .25s ease; white-space: nowrap; }
+.gooey-nav-items a.active { background: rgb(var(--color-text)); color: rgb(var(--color-page)); }
+.gooey-pill { position: absolute; z-index: 1; border-radius: 999px; background: rgb(var(--color-text)); transition: transform .48s cubic-bezier(.22,1,.36,1), width .48s cubic-bezier(.22,1,.36,1), height .48s cubic-bezier(.22,1,.36,1); }
+.gooey-pill::after { content: ''; position: absolute; inset: -5px; border-radius: inherit; background: rgb(var(--color-text) / .5); filter: blur(7px); opacity: .45; }
