@@ -71,6 +71,14 @@ describe('App', () => {
     expect(screen.getByRole('button', { name: '问我的 AI 助手' }).parentElement?.className).toContain('spotlight-card--glass')
   })
 
+  it('keeps the mobile assistant in document flow and fixes it on desktop', () => {
+    renderApp()
+    const assistantCard = screen.getByRole('button', { name: '问我的 AI 助手' }).parentElement
+
+    expect(assistantCard).not.toHaveClass('fixed', 'bottom-5', 'right-5')
+    expect(assistantCard).toHaveClass('mx-auto', 'w-fit', 'md:fixed', 'md:bottom-5', 'md:right-5')
+  })
+
   it('shows the compact mobile assistant label in the fixed trigger', () => {
     renderApp()
 

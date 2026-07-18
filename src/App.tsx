@@ -31,7 +31,7 @@ export default function App() {
       <CustomCursor />
       <TopNav currentPage={page} onNavigate={navigate} />
       <PageTransition page={page}>{pages[page]}</PageTransition>
-      <SpotlightCard className="spotlight-card--assistant spotlight-card--cta spotlight-card--glass fixed bottom-5 right-5 z-[90]" spotlightColor="rgba(56, 189, 248, .40)"><button
+      <SpotlightCard className="spotlight-card--assistant spotlight-card--cta spotlight-card--glass z-[60] mx-auto mb-5 mt-8 w-fit md:fixed md:bottom-5 md:right-5 md:z-[90] md:m-0" spotlightColor="rgba(56, 189, 248, .40)"><button
         type="button"
         onClick={() => setAssistantOpen(true)}
         aria-label="问我的 AI 助手"
