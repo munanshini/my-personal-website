@@ -56,7 +56,7 @@ export function TopNav({ currentPage, onNavigate }: TopNavProps) {
 
       <div className="hidden items-center gap-3 md:flex">
         <div className="relative" onMouseEnter={openUtility} onMouseLeave={closeUtilitySoon}>
-          <SpotlightCard className="spotlight-card--cta spotlight-card--glass" spotlightColor="rgba(74, 222, 128, .44)"><button type="button" onClick={() => setUtilityOpen((open) => !open)} aria-expanded={utilityOpen} className="flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-medium text-white">
+          <SpotlightCard className="spotlight-card--cta spotlight-card--glass" spotlightColor="rgba(74, 222, 128, .44)"><button type="button" onClick={() => setUtilityOpen((open) => !open)} aria-expanded={utilityOpen} className="flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-medium text-ink">
               <span className="inline-block h-2 w-2 rounded-full bg-green-400" />
               OPEN TO WORK
             </button></SpotlightCard>

@@ -60,7 +60,7 @@ export function MusicToggle() {
     }
   }, [])
 
-  return <button type="button" onClick={() => contextRef.current ? stop() : void start()} aria-pressed={playing} className="spotlight-card spotlight-card--glass flex h-8 w-8 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10 backdrop-blur" aria-label={playing ? '关闭背景音乐' : '播放背景音乐'}>
+  return <button type="button" onClick={() => contextRef.current ? stop() : void start()} aria-pressed={playing} className="spotlight-card spotlight-card--glass flex h-8 w-8 items-center justify-center rounded-full text-ink transition-colors hover:bg-white/10 backdrop-blur" aria-label={playing ? '关闭背景音乐' : '播放背景音乐'}>
     {playing ? <Pause size={13} /> : <Play size={14} fill="currentColor" />}
   </button>
 }

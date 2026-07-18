@@ -93,4 +93,16 @@ describe('TopNav', () => {
     expect(screen.getAllByRole('button', { name: '切换到深色模式' })).toHaveLength(2)
   })
 
+  it('uses semantic ink text on the glass Open to Work control in both themes', () => {
+    renderNav()
+    const openToWork = screen.getByRole('button', { name: /open to work/i })
+
+    expect(openToWork).toHaveClass('text-ink')
+    expect(openToWork).not.toHaveClass('text-white')
+
+    fireEvent.click(screen.getByRole('button', { name: '切换到深色模式' }))
+    expect(document.documentElement).toHaveAttribute('data-theme', 'dark')
+    expect(openToWork).toHaveClass('text-ink')
+  })
+
 })

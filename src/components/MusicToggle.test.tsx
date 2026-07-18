@@ -21,4 +21,12 @@ describe('MusicToggle', () => {
 
     expect(screen.getByRole('button', { name: '播放背景音乐' }).className).toContain('backdrop-blur')
   })
+
+  it('uses semantic ink text on its theme-aware glass surface', () => {
+    render(<MusicToggle />)
+    const button = screen.getByRole('button', { name: '播放背景音乐' })
+
+    expect(button).toHaveClass('text-ink')
+    expect(button).not.toHaveClass('text-white')
+  })
 })
