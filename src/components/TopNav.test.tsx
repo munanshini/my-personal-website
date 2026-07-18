@@ -59,11 +59,14 @@ describe('TopNav', () => {
   })
 
   it('removes mobile music and contact rows while keeping resume access', () => {
-    renderNav()
+    const { container } = renderNav()
     fireEvent.click(screen.getByRole('button', { name: '打开菜单' }))
 
     expect(screen.queryByText('MUSIC 音乐')).not.toBeInTheDocument()
-    expect(screen.getByRole('link', { name: '简历 PDF 下载' })).toHaveAttribute('download')
+    const resumeLink = screen.getByRole('link', { name: '简历 PDF 下载' })
+    const links = Array.from(container.querySelectorAll('a'))
+    expect(resumeLink).toHaveAttribute('download')
+    expect(links[links.length - 1]).toBe(resumeLink)
     expect(screen.queryByText('15767978588')).not.toBeInTheDocument()
     expect(screen.queryByText('zn525347603@gmail.com')).not.toBeInTheDocument()
   })
@@ -103,6 +106,19 @@ describe('TopNav', () => {
     fireEvent.click(screen.getByRole('button', { name: '切换到深色模式' }))
     expect(document.documentElement).toHaveAttribute('data-theme', 'dark')
     expect(openToWork).toHaveClass('text-ink')
+  })
+
+  it('keeps menu controls and links keyboard focusable', () => {
+    const { container } = renderNav()
+    const menuButton = screen.getByRole('button', { name: '打开菜单' })
+    menuButton.focus()
+    expect(menuButton).toHaveFocus()
+
+    fireEvent.click(menuButton)
+    const mobileIndexLink = Array.from(container.querySelectorAll<HTMLAnchorElement>('a[href="#index"]'))
+      .find((link) => link.textContent === 'INDEX 首页')
+    mobileIndexLink?.focus()
+    expect(mobileIndexLink).toHaveFocus()
   })
 
 })

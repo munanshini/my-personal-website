@@ -9,6 +9,12 @@
 - `npm run test`
 - `npm run build`
 
+## Navigation and theme
+
+- Primary pages use GitHub Pages-safe hashes: `#index`, `#work`, `#words`, `#now`, and `#contact`.
+- The first visit follows the operating-system color scheme.
+- A manual theme choice is stored under `portfolio-theme` in local storage.
+
 ## Replace before publishing
 
 - `src/data/portfolio.ts`：个人姓名、项目内容与量化结果。

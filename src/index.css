@@ -46,7 +46,30 @@ html {
   animation: page-enter 420ms cubic-bezier(.22, 1, .36, 1) both;
 }
 
+:focus-visible {
+  outline: 3px solid rgb(var(--color-text));
+  outline-offset: 3px;
+}
+
+.page-shell {
+  width: min(100% - 2.5rem, 1600px);
+  margin-inline: auto;
+}
+
+.content-directory-row {
+  min-height: 220px;
+  padding: 2rem 1rem;
+  border-bottom: 1px solid rgb(var(--color-line) / .15);
+  transition: background-color 240ms ease, padding 240ms ease;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .page-enter { animation: none; }
+}
+
+@media (max-width: 767px) {
+  .page-shell { width: min(100% - 1.5rem, 1600px); }
+  .content-directory-row { min-height: 180px; padding: 1.5rem 0; }
+  [data-testid='work-row'] > div:last-child { border-left: 0; padding-left: 0; }
 }

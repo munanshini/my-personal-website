@@ -34,6 +34,7 @@ describe('Hero', () => {
     render(<Hero />)
 
     expect(screen.getByTestId('hero-portrait')).toHaveClass('bg-[position:58%_center]')
+    expect(screen.getByRole('heading', { name: /AI PRODUCT MGR/i }).parentElement).toHaveClass('max-w-[calc(100%-2.5rem)]')
   })
 
   it('keeps the mobile portrait from over-zooming', () => {
