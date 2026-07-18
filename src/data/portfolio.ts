@@ -22,6 +22,7 @@ export interface WorkItem extends Project {
   companyPeriod: string
   companyFocus: string
   detailLabel: string
+  detailHref?: string
 }
 
 export interface WordItem {
