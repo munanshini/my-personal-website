@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import type { SitePage } from '../lib/siteRoute'
 
 const TRANSITION_DURATION_MS = 420
@@ -6,6 +6,7 @@ const TRANSITION_DURATION_MS = 420
 type PageLayer = {
   page: SitePage
   children: ReactNode
+  status: 'current' | 'exiting'
 }
 
 function prefersReducedMotion() {
@@ -20,49 +21,74 @@ export function PageTransition({ page, children }: {
   page: SitePage
   children: ReactNode
 }) {
-  const [current, setCurrent] = useState<PageLayer>({ page, children })
-  const [exiting, setExiting] = useState<PageLayer | null>(null)
+  const [layers, setLayers] = useState<PageLayer[]>([{ page, children, status: 'current' }])
   const [reducedMotion] = useState(prefersReducedMotion)
+  const exitTimers = useRef(new Map<SitePage, number>())
 
   useEffect(() => {
-    if (current.page === page) return
-
     if (reducedMotion) {
-      setExiting(null)
-    } else {
-      setExiting(current)
+      setLayers([{ page, children, status: 'current' }])
+      return
     }
-    setCurrent({ page, children })
-  }, [children, current, page, reducedMotion])
+
+    setLayers((existing) => {
+      const current = existing.find((layer) => layer.status === 'current')
+      if (current?.page === page) return existing
+
+      const targetExists = existing.some((layer) => layer.page === page)
+      const next = existing.map((layer): PageLayer => ({
+        ...layer,
+        children: layer.page === page ? children : layer.children,
+        status: layer.page === page ? 'current' : 'exiting',
+      }))
+
+      return targetExists ? next : [...next, { page, children, status: 'current' }]
+    })
+  }, [children, page, reducedMotion])
 
   useEffect(() => {
-    if (!exiting) return
-    const timer = window.setTimeout(() => setExiting(null), TRANSITION_DURATION_MS)
-    return () => window.clearTimeout(timer)
-  }, [exiting])
+    const exitingPages = new Set(layers.filter((layer) => layer.status === 'exiting').map((layer) => layer.page))
+
+    exitTimers.current.forEach((timer, exitingPage) => {
+      if (exitingPages.has(exitingPage)) return
+      window.clearTimeout(timer)
+      exitTimers.current.delete(exitingPage)
+    })
+
+    exitingPages.forEach((exitingPage) => {
+      if (exitTimers.current.has(exitingPage)) return
+      const timer = window.setTimeout(() => {
+        exitTimers.current.delete(exitingPage)
+        setLayers((current) => current.filter((layer) => layer.page !== exitingPage || layer.status !== 'exiting'))
+      }, TRANSITION_DURATION_MS)
+      exitTimers.current.set(exitingPage, timer)
+    })
+  }, [layers])
+
+  useEffect(() => () => {
+    exitTimers.current.forEach((timer) => window.clearTimeout(timer))
+    exitTimers.current.clear()
+  }, [])
 
   return (
     <div className="relative">
-      {exiting && (
-        <div
-          key={`exit-${exiting.page}`}
-          data-testid="page-transition-exit"
-          data-page={exiting.page}
-          aria-hidden="true"
-          {...{ inert: '' }}
-          className="page-exit pointer-events-none absolute inset-x-0 top-0 z-10 w-full"
-        >
-          {exiting.children}
-        </div>
-      )}
-      <div
-        key={current.page}
-        data-testid="page-transition"
-        data-page={current.page}
-        className={reducedMotion ? undefined : 'page-enter'}
-      >
-        {current.children}
-      </div>
+      {layers.map((layer) => {
+        const exiting = layer.status === 'exiting'
+        return (
+          <div
+            key={layer.page}
+            data-testid={exiting ? 'page-transition-exit' : 'page-transition'}
+            data-page={layer.page}
+            aria-hidden={exiting ? 'true' : undefined}
+            {...(exiting ? { inert: '' } : {})}
+            className={exiting
+              ? 'page-exit pointer-events-none absolute inset-x-0 top-0 z-10 w-full'
+              : reducedMotion ? undefined : 'page-enter'}
+          >
+            {layer.children}
+          </div>
+        )
+      })}
     </div>
   )
 }

@@ -1,4 +1,5 @@
-import { act, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen } from '@testing-library/react'
+import { useState } from 'react'
 import { afterEach, expect, it, vi } from 'vitest'
 import { PageTransition } from './PageTransition'
 
@@ -25,6 +26,33 @@ it('retains the old page as an inert exit layer until the transition completes',
 
   act(() => vi.advanceTimersByTime(1))
   expect(screen.queryByTestId('page-transition-exit')).not.toBeInTheDocument()
+})
+
+it('preserves the exiting page component instance and its local state', () => {
+  vi.useFakeTimers()
+  let mountCount = 0
+
+  function StatefulPage() {
+    const [count, setCount] = useState(() => {
+      mountCount += 1
+      return 0
+    })
+    return <button onClick={() => setCount((value) => value + 1)}>Count {count}</button>
+  }
+
+  const { rerender } = render(<PageTransition page="now"><StatefulPage /></PageTransition>)
+  fireEvent.click(screen.getByRole('button', { name: 'Count 0' }))
+  expect(screen.getByRole('button', { name: 'Count 1' })).toBeInTheDocument()
+  expect(mountCount).toBe(1)
+
+  rerender(<PageTransition page="work"><div>Work</div></PageTransition>)
+
+  expect(screen.getByTestId('page-transition-exit')).toHaveTextContent('Count 1')
+  expect(mountCount).toBe(1)
+
+  act(() => vi.advanceTimersByTime(420))
+  expect(screen.queryByText('Count 1')).not.toBeInTheDocument()
+  expect(mountCount).toBe(1)
 })
 
 it('switches immediately without enter or exit motion when reduced motion is preferred', () => {
