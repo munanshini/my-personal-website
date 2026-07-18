@@ -44,7 +44,7 @@ export function Contact() {
             <img src={wechatQr} alt="添加张楠微信的二维码" className="mt-7 h-32 w-32 rounded-2xl object-cover sm:h-40 sm:w-40" />
             <div className="mt-8 flex flex-wrap gap-2">{platforms.map((platform) => {
               const Icon = platform.icon
-              return platform.href ? <a key={platform.label} href={platform.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-line/15 px-3 py-2 text-xs font-semibold transition-colors hover:bg-ink hover:text-paper"><Icon size={14} />{platform.label}</a> : <button key={platform.label} type="button" title="链接待补充" className="inline-flex items-center gap-2 rounded-full border border-line/15 px-3 py-2 text-xs font-semibold text-muted"><Icon size={14} />{platform.label}</button>
+              return platform.href ? <a key={platform.label} href={platform.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-line/15 px-3 py-2 text-xs font-semibold transition-colors hover:bg-ink hover:text-paper"><Icon size={14} />{platform.label}</a> : <span key={platform.label} className="inline-flex items-center gap-2 rounded-full border border-line/15 px-3 py-2 text-xs font-semibold text-muted"><Icon size={14} aria-hidden="true" />{platform.label}</span>
             })}</div>
           </div>
         </div>

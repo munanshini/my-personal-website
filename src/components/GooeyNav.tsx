@@ -28,6 +28,6 @@ export function GooeyNav({ items, activeIndex, onSelect }: { items: GooeyNavItem
 
   return <div ref={containerRef} className="gooey-nav-container">
     <span className="gooey-pill" style={{ transform: `translate(${pill.x}px, ${pill.y}px)`, width: pill.width, height: pill.height }} />
-    <div className="gooey-nav-items">{items.map((item, index) => <a key={item.href} ref={(node) => { itemRefs.current[index] = node }} href={item.href} onClick={(event) => { event.preventDefault(); onSelect(index) }} className={index === activeIndex ? 'active bg-white' : ''}>{item.label}</a>)}</div>
+    <div className="gooey-nav-items">{items.map((item, index) => <a key={item.href} ref={(node) => { itemRefs.current[index] = node }} href={item.href} aria-current={index === activeIndex ? 'page' : undefined} onClick={(event) => { event.preventDefault(); onSelect(index) }} className={index === activeIndex ? 'active' : undefined}>{item.label}</a>)}</div>
   </div>
 }

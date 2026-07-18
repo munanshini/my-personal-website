@@ -21,9 +21,23 @@ describe('TopNav', () => {
 
   it('marks the current route without reading section positions', () => {
     const onNavigate = vi.fn()
-    renderNav('now', onNavigate)
-    expect(screen.getByRole('link', { name: 'NOW 现在' })).toHaveClass('bg-white')
-    fireEvent.click(screen.getByRole('link', { name: 'WORK 工作' }))
+    const { container } = renderNav('now', onNavigate)
+    const desktopNow = screen.getByRole('link', { name: 'NOW 现在' })
+    const desktopWork = screen.getByRole('link', { name: 'WORK 工作' })
+    expect(desktopNow).toHaveAttribute('aria-current', 'page')
+    expect(desktopNow).not.toHaveClass('bg-white')
+    expect(desktopWork).not.toHaveAttribute('aria-current')
+
+    fireEvent.click(screen.getByRole('button', { name: '打开菜单' }))
+    const mobileNow = Array.from(container.querySelectorAll<HTMLAnchorElement>('a[href="#now"]'))
+      .find((link) => link !== desktopNow)
+    const mobileWork = Array.from(container.querySelectorAll<HTMLAnchorElement>('a[href="#work"]'))
+      .find((link) => link.textContent === 'WORK 工作' && link !== desktopWork)
+    expect(mobileNow).toHaveAttribute('aria-current', 'page')
+    expect(mobileNow).toHaveClass('text-signal')
+    expect(mobileWork).not.toHaveAttribute('aria-current')
+
+    fireEvent.click(desktopWork)
     expect(onNavigate).toHaveBeenCalledWith('work')
   })
 

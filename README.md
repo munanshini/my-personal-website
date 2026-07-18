@@ -15,12 +15,13 @@
 - The first visit follows the operating-system color scheme.
 - A manual theme choice is stored under `portfolio-theme` in local storage.
 
-## Replace before publishing
+## Content and local resources
 
 - `src/data/portfolio.ts`：个人姓名、项目内容与量化结果。
-- `src/components/Hero.tsx`：将临时远程 Hero 图片替换为获授权的个人形象或原创视觉，并在简历就绪后增加下载入口。
+- `src/assets/hero-portrait.png`：首页与联系页使用的本地人物主视觉。
+- `src/assets/hero-portrait-natural.png`：首页悬停揭示使用的本地自然色人物图。
 - `src/components/Contact.tsx`：真实邮箱、联系方式和社媒链接。
-- `public/resume.pdf`：添加真实简历文件后再正式开放下载。
+- `public/张楠-ai产品经理.pdf`：顶部桌面与移动菜单提供下载的简历文件。
 
 ## 1.0 assistant boundary
 

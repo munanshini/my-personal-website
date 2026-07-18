@@ -95,12 +95,13 @@ export function TopNav({ currentPage, onNavigate }: TopNavProps) {
             <a
               key={item.page}
               href={sitePageHash(item.page)}
+              aria-current={item.page === currentPage ? 'page' : undefined}
               onClick={(event) => {
                 event.preventDefault()
                 onNavigate(item.page)
                 setMenuOpen(false)
               }}
-              className="block border-b border-line/15 py-4 text-left text-base font-medium text-ink transition-colors last:border-b-0 hover:text-muted"
+              className={`block border-b border-line/15 py-4 text-left text-base font-medium transition-colors last:border-b-0 hover:text-muted ${item.page === currentPage ? 'text-signal' : 'text-ink'}`}
             >
               {item.label}
             </a>

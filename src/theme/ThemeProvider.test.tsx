@@ -37,6 +37,19 @@ it('follows the system when no user theme is saved and persists toggles', () => 
   expect(localStorage.getItem('portfolio-theme')).toBe('light')
 })
 
+it('keeps the root theme dataset and native color scheme in sync after a toggle', () => {
+  localStorage.setItem('portfolio-theme', 'dark')
+  render(<ThemeProvider><ThemeProbe /></ThemeProvider>)
+
+  expect(document.documentElement.dataset.theme).toBe('dark')
+  expect(document.documentElement.style.colorScheme).toBe('dark')
+
+  fireEvent.click(screen.getByRole('button'))
+
+  expect(document.documentElement.dataset.theme).toBe('light')
+  expect(document.documentElement.style.colorScheme).toBe('light')
+})
+
 it('still switches when local storage is unavailable', () => {
   vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => { throw new Error('blocked') })
   vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('blocked') })

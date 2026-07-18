@@ -43,6 +43,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     } catch {
       // Theme state remains usable when the DOM is unavailable.
     }
+    try {
+      document.documentElement.style.colorScheme = theme
+    } catch {
+      // Native controls keep their existing scheme when the DOM is unavailable.
+    }
   }, [theme])
 
   const value = useMemo(() => ({

@@ -12,7 +12,7 @@ export function NowSection({ items }: { items: NowItem[] }) {
     <section id="now" className="border-t border-line/15 bg-paper px-5 py-16 text-ink transition-colors duration-700 sm:px-8 md:py-32">
       <div className="mx-auto max-w-canvas">
         <SectionHeading index="04" eyebrow="NOW" title="此刻，我在关注什么。" description="一个不断变化的小栏目，用来记录最近的产品问题、创作与生活。" />
-        <div data-testid="now-list" className="mt-12 divide-y divide-line/15 border-y border-line/15 sm:mt-20 md:min-h-[690px]">
+        <div data-testid="now-list" className="mt-12 grid h-[1400px] grid-rows-5 divide-y divide-line/15 border-y border-line/15 sm:mt-20 sm:h-[1200px] md:h-[690px]">
           {visibleItems.map((item, index) => (
             <div key={`${item.date}-${item.type}-${item.title}`} data-testid="now-row" className="grid gap-3 py-5 sm:gap-4 sm:py-7 md:grid-cols-[120px_150px_1fr_auto] md:items-center">
               <span className="font-mono text-xs text-signal">0{index + 1}</span>

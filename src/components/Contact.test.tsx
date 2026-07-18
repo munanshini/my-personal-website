@@ -20,5 +20,7 @@ describe('Contact', () => {
     expect(screen.getByRole('link', { name: 'zn525347603@gmail.com' })).toHaveAttribute('href', 'mailto:zn525347603@gmail.com')
     expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/munanshini')
     expect(screen.queryByRole('link', { name: '视频号' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '视频号' })).not.toBeInTheDocument()
+    expect(screen.getByText('视频号').closest('span')).not.toHaveAttribute('tabindex')
   })
 })
