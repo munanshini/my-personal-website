@@ -30,10 +30,10 @@ describe('Hero', () => {
     expect(screen.queryByRole('link', { name: '查看经历' })).not.toBeInTheDocument()
   })
 
-  it('marks the portrait for right-weighted mobile composition', () => {
+  it('centers the full portrait for the mobile composition', () => {
     render(<Hero />)
 
-    expect(screen.getByTestId('hero-portrait')).toHaveClass('bg-[position:58%_center]')
+    expect(screen.getByTestId('hero-portrait')).toHaveClass('bg-center')
     expect(screen.getByRole('heading', { name: /AI PRODUCT MGR/i }).parentElement).toHaveClass('max-w-[calc(100%-2.5rem)]')
   })
 
@@ -41,9 +41,10 @@ describe('Hero', () => {
     render(<Hero />)
 
     const portrait = screen.getByTestId('hero-portrait')
-    expect(portrait).toHaveClass('bg-[length:auto_100%]')
-    expect(portrait).toHaveClass('w-full')
-    expect(portrait).toHaveClass('md:w-[68%]')
+    expect(portrait).toHaveClass('bg-contain')
+    expect(portrait).toHaveClass('bg-center')
+    expect(portrait).toHaveClass('md:bg-[position:68%_center]')
+    expect(portrait.getAttribute('style')).toContain('hero-portrait-cutout.png')
   })
 
   it('renders a static portrait without an interactive reveal or light rays', () => {

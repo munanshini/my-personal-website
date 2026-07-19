@@ -1,6 +1,6 @@
-import heroPortrait from '../assets/hero-portrait.png'
+import heroPortraitCutout from '../assets/hero-portrait-cutout.png'
 
-const portraitComposition = 'bg-[length:auto_100%] bg-[position:58%_center] md:bg-cover md:bg-center'
+const portraitComposition = 'bg-contain bg-center'
 
 export function Hero() {
   return (
@@ -10,8 +10,8 @@ export function Hero() {
     >
       <div
         data-testid="hero-portrait"
-        className={`absolute inset-0 z-10 w-full bg-no-repeat opacity-[0.78] md:inset-y-0 md:left-auto md:right-0 md:w-[68%] ${portraitComposition}`}
-        style={{ backgroundImage: `url('${heroPortrait}')` }}
+        className={`absolute inset-0 z-10 bg-no-repeat md:bg-[position:68%_center] ${portraitComposition}`}
+        style={{ backgroundImage: `url('${heroPortraitCutout}')` }}
         aria-hidden="true"
       />
 
