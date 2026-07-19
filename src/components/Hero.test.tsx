@@ -40,26 +40,23 @@ describe('Hero', () => {
   it('keeps the mobile portrait from over-zooming', () => {
     render(<Hero />)
 
-    expect(screen.getByTestId('hero-portrait')).toHaveClass('bg-[length:auto_100%]')
+    const portrait = screen.getByTestId('hero-portrait')
+    expect(portrait).toHaveClass('bg-[length:auto_100%]')
+    expect(portrait).toHaveClass('w-full')
+    expect(portrait).toHaveClass('md:w-[68%]')
   })
 
-  it('keeps the hover reveal aligned with the base portrait', () => {
-    render(<Hero />)
+  it('renders a static portrait without an interactive reveal or light rays', () => {
+    const { container } = render(<Hero />)
 
-    const basePortrait = screen.getByTestId('hero-portrait')
-    const revealPortrait = screen.getByTestId('hero-portrait-reveal')
-
-    expect(revealPortrait).toHaveClass('bg-[length:auto_100%]')
-    expect(revealPortrait).toHaveClass('bg-[position:58%_center]')
-    expect(revealPortrait).toHaveClass('md:bg-cover')
-    expect(revealPortrait).toHaveClass('md:bg-center')
-    expect(basePortrait.className).toContain('bg-[length:auto_100%]')
+    expect(screen.queryByTestId('hero-portrait-reveal')).not.toBeInTheDocument()
+    expect(container.querySelector('.side-rays-container')).toBeNull()
   })
 
   it('uses theme-semantic contrast for the portrait veil and copy', () => {
     render(<Hero />)
 
-    expect(screen.getByTestId('hero-portrait').getAttribute('style')).toContain('rgb(var(--color-page) / .98)')
+    expect(screen.getByTestId('hero-portrait').getAttribute('style')).not.toContain('gradient')
     expect(screen.getByText('AI PRODUCT · EXPERIENCE · DELIVERY')).toHaveClass('text-muted')
     expect(screen.getByText('你好，我是张楠，一个画过图、懂交互、有审美，写 PROMPT 比写 PRD 多的 AI 产品经理。')).toHaveClass('text-ink')
     expect(screen.getByText(/Shenzhen · China/i)).toHaveClass('text-muted')
