@@ -8,9 +8,12 @@ describe('ProjectGrid', () => {
     render(<ProjectGrid projects={workItems} />)
     const rows = screen.getAllByTestId('work-row')
     expect(rows).toHaveLength(3)
-    expect(within(rows[0]).getByText('华为')).toBeInTheDocument()
-    expect(within(rows[1]).getByText('深圳市顺丰丰链科技有限责任公司')).toBeInTheDocument()
+    expect(within(rows[0]).getByText('华为技术有限公司')).toBeInTheDocument()
+    expect(within(rows[0]).getByText('2025.02 — 2026.06')).toBeInTheDocument()
+    expect(within(rows[1]).getByText('深圳丰链科技有限公司')).toBeInTheDocument()
     expect(within(rows[2]).getByText('深圳市明源云科技有限公司')).toBeInTheDocument()
+    expect(within(rows[1]).getByText('调度响应时间缩短约 30%')).toBeInTheDocument()
+    expect(within(rows[2]).getByText('10 家房企、100+ 个售楼处')).toBeInTheDocument()
   })
 
   it('does not create a project link without a real detailHref', () => {
@@ -23,5 +26,14 @@ describe('ProjectGrid', () => {
     screen.getAllByTestId('work-row').forEach((row) => {
       expect(row).toHaveClass('border-line/15')
     })
+  })
+
+  it('uses an elevated gallery treatment for each project row', () => {
+    render(<ProjectGrid projects={workItems} />)
+    const [firstRow] = screen.getAllByTestId('work-row')
+
+    expect(firstRow).toHaveClass('hover:-translate-y-1')
+    expect(firstRow).toHaveClass('focus:border-signal/60')
+    expect(within(firstRow).getByTestId('work-result')).toHaveClass('group-hover:text-ink')
   })
 })
