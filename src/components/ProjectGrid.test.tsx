@@ -4,6 +4,14 @@ import { workItems } from '../data/portfolio'
 import { ProjectGrid } from './ProjectGrid'
 
 describe('ProjectGrid', () => {
+  it('uses a title-only project gallery opening', () => {
+    render(<ProjectGrid projects={workItems} />)
+
+    expect(screen.getByRole('heading', { name: /AI 不止能生成/ })).toBeInTheDocument()
+    expect(screen.queryByText('SELECTED WORK')).not.toBeInTheDocument()
+    expect(screen.queryByText(/三个企业级场景/)).not.toBeInTheDocument()
+  })
+
   it('renders work in newest-to-oldest directory rows', () => {
     render(<ProjectGrid projects={workItems} />)
     const rows = screen.getAllByTestId('work-row')

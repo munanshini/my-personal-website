@@ -1,18 +1,16 @@
 import type { WorkItem } from '../data/portfolio'
-import { SectionHeading } from './SectionHeading'
 
 export function ProjectGrid({ projects }: { projects: WorkItem[] }) {
   return (
     <section id="work" className="border-t border-line/15 bg-paper px-5 py-16 text-ink transition-colors duration-700 sm:px-8 md:py-32">
       <div className="mx-auto max-w-canvas">
-        <SectionHeading
-          index="01"
-          eyebrow="SELECTED WORK"
-          title="AI 不止能生成， 还要进入真实工作流。"
-          description="三个企业级场景，展示我如何从用户问题出发，定义 AI 能力边界，并把产品推进到可使用、可衡量的结果。"
-        />
+        <div className="max-w-5xl pb-10 sm:pb-14 md:pb-20">
+          <h2 className="text-[clamp(3.25rem,7vw,7.5rem)] font-semibold leading-[0.88] tracking-[-0.065em]">
+            AI 不止能生成，<br />还要进入真实工作流。
+          </h2>
+        </div>
 
-        <div className="mt-10 grid gap-4 sm:mt-16 md:gap-5">
+        <div className="grid gap-4 md:gap-5">
           {projects.map((project) => (
             <article
               key={project.number}
