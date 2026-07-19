@@ -1,8 +1,14 @@
 import { fireEvent, render, screen } from '@testing-library/react'
+// @ts-expect-error Node's fs types are available in Vitest but not the browser tsconfig.
+import { readFileSync } from 'node:fs'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { SitePage } from '../lib/siteRoute'
 import { ThemeProvider } from '../theme/ThemeProvider'
 import { TopNav } from './TopNav'
+
+declare const process: { cwd: () => string }
+
+const gooeyNavStyles = readFileSync(`${process.cwd()}/src/components/GooeyNav.css`, 'utf8')
 
 function renderNav(currentPage: SitePage = 'index', onNavigate = vi.fn()) {
   return render(
@@ -62,6 +68,12 @@ describe('TopNav', () => {
 
     const navCard = screen.getByRole('link', { name: 'INDEX 首页' }).closest('.spotlight-card--nav')
     expect(navCard).toHaveClass('spotlight-card--glass')
+  })
+
+  it('gives inactive desktop navigation items an inset outline on hover', () => {
+    expect(gooeyNavStyles).toMatch(/a:not\(\.active\):hover/)
+    expect(gooeyNavStyles).toMatch(/box-shadow:\s*inset 0 0 0 1px/)
+    expect(gooeyNavStyles).toMatch(/a:not\(\.active\):focus-visible/)
   })
 
   it('shows the corrected phone number in the Open to Work panel', () => {
