@@ -61,8 +61,7 @@ html {
 }
 
 .page-shell {
-  width: min(100% - 2.5rem, 1600px);
-  margin-inline: auto;
+  width: 100%;
 }
 
 .content-directory-row {
@@ -79,7 +78,6 @@ html {
 }
 
 @media (max-width: 767px) {
-  .page-shell { width: min(100% - 1.5rem, 1600px); }
   .content-directory-row { min-height: 180px; padding: 1.5rem 0; }
   [data-testid='work-row'] > div:last-child { border-left: 0; padding-left: 0; }
 }

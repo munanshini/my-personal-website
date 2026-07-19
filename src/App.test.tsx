@@ -28,6 +28,14 @@ describe('App', () => {
     expect(container.firstElementChild).toHaveClass('page-shell')
   })
 
+  it('lets the page shell span the full viewport width', () => {
+    const pageShellRule = stylesheet.match(/\.page-shell\s*{([^}]*)}/)?.[1]
+
+    expect(pageShellRule).toMatch(/width:\s*100%/)
+    expect(pageShellRule).not.toMatch(/width:\s*min/)
+    expect(pageShellRule).not.toMatch(/margin-inline/)
+  })
+
   it.each([
     ['#index', 'AI PRODUCT MGR'],
     ['#work', 'AI 不止能生成'],
