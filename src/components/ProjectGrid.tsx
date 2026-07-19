@@ -2,12 +2,20 @@ import type { WorkItem } from '../data/portfolio'
 
 export function ProjectGrid({ projects }: { projects: WorkItem[] }) {
   return (
-    <section id="work" className="border-t border-line/15 bg-paper px-5 py-16 text-ink transition-colors duration-700 sm:px-8 md:py-32">
+    <section id="work" className="bg-paper px-5 py-16 text-ink transition-colors duration-700 sm:px-8 md:py-32">
       <div className="mx-auto max-w-canvas">
-        <div className="max-w-5xl pb-10 sm:pb-14 md:pb-20">
-          <h2 className="text-[clamp(3.25rem,7vw,7.5rem)] font-semibold leading-[0.88] tracking-[-0.065em]">
-            AI 不止能生成，<br />还要进入真实工作流。
-          </h2>
+        <div className="grid gap-8 pb-10 sm:pb-14 md:grid-cols-[minmax(0,1fr)_220px] md:items-start md:pb-20">
+          <div className="max-w-5xl">
+            <h2 className="text-[clamp(3.25rem,7vw,7.5rem)] font-semibold leading-[0.88] tracking-[-0.065em]">
+              AI 不止能生成，<br />还要进入真实工作流。
+            </h2>
+            <p className="mt-8 max-w-xl text-sm leading-7 text-muted md:text-base">
+              三个企业级场景，展示我如何从用户问题出发，定义 AI 能力边界，并把产品推进到可使用、可衡量的结果。
+            </p>
+          </div>
+          <p className="justify-self-start text-[10px] font-semibold uppercase leading-5 tracking-[0.14em] text-signal md:justify-self-end md:text-right">
+            PROJECT GALLERY /<br />SELECTED WORK
+          </p>
         </div>
 
         <div className="grid gap-4 md:gap-5">

@@ -7,13 +7,16 @@ Make the Work opening feel like a focused project gallery, with the work itself�
 ## Scope
 
 - Replace the reusable `SectionHeading` in `ProjectGrid` with a Work-specific opening.
-- Keep only the existing main statement: `AI 不止能生成，还要进入真实工作流。`
-- Remove the section index, eyebrow, descriptive paragraph, and opening divider.
+- Keep the existing main statement: `AI 不止能生成，还要进入真实工作流。`
+- Keep the existing supporting description beneath the title.
+- Add a small `PROJECT GALLERY / SELECTED WORK` label at the upper right on desktop.
+- Remove the section index, eyebrow, and opening divider.
 - Preserve all project cards, their data, spacing, interaction, and responsive behavior.
 
 ## Layout
 
-- The title sits at the left edge of the existing canvas and uses the current display type scale.
+- The title sits at the left edge of the existing canvas and uses the current display type scale; its supporting description is directly below.
+- The project-gallery label aligns to the upper right on desktop and flows below the description on mobile.
 - The opening has generous bottom spacing before the first project card.
 - On mobile, the title remains within the content width and the spacing compresses without introducing horizontal overflow.
 

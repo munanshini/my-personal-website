@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Replace the Work opening with a title-only project-gallery introduction while preserving every project card.
+**Goal:** Replace the Work opening with a title, supporting description, and project-gallery label while preserving every project card.
 
 **Architecture:** `ProjectGrid` will own its opening layout instead of using the shared `SectionHeading`. The section will render one display heading followed by the existing project-card grid, so no data model or project interaction needs to change.
 
@@ -11,7 +11,8 @@
 ## Global Constraints
 
 - Change only `ProjectGrid` and its focused test.
-- Remove the Work opening index, eyebrow, description, and divider.
+- Remove the Work opening index, eyebrow, and divider.
+- Keep the supporting description beneath the title and render a small project-gallery label at the upper right on desktop.
 - Keep the three project cards and their responsive gallery behavior unchanged.
 - Do not add dependencies or project-detail links.
 
@@ -25,17 +26,17 @@
 
 **Interfaces:**
 - Consumes: `ProjectGrid({ projects }: { projects: WorkItem[] })`
-- Produces: the same component API with a title-only Work opening.
+- Produces: the same component API with a project-gallery Work opening.
 
 - [x] **Step 1: Write the failing test**
 
 ```tsx
-it('uses a title-only project gallery opening', () => {
+it('uses a project-gallery opening with the supporting description', () => {
   render(<ProjectGrid projects={workItems} />)
 
   expect(screen.getByRole('heading', { name: /AI 不止能生成/ })).toBeInTheDocument()
-  expect(screen.queryByText('SELECTED WORK')).not.toBeInTheDocument()
-  expect(screen.queryByText(/三个企业级场景/)).not.toBeInTheDocument()
+  expect(screen.getByText(/三个企业级场景/)).toBeInTheDocument()
+  expect(screen.getByText(/PROJECT GALLERY/)).toBeInTheDocument()
 })
 ```
 
@@ -43,15 +44,17 @@ it('uses a title-only project gallery opening', () => {
 
 Run: `npm test -- --run src/components/ProjectGrid.test.tsx`
 
-Expected: the `SELECTED WORK` assertion fails because the shared `SectionHeading` is still rendered.
+Expected: the supporting description assertion fails because the opening has not yet been updated.
 
 - [x] **Step 3: Write the minimal implementation**
 
 ```tsx
-<div className="max-w-5xl pb-10 sm:pb-14 md:pb-20">
-  <h2 className="text-[clamp(3.25rem,7vw,7.5rem)] font-semibold leading-[0.88] tracking-[-0.065em]">
-    AI 不止能生成，<br />还要进入真实工作流。
-  </h2>
+<div className="grid gap-8 pb-10 md:grid-cols-[minmax(0,1fr)_220px] md:pb-20">
+  <div className="max-w-5xl">
+    <h2>AI 不止能生成，<br />还要进入真实工作流。</h2>
+    <p>三个企业级场景，展示我如何从用户问题出发，定义 AI 能力边界，并把产品推进到可使用、可衡量的结果。</p>
+  </div>
+  <p>PROJECT GALLERY /<br />SELECTED WORK</p>
 </div>
 ```
 
