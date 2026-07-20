@@ -4,13 +4,13 @@ import { workItems } from '../data/portfolio'
 import { ProjectGrid } from './ProjectGrid'
 
 describe('ProjectGrid', () => {
-  it('uses a project-gallery opening with the supporting description', () => {
+  it('uses a left-right Work opening with the supporting description', () => {
     render(<ProjectGrid projects={workItems} />)
 
     expect(screen.getByRole('heading', { name: /AI 不止能生成/ })).toBeInTheDocument()
     expect(screen.getByText(/三个企业级场景/)).toBeInTheDocument()
-    expect(screen.getByText(/PROJECT GALLERY/)).toBeInTheDocument()
-    expect(screen.getByText(/SELECTED WORK/)).toBeInTheDocument()
+    expect(screen.queryByText(/PROJECT GALLERY/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/SELECTED WORK/)).not.toBeInTheDocument()
   })
 
   it('renders work in newest-to-oldest directory rows', () => {
