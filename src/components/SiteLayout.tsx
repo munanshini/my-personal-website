@@ -6,6 +6,7 @@ import { ThemeProvider } from '../theme/ThemeProvider'
 import { AssistantPanel } from './AssistantPanel'
 import { CustomCursor } from './CustomCursor'
 import { LegacyHashRedirect } from './LegacyHashRedirect'
+import { PageMeta } from './PageMeta'
 import { PageTransition } from './PageTransition'
 import { SpotlightCard } from './SpotlightCard'
 import { TopNav } from './TopNav'
@@ -23,6 +24,7 @@ export function SiteLayout() {
   return (
     <ThemeProvider>
       <LegacyHashRedirect />
+      <PageMeta page={page} target={import.meta.env.MODE === 'pages' ? 'pages' : 'aliyun'} />
       <div className="page-shell min-h-screen bg-paper text-ink">
         <CustomCursor />
         <TopNav currentPage={page} onNavigate={(nextPage) => navigate(sitePath(nextPage))} />
