@@ -37,9 +37,8 @@ export function Contact() {
           <div className="rounded-[2rem] border border-line/15 bg-surface p-6 sm:p-10">
             <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted">CONTACT DETAILS</p>
             <div className="mt-8 divide-y divide-line/15 border-y border-line/15 text-sm">
-              <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 py-4"><span>电话</span><a href="tel:15767978588" className="min-w-0 text-right font-bold hover:text-signal">15767978588</a><CopyButton value="15767978588" label="电话" /></div>
               <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 py-4"><span>邮箱</span><a href="mailto:zn525347603@gmail.com" className="min-w-0 break-all text-right font-bold leading-5 hover:text-signal">zn525347603@gmail.com</a><CopyButton value="zn525347603@gmail.com" label="邮箱" /></div>
-              <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 py-4"><span>微信</span><strong className="min-w-0 text-right">15767978588</strong><CopyButton value="15767978588" label="微信" /></div>
+              <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-3 py-4"><span>微信</span><strong className="min-w-0 text-right">扫码添加微信</strong></div>
             </div>
             <img src={wechatQr} alt="添加张楠微信的二维码" className="mt-7 h-32 w-32 rounded-2xl object-cover sm:h-40 sm:w-40" />
             <div className="mt-8 flex flex-wrap gap-2">{platforms.map((platform) => {

@@ -35,9 +35,9 @@ describe('TopNav', () => {
     expect(desktopWork).not.toHaveAttribute('aria-current')
 
     fireEvent.click(screen.getByRole('button', { name: '打开菜单' }))
-    const mobileNow = Array.from(container.querySelectorAll<HTMLAnchorElement>('a[href="#now"]'))
+    const mobileNow = Array.from(container.querySelectorAll<HTMLAnchorElement>('a[href="/now/"]'))
       .find((link) => link !== desktopNow)
-    const mobileWork = Array.from(container.querySelectorAll<HTMLAnchorElement>('a[href="#work"]'))
+    const mobileWork = Array.from(container.querySelectorAll<HTMLAnchorElement>('a[href="/work/"]'))
       .find((link) => link.textContent === 'WORK 工作' && link !== desktopWork)
     expect(mobileNow).toHaveAttribute('aria-current', 'page')
     expect(mobileNow).toHaveClass('text-signal')
@@ -53,7 +53,7 @@ describe('TopNav', () => {
     expect(listener).not.toHaveBeenCalledWith('scroll', expect.any(Function), expect.anything())
   })
 
-  it('prevents the native hash jump when a desktop navigation item is selected', () => {
+  it('prevents a full document navigation when a desktop navigation item is selected', () => {
     renderNav()
     const workLink = screen.getByRole('link', { name: 'WORK 工作' })
     const click = new MouseEvent('click', { bubbles: true, cancelable: true })
@@ -76,12 +76,13 @@ describe('TopNav', () => {
     expect(gooeyNavStyles).toMatch(/a:not\(\.active\):focus-visible/)
   })
 
-  it('shows the corrected phone number in the Open to Work panel', () => {
+  it('keeps the Open to Work panel free from phone and WeChat numbers', () => {
     renderNav()
     fireEvent.click(screen.getByRole('button', { name: /open to work/i }))
 
-    expect(screen.getAllByText('15767978588')).toHaveLength(2)
-    expect(screen.queryByText('1576797855')).not.toBeInTheDocument()
+    expect(screen.queryByText(/15767978588/)).not.toBeInTheDocument()
+    expect(screen.getByText('扫码添加微信')).toBeInTheDocument()
+    expect(screen.getByText('zn525347603@gmail.com')).toBeInTheDocument()
   })
 
   it('removes mobile music and contact rows while keeping resume access', () => {
@@ -92,6 +93,7 @@ describe('TopNav', () => {
     const resumeLink = screen.getByRole('link', { name: '简历 PDF 下载' })
     const links = Array.from(container.querySelectorAll('a'))
     expect(resumeLink).toHaveAttribute('download')
+    expect(resumeLink).toHaveAttribute('href', '/resume.pdf')
     expect(links[links.length - 1]).toBe(resumeLink)
     expect(screen.queryByText('15767978588')).not.toBeInTheDocument()
     expect(screen.queryByText('zn525347603@gmail.com')).not.toBeInTheDocument()
@@ -102,7 +104,7 @@ describe('TopNav', () => {
     fireEvent.click(screen.getByRole('button', { name: '打开菜单' }))
 
     expect(screen.queryByText('MUSIC 音乐')).not.toBeInTheDocument()
-    const indexLink = screen.getAllByRole('link', { name: 'INDEX 首页' }).find((link) => link.getAttribute('href') === '#index' && link.className.includes('py-4'))
+    const indexLink = screen.getAllByRole('link', { name: 'INDEX 首页' }).find((link) => link.getAttribute('href') === '/' && link.className.includes('py-4'))
     expect(indexLink?.className).toContain('border-b')
     expect(indexLink?.className).toContain('py-4')
   })
@@ -141,7 +143,7 @@ describe('TopNav', () => {
     expect(menuButton).toHaveFocus()
 
     fireEvent.click(menuButton)
-    const mobileIndexLink = Array.from(container.querySelectorAll<HTMLAnchorElement>('a[href="#index"]'))
+    const mobileIndexLink = Array.from(container.querySelectorAll<HTMLAnchorElement>('a[href="/"]'))
       .find((link) => link.textContent === 'INDEX 首页')
     mobileIndexLink?.focus()
     expect(mobileIndexLink).toHaveFocus()

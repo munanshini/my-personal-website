@@ -1,19 +1,19 @@
 import { render, screen } from '@testing-library/react'
+import { createMemoryRouter, RouterProvider } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 // @ts-expect-error The app does not ship Node types; Vitest runs this test in Node.
 import { readFileSync } from 'node:fs'
-import App from './App'
-import { ThemeProvider } from './theme/ThemeProvider'
+import { routes } from './App'
 
 declare const process: { cwd: () => string }
 const stylesheet = readFileSync(`${process.cwd()}/src/index.css`, 'utf8')
 
-function renderApp() {
-  return render(<ThemeProvider><App /></ThemeProvider>)
+function renderApp(path = '/') {
+  const router = createMemoryRouter(routes, { initialEntries: [path] })
+  return render(<RouterProvider router={router} />)
 }
 
 beforeEach(() => {
-  window.history.replaceState(null, '', '#index')
   vi.stubGlobal('scrollTo', vi.fn())
 })
 
@@ -37,23 +37,20 @@ describe('App', () => {
   })
 
   it.each([
-    ['#index', 'AI PRODUCT MGR'],
-    ['#work', 'AI 不止能生成'],
-    ['#words', '持续思考'],
-    ['#now', '此刻，我在关注什么'],
-    ['#contact', "LET'S TALK"],
-  ])('renders only the target page for %s', (hash, heading) => {
-    window.history.replaceState(null, '', hash)
-    renderApp()
+    ['/', 'AI PRODUCT MGR', 'index'],
+    ['/work/', 'AI 不止能生成', 'work'],
+    ['/words/', '持续思考', 'words'],
+    ['/now/', '此刻，我在关注什么', 'now'],
+    ['/contact/', "LET'S TALK", 'contact'],
+  ])('renders only the target page for %s', (path, heading, page) => {
+    renderApp(path)
     expect(screen.getByRole('heading', { name: new RegExp(heading, 'i') })).toBeInTheDocument()
-    expect(screen.getByTestId('page-transition')).toHaveAttribute('data-page', hash.slice(1))
-    const primaryPages = ['index', 'work', 'words', 'now', 'contact']
-    expect(primaryPages.filter((page) => document.getElementById(page))).toEqual([hash.slice(1)])
+    expect(screen.getByTestId('page-transition')).toHaveAttribute('data-page', path)
+    expect(document.getElementById(page)).toBeInTheDocument()
   })
 
-  it.each(['#index', '#work', '#words', '#now', '#contact'])('keeps the global assistant available on %s', (hash) => {
-    window.history.replaceState(null, '', hash)
-    renderApp()
+  it.each(['/', '/work/', '/words/', '/now/', '/contact/'])('keeps the global assistant available on %s', (path) => {
+    renderApp(path)
     expect(screen.getByRole('button', { name: '问我的 AI 助手' })).toBeInTheDocument()
   })
 

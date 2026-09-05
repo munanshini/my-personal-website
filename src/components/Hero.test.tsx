@@ -10,6 +10,13 @@ describe('Hero', () => {
     expect(screen.getByRole('heading', { name: /AI PRODUCT MGR/i }).className).toContain('font-black')
   })
 
+  it('uses first-person language for the personal product philosophy', () => {
+    render(<Hero />)
+
+    expect(screen.getByText(/我相信好工具优雅、好用/)).toBeInTheDocument()
+    expect(screen.queryByText(/我们相信好工具优雅、好用/)).not.toBeInTheDocument()
+  })
+
   it('uses the highest loaded weight with tighter hero tracking', () => {
     render(<Hero />)
 

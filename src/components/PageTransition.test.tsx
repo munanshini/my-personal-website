@@ -10,9 +10,9 @@ afterEach(() => {
 
 it('retains the old page as an inert exit layer until the transition completes', () => {
   vi.useFakeTimers()
-  const { rerender } = render(<PageTransition page="work"><div>Work</div></PageTransition>)
+  const { rerender } = render(<PageTransition pageKey="work"><div>Work</div></PageTransition>)
 
-  rerender(<PageTransition page="words"><div>Words</div></PageTransition>)
+  rerender(<PageTransition pageKey="words"><div>Words</div></PageTransition>)
 
   const exitingPage = screen.getByTestId('page-transition-exit')
   expect(exitingPage).toHaveTextContent('Work')
@@ -40,12 +40,12 @@ it('preserves the exiting page component instance and its local state', () => {
     return <button onClick={() => setCount((value) => value + 1)}>Count {count}</button>
   }
 
-  const { rerender } = render(<PageTransition page="now"><StatefulPage /></PageTransition>)
+  const { rerender } = render(<PageTransition pageKey="now"><StatefulPage /></PageTransition>)
   fireEvent.click(screen.getByRole('button', { name: 'Count 0' }))
   expect(screen.getByRole('button', { name: 'Count 1' })).toBeInTheDocument()
   expect(mountCount).toBe(1)
 
-  rerender(<PageTransition page="work"><div>Work</div></PageTransition>)
+  rerender(<PageTransition pageKey="work"><div>Work</div></PageTransition>)
 
   expect(screen.getByTestId('page-transition-exit')).toHaveTextContent('Count 1')
   expect(mountCount).toBe(1)
@@ -61,9 +61,9 @@ it('switches immediately without enter or exit motion when reduced motion is pre
     addEventListener: vi.fn(),
     removeEventListener: vi.fn(),
   }))
-  const { rerender } = render(<PageTransition page="work"><div>Work</div></PageTransition>)
+  const { rerender } = render(<PageTransition pageKey="work"><div>Work</div></PageTransition>)
 
-  rerender(<PageTransition page="words"><div>Words</div></PageTransition>)
+  rerender(<PageTransition pageKey="words"><div>Words</div></PageTransition>)
 
   expect(screen.queryByTestId('page-transition-exit')).not.toBeInTheDocument()
   expect(screen.getByTestId('page-transition')).not.toHaveClass('page-enter')

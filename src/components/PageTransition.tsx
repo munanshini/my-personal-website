@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
-import type { SitePage } from '../lib/siteRoute'
-
 const TRANSITION_DURATION_MS = 420
 
 type PageLayer = {
-  page: SitePage
+  pageKey: string
   children: ReactNode
   status: 'current' | 'exiting'
 }
@@ -17,51 +15,51 @@ function prefersReducedMotion() {
   }
 }
 
-export function PageTransition({ page, children }: {
-  page: SitePage
+export function PageTransition({ pageKey, children }: {
+  pageKey: string
   children: ReactNode
 }) {
-  const [layers, setLayers] = useState<PageLayer[]>([{ page, children, status: 'current' }])
+  const [layers, setLayers] = useState<PageLayer[]>([{ pageKey, children, status: 'current' }])
   const [reducedMotion] = useState(prefersReducedMotion)
-  const exitTimers = useRef(new Map<SitePage, number>())
+  const exitTimers = useRef(new Map<string, number>())
 
   useEffect(() => {
     if (reducedMotion) {
-      setLayers([{ page, children, status: 'current' }])
+      setLayers([{ pageKey, children, status: 'current' }])
       return
     }
 
     setLayers((existing) => {
       const current = existing.find((layer) => layer.status === 'current')
-      if (current?.page === page) return existing
+      if (current?.pageKey === pageKey) return existing
 
-      const targetExists = existing.some((layer) => layer.page === page)
+      const targetExists = existing.some((layer) => layer.pageKey === pageKey)
       const next = existing.map((layer): PageLayer => ({
         ...layer,
-        children: layer.page === page ? children : layer.children,
-        status: layer.page === page ? 'current' : 'exiting',
+        children: layer.pageKey === pageKey ? children : layer.children,
+        status: layer.pageKey === pageKey ? 'current' : 'exiting',
       }))
 
-      return targetExists ? next : [...next, { page, children, status: 'current' }]
+      return targetExists ? next : [...next, { pageKey, children, status: 'current' }]
     })
-  }, [children, page, reducedMotion])
+  }, [children, pageKey, reducedMotion])
 
   useEffect(() => {
-    const exitingPages = new Set(layers.filter((layer) => layer.status === 'exiting').map((layer) => layer.page))
+    const exitingPages = new Set(layers.filter((layer) => layer.status === 'exiting').map((layer) => layer.pageKey))
 
-    exitTimers.current.forEach((timer, exitingPage) => {
-      if (exitingPages.has(exitingPage)) return
+    exitTimers.current.forEach((timer, exitingPageKey) => {
+      if (exitingPages.has(exitingPageKey)) return
       window.clearTimeout(timer)
-      exitTimers.current.delete(exitingPage)
+      exitTimers.current.delete(exitingPageKey)
     })
 
-    exitingPages.forEach((exitingPage) => {
-      if (exitTimers.current.has(exitingPage)) return
+    exitingPages.forEach((exitingPageKey) => {
+      if (exitTimers.current.has(exitingPageKey)) return
       const timer = window.setTimeout(() => {
-        exitTimers.current.delete(exitingPage)
-        setLayers((current) => current.filter((layer) => layer.page !== exitingPage || layer.status !== 'exiting'))
+        exitTimers.current.delete(exitingPageKey)
+        setLayers((current) => current.filter((layer) => layer.pageKey !== exitingPageKey || layer.status !== 'exiting'))
       }, TRANSITION_DURATION_MS)
-      exitTimers.current.set(exitingPage, timer)
+      exitTimers.current.set(exitingPageKey, timer)
     })
   }, [layers])
 
@@ -76,9 +74,9 @@ export function PageTransition({ page, children }: {
         const exiting = layer.status === 'exiting'
         return (
           <div
-            key={layer.page}
+            key={layer.pageKey}
             data-testid={exiting ? 'page-transition-exit' : 'page-transition'}
-            data-page={layer.page}
+            data-page={layer.pageKey}
             aria-hidden={exiting ? 'true' : undefined}
             {...(exiting ? { inert: '' } : {})}
             className={exiting

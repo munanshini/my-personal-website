@@ -1,13 +1,12 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
+import { ViteReactSSG } from 'vite-react-ssg'
+import { routes } from './App'
 import './index.css'
-import { ThemeProvider } from './theme/ThemeProvider'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
-  </React.StrictMode>,
-)
+export const createRoot = ViteReactSSG({
+  routes,
+  basename: import.meta.env.BASE_URL,
+  future: {
+    v7_startTransition: true,
+    v7_relativeSplatPath: true,
+  },
+})

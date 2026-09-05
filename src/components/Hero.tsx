@@ -28,7 +28,7 @@ export function Hero() {
             你好，我是张楠，一个画过图、懂交互、有审美，写 PROMPT 比写 PRD 多的 AI 产品经理。
           </p>
           <p className="mt-3 text-sm font-medium leading-relaxed text-ink sm:text-base">
-            我们相信好工具优雅、好用，并经得起反复打磨；也坚持通过规划、协调、推进与落实，让想法最终被完美实现。
+            我相信好工具优雅、好用，并经得起反复打磨；也坚持通过规划、协调、推进与落实，让想法最终被完美实现。
           </p>
         </div>
       </div>
