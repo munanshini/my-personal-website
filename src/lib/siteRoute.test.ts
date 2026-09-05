@@ -1,18 +1,30 @@
 import { describe, expect, it } from 'vitest'
-import { parseSitePage, sitePageHash } from './siteRoute'
+import { legacyHashPath, publicSitePaths, sitePageFromPath, sitePath } from './siteRoute'
 
 describe('siteRoute', () => {
-  it.each(['index', 'work', 'words', 'now', 'contact'] as const)(
-    'parses #%s as a valid page',
-    (page) => expect(parseSitePage(`#${page}`)).toBe(page),
+  it.each([
+    ['index', '/'],
+    ['work', '/work/'],
+    ['words', '/words/'],
+    ['now', '/now/'],
+    ['contact', '/contact/'],
+  ] as const)(
+    'returns a canonical path for %s',
+    (page, path) => expect(sitePath(page)).toBe(path),
   )
 
-  it('falls back to index for empty and unknown hashes', () => {
-    expect(parseSitePage('')).toBe('index')
-    expect(parseSitePage('#unknown')).toBe('index')
+  it('maps legacy hashes to matching real paths', () => {
+    expect(legacyHashPath('#work')).toBe('/work/')
+    expect(legacyHashPath('#unknown')).toBeNull()
   })
 
-  it('creates stable hashes', () => {
-    expect(sitePageHash('work')).toBe('#work')
+  it('normalizes known paths and falls back to the index page', () => {
+    expect(sitePageFromPath('/work')).toBe('work')
+    expect(sitePageFromPath('/work/')).toBe('work')
+    expect(sitePageFromPath('/unknown/')).toBe('index')
+  })
+
+  it('exposes only first-batch public routes', () => {
+    expect(publicSitePaths()).toEqual(['/', '/work/', '/words/', '/now/', '/contact/'])
   })
 })
