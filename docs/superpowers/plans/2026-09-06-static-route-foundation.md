@@ -6,7 +6,7 @@
 
 **Architecture:** 使用 `react-router-dom` 和 `vite-react-ssg` 取代 hash 路由。所有公共路径和导航标签从 `src/lib/siteRoute.ts` 的 route manifest 读取；SSG 以 nested directory 输出实体 HTML，Vite 的 `onFinished` 只为主站构建写入 sitemap 与 robots。页面 head 使用 `vite-react-ssg` 的 `Head` 在预渲染阶段输出，GitHub Pages 构建由模式标识注入 noindex。
 
-**Tech Stack:** React 18、TypeScript、Vite 5、React Router v6、vite-react-ssg、Vitest、Testing Library、Tailwind CSS。
+**Tech Stack:** React 18、TypeScript、Vite 5、React Router v6、vite-react-ssg 0.8.9、Vitest、Testing Library、Tailwind CSS。
 
 **Spec:** `docs/superpowers/specs/2026-09-06-project-detail-pages-design.md`
 
@@ -193,7 +193,7 @@ Expected: FAIL because the project has no real-path Router or legacy redirect co
 
 - [ ] **Step 3: Install only the required routing and SSG dependencies**
 
-Run: `npm install react-router-dom@6 && npm install --save-dev vite-react-ssg && npm uninstall @supabase/supabase-js`
+Run: `npm install react-router-dom@6 && npm install --save-dev vite-react-ssg@0.8.9 @types/node && npm uninstall @supabase/supabase-js`
 
 Expected: `react-router-dom` is in runtime dependencies, `vite-react-ssg` is in development dependencies, and `@supabase/supabase-js` is absent.
 
@@ -427,7 +427,7 @@ export default defineConfig(({ mode }) => {
     ssgOptions: {
       dirStyle: 'nested',
       includedRoutes: () => publicSitePaths(),
-      onFinished: (outDir) => writeSiteFiles({ outDir, target, paths: publicSitePaths() }),
+      onFinished: () => writeSiteFiles({ outDir: resolve(process.cwd(), 'dist'), target, paths: publicSitePaths() }),
     },
   }
 })

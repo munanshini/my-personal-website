@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "npm run build:aliyun",
+    "build:aliyun": "tsc -b && vite-react-ssg build --mode aliyun",
+    "build:pages": "tsc -b && vite-react-ssg build --mode pages",
+    "verify:static": "node scripts/verify-static-output.mjs",
     "test": "vitest run"
   },
   "dependencies": {
@@ -18,6 +21,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
+    "@types/node": "^26.4.1",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",

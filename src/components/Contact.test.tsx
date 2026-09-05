@@ -18,7 +18,7 @@ describe('Contact', () => {
     render(<Contact />)
 
     expect(screen.getByRole('link', { name: 'zn525347603@gmail.com' })).toHaveAttribute('href', 'mailto:zn525347603@gmail.com')
-    expect(screen.queryByText(/15767978588/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/phone-number/)).not.toBeInTheDocument()
     expect(document.querySelector('a[href^="tel:"]')).toBeNull()
     expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/munanshini')
     expect(screen.queryByRole('link', { name: '视频号' })).not.toBeInTheDocument()

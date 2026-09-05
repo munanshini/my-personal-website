@@ -27,7 +27,17 @@ describe('ProjectGrid', () => {
 
   it('does not create a project link without a real detailHref', () => {
     render(<ProjectGrid projects={workItems} />)
-    expect(screen.queryByRole('link', { name: /查看项目详情/ })).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: '查看项目档案 ↗' })).not.toBeInTheDocument()
+    screen.getAllByTestId('work-row').forEach((row) => {
+      expect(row).not.toHaveAttribute('tabindex')
+    })
+  })
+
+  it('uses the agreed archive link only after a project is content-ready', () => {
+    const [firstProject, ...remainingProjects] = workItems
+    render(<ProjectGrid projects={[{ ...firstProject, detail: { ...firstProject.detail, isReady: true } }, ...remainingProjects]} />)
+
+    expect(screen.getByRole('link', { name: '查看项目档案 ↗' })).toHaveAttribute('href', '/work/ai-ide/')
   })
 
   it('uses one subtle divider contract for every company', () => {

@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { createMemoryRouter, RouterProvider } from 'react-router-dom'
+import { HelmetProvider } from 'react-helmet-async'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-// @ts-expect-error The app does not ship Node types; Vitest runs this test in Node.
 import { readFileSync } from 'node:fs'
 import { routes } from './App'
 
@@ -10,7 +10,7 @@ const stylesheet = readFileSync(`${process.cwd()}/src/index.css`, 'utf8')
 
 function renderApp(path = '/') {
   const router = createMemoryRouter(routes, { initialEntries: [path] })
-  return render(<RouterProvider router={router} />)
+  return render(<HelmetProvider><RouterProvider router={router} /></HelmetProvider>)
 }
 
 beforeEach(() => {

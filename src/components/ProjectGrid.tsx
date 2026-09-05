@@ -1,4 +1,5 @@
 import type { WorkItem } from '../data/portfolio'
+import { publicPath } from '../lib/publicPath'
 
 export function ProjectGrid({ projects }: { projects: WorkItem[] }) {
   return (
@@ -20,7 +21,6 @@ export function ProjectGrid({ projects }: { projects: WorkItem[] }) {
             <article
               key={project.number}
               data-testid="work-row"
-              tabIndex={0}
               className="group relative grid gap-6 overflow-hidden rounded-[1.75rem] border border-line/15 bg-surface/35 px-5 py-8 transition duration-300 hover:-translate-y-1 hover:border-signal/50 hover:bg-surface/80 hover:shadow-[0_18px_44px_rgb(var(--color-text)/0.10)] focus:border-signal/60 focus:bg-surface/80 focus:outline-none md:grid-cols-[64px_190px_minmax(0,1fr)_minmax(245px,.75fr)] md:px-7 md:py-10"
             >
               <span aria-hidden className="absolute inset-y-6 left-0 w-1 origin-top scale-y-0 bg-signal transition-transform duration-300 group-hover:scale-y-100 group-focus:scale-y-100" />
@@ -43,9 +43,18 @@ export function ProjectGrid({ projects }: { projects: WorkItem[] }) {
                     <li key={result} className="text-sm text-muted">{result}</li>
                   ))}
                 </ul>
-                <p className="mt-auto inline-flex items-center gap-2 pt-6 text-xs font-semibold uppercase tracking-[0.14em] text-muted transition-all duration-300 group-hover:translate-x-1 group-hover:text-signal group-focus:translate-x-1 group-focus:text-signal">
-                  {project.detailLabel}<span aria-hidden>↗</span>
-                </p>
+                {project.detail.isReady ? (
+                  <a
+                    href={publicPath(`/work/${project.slug}/`)}
+                    className="mt-auto inline-flex items-center gap-2 pt-6 text-xs font-semibold uppercase tracking-[0.14em] text-muted transition-all duration-300 hover:translate-x-1 hover:text-signal focus:translate-x-1 focus:text-signal focus:outline-none"
+                  >
+                    查看项目档案 ↗
+                  </a>
+                ) : (
+                  <p className="mt-auto inline-flex items-center gap-2 pt-6 text-xs font-semibold uppercase tracking-[0.14em] text-muted">
+                    项目档案 · 内容整理中
+                  </p>
+                )}
               </div>
             </article>
           ))}

@@ -1,5 +1,4 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-// @ts-expect-error Node's fs types are available in Vitest but not the browser tsconfig.
 import { readFileSync } from 'node:fs'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { SitePage } from '../lib/siteRoute'
@@ -80,7 +79,7 @@ describe('TopNav', () => {
     renderNav()
     fireEvent.click(screen.getByRole('button', { name: /open to work/i }))
 
-    expect(screen.queryByText(/15767978588/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/phone-number/)).not.toBeInTheDocument()
     expect(screen.getByText('扫码添加微信')).toBeInTheDocument()
     expect(screen.getByText('zn525347603@gmail.com')).toBeInTheDocument()
   })
@@ -95,7 +94,7 @@ describe('TopNav', () => {
     expect(resumeLink).toHaveAttribute('download')
     expect(resumeLink).toHaveAttribute('href', '/resume.pdf')
     expect(links[links.length - 1]).toBe(resumeLink)
-    expect(screen.queryByText('15767978588')).not.toBeInTheDocument()
+    expect(screen.queryByText('phone-number')).not.toBeInTheDocument()
     expect(screen.queryByText('zn525347603@gmail.com')).not.toBeInTheDocument()
   })
 

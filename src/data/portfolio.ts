@@ -17,12 +17,48 @@ export interface ExperienceItem {
   focus: string
 }
 
+export interface ProjectDecision {
+  /** 这个决策解决的是什么问题 */
+  problem: string
+  /** 当时怎么判断的 */
+  approach: string
+  /** 取舍了什么，放弃了哪个方案 */
+  tradeoff: string
+  title: string
+}
+
+export interface ProjectOutcome {
+  /** 结果，尽量带数字 */
+  metric: string
+  /** 这个数字怎么来的、意味着什么 */
+  note: string
+}
+
+export interface ProjectDetail {
+  /** URL 用的英文短标识 */
+  slug: string
+  seoTitle: string
+  seoDescription: string
+  heroTagline: string
+  background: string[]
+  role: {
+    scope: string
+    bullets: string[]
+  }
+  decisions: ProjectDecision[]
+  outcomes: ProjectOutcome[]
+  reflection: string
+  confidentialityNote?: string
+  /** 最终脱敏文案确认前，不生成详情页或公开链接。 */
+  isReady: boolean
+}
+
 export interface WorkItem extends Project {
   company: string
   companyPeriod: string
   companyFocus: string
-  detailLabel: string
-  detailHref?: string
+  slug: string
+  detail: ProjectDetail
 }
 
 export interface WordItem {
@@ -73,7 +109,7 @@ export const projects: Project[] = [
   {
     number: '03',
     title: 'AI IDE 研发助手',
-    year: '2025.02–2026.05',
+    year: '2025.02 — 2026.06',
     category: 'AI IDE · DEVELOPER EXPERIENCE',
     summary: '围绕写代码、读代码、查问题与改 Bug，将企业代码库、API 文档和开发规范接入 AI 辅助研发工作流。',
     role: '负责高频任务定义、RAG 与 Agent 产品形态及验收标准、评测用例与 Bad Case 归因，并协同算法、研发与使用团队完成 MVP、灰度和版本迭代。',
@@ -104,10 +140,43 @@ export const experiences: ExperienceItem[] = [
   },
 ]
 
+// TODO: 待替换为最终文案。详情页在 isReady 变为 true 前不会生成、不会写入 sitemap，也不会在列表页开放链接。
+function pendingProjectDetail(slug: string, title: string): ProjectDetail {
+  return {
+    slug,
+    seoTitle: `${title} · 张楠 AI 产品经理`,
+    seoDescription: `待替换：${title} 的最终脱敏背景、决策过程与结果说明将在文案确认后补齐；确认前该项目不会作为公开详情页生成或被搜索引擎收录。`,
+    heroTagline: '待补充最终一句话定位',
+    background: ['待补充：项目启动前的用户问题。', '待补充：项目对应的业务约束与目标。'],
+    role: {
+      scope: '待补充：本人职责范围。',
+      bullets: ['待补充：具体工作一。', '待补充：具体工作二。', '待补充：具体工作三。'],
+    },
+    decisions: [
+      {
+        title: '待补充：关键决策一',
+        problem: '待补充：当时需要解决的问题。',
+        approach: '待补充：判断依据与执行方式。',
+        tradeoff: '待补充：取舍与放弃的方案。',
+      },
+      {
+        title: '待补充：关键决策二',
+        problem: '待补充：当时需要解决的问题。',
+        approach: '待补充：判断依据与执行方式。',
+        tradeoff: '待补充：取舍与放弃的方案。',
+      },
+    ],
+    outcomes: [{ metric: '待补充：核心结果', note: '待补充：指标口径与业务意义。' }],
+    reflection: '待补充：项目复盘。',
+    confidentialityNote: '待补充：经确认后展示的脱敏说明。',
+    isReady: false,
+  }
+}
+
 export const workItems: WorkItem[] = [
-  { ...projects[2], number: '01', company: '华为技术有限公司', companyPeriod: '2025.02 — 2026.06', companyFocus: '开发者工具 · AI IDE · 智能编码', detailLabel: '项目档案 · 即将开放' },
-  { ...projects[1], number: '02', company: '深圳丰链科技有限公司', companyPeriod: '2023.03 — 2024.12', companyFocus: '供应链数字化 · 智能仓储调度', detailLabel: '项目档案 · 即将开放' },
-  { ...projects[0], number: '03', company: '深圳市明源云科技有限公司', companyPeriod: '2019.03 — 2023.02', companyFocus: '不动产数字营销 · 智慧案场 · 客户接待', detailLabel: '项目档案 · 即将开放' },
+  { ...projects[2], number: '01', company: '华为技术有限公司', companyPeriod: '2025.02 — 2026.06', companyFocus: '开发者工具 · AI IDE · 智能编码', slug: 'ai-ide', detail: pendingProjectDetail('ai-ide', 'AI IDE 研发助手') },
+  { ...projects[1], number: '02', company: '深圳丰链科技有限公司', companyPeriod: '2023.03 — 2024.12', companyFocus: '供应链数字化 · 智能仓储调度', slug: 'warehouse-scheduling', detail: pendingProjectDetail('warehouse-scheduling', '智能仓储调度系统') },
+  { ...projects[0], number: '03', company: '深圳市明源云科技有限公司', companyPeriod: '2019.03 — 2023.02', companyFocus: '不动产数字营销 · 智慧案场 · 客户接待', slug: 'smart-sales-center', detail: pendingProjectDetail('smart-sales-center', '房企智慧案场销讲与客户接待系统') },
 ]
 
 export const words: WordItem[] = [
