@@ -16,10 +16,11 @@ it('emits a unique title, canonical URL and absolute sharing image for work', as
   expect(document.head.querySelector('meta[property="og:url"]')).toHaveAttribute('content', 'https://zhangnanai.com/work/')
 })
 
-it('adds noindex only for the GitHub Pages deployment', async () => {
+it('keeps the custom-domain deployment indexable when served by GitHub Pages', async () => {
   render(<HelmetProvider><PageMeta page="index" target="pages" /></HelmetProvider>)
 
-  await waitFor(() => expect(document.head.querySelector('meta[name="robots"]')).toHaveAttribute('content', 'noindex'))
+  await waitFor(() => expect(document.head.querySelector('link[rel="canonical"]')).toHaveAttribute('href', 'https://zhangnanai.com/'))
+  expect(document.head.querySelector('meta[name="robots"]')).toBeNull()
 })
 
 it('adds Person structured data only to the home page', async () => {

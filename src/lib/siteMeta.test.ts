@@ -9,8 +9,8 @@ describe('siteMeta', () => {
     expect(meta.ogImage).toBe('https://zhangnanai.com/social-cover.png')
   })
 
-  it('marks only the GitHub Pages build as noindex', () => {
-    expect(getPageMeta('index', 'pages').robots).toBe('noindex')
+  it('keeps the shared custom-domain artifact indexable', () => {
+    expect(getPageMeta('index', 'pages').robots).toBeUndefined()
     expect(getPageMeta('index', 'aliyun').robots).toBeUndefined()
   })
 

@@ -34,9 +34,9 @@ describe('TopNav', () => {
     expect(desktopWork).not.toHaveAttribute('aria-current')
 
     fireEvent.click(screen.getByRole('button', { name: '打开菜单' }))
-    const mobileNow = Array.from(container.querySelectorAll<HTMLAnchorElement>('a[href="/now/"]'))
+    const mobileNow = Array.from(container.querySelectorAll<HTMLAnchorElement>('a[href="../now/"]'))
       .find((link) => link !== desktopNow)
-    const mobileWork = Array.from(container.querySelectorAll<HTMLAnchorElement>('a[href="/work/"]'))
+    const mobileWork = Array.from(container.querySelectorAll<HTMLAnchorElement>('a[href="../work/"]'))
       .find((link) => link.textContent === 'WORK 工作' && link !== desktopWork)
     expect(mobileNow).toHaveAttribute('aria-current', 'page')
     expect(mobileNow).toHaveClass('text-signal')
@@ -92,7 +92,7 @@ describe('TopNav', () => {
     const resumeLink = screen.getByRole('link', { name: '简历 PDF 下载' })
     const links = Array.from(container.querySelectorAll('a'))
     expect(resumeLink).toHaveAttribute('download')
-    expect(resumeLink).toHaveAttribute('href', '/resume.pdf')
+    expect(resumeLink).toHaveAttribute('href', './resume.pdf')
     expect(links[links.length - 1]).toBe(resumeLink)
     expect(screen.queryByText('phone-number')).not.toBeInTheDocument()
     expect(screen.queryByText('zn525347603@gmail.com')).not.toBeInTheDocument()
@@ -103,7 +103,7 @@ describe('TopNav', () => {
     fireEvent.click(screen.getByRole('button', { name: '打开菜单' }))
 
     expect(screen.queryByText('MUSIC 音乐')).not.toBeInTheDocument()
-    const indexLink = screen.getAllByRole('link', { name: 'INDEX 首页' }).find((link) => link.getAttribute('href') === '/' && link.className.includes('py-4'))
+    const indexLink = screen.getAllByRole('link', { name: 'INDEX 首页' }).find((link) => link.getAttribute('href') === './' && link.className.includes('py-4'))
     expect(indexLink?.className).toContain('border-b')
     expect(indexLink?.className).toContain('py-4')
   })
@@ -142,7 +142,7 @@ describe('TopNav', () => {
     expect(menuButton).toHaveFocus()
 
     fireEvent.click(menuButton)
-    const mobileIndexLink = Array.from(container.querySelectorAll<HTMLAnchorElement>('a[href="/"]'))
+    const mobileIndexLink = Array.from(container.querySelectorAll<HTMLAnchorElement>('a[href="./"]'))
       .find((link) => link.textContent === 'INDEX 首页')
     mobileIndexLink?.focus()
     expect(mobileIndexLink).toHaveFocus()

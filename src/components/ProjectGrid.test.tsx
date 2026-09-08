@@ -37,7 +37,7 @@ describe('ProjectGrid', () => {
     const [firstProject, ...remainingProjects] = workItems
     render(<ProjectGrid projects={[{ ...firstProject, detail: { ...firstProject.detail, isReady: true } }, ...remainingProjects]} />)
 
-    expect(screen.getByRole('link', { name: '查看项目档案 ↗' })).toHaveAttribute('href', '/work/ai-ide/')
+    expect(screen.getByRole('link', { name: '查看项目档案 ↗' })).toHaveAttribute('href', '../work/ai-ide/')
   })
 
   it('uses one subtle divider contract for every company', () => {

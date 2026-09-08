@@ -21,6 +21,11 @@ function assertText(path, text) {
   if (!contents.includes(text)) throw new Error(`Expected ${path} to include ${text}`)
 }
 
+function assertNoText(path, text) {
+  const contents = readFileSync(resolve(root, path), 'utf8')
+  if (contents.includes(text)) throw new Error(`Expected ${path} not to include ${text}`)
+}
+
 for (const path of ['index.html', 'work/index.html', 'words/index.html', 'now/index.html', 'contact/index.html']) {
   assertExists(path)
 }
@@ -33,9 +38,14 @@ if (target === 'aliyun') {
   assertText('sitemap.xml', 'https://zhangnanai.com/work/')
   assertText('work/index.html', 'AI 不止能生成')
 } else {
-  assertMissing('sitemap.xml')
+  assertExists('sitemap.xml')
   assertExists('robots.txt')
   assertExists('resume.pdf')
-  assertText('work/index.html', 'name="robots" content="noindex"')
-  assertText('work/index.html', 'href="/my-personal-website/work/"')
+  assertText('sitemap.xml', 'https://zhangnanai.com/work/')
+  assertText('index.html', 'href="./assets/')
+  assertText('work/index.html', '<base href="../">')
+  assertText('work/index.html', 'href="./assets/')
+  assertText('work/index.html', 'href="./work/"')
+  assertNoText('index.html', "url('/assets/")
+  assertNoText('contact/index.html', 'src="/assets/')
 }

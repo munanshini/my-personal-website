@@ -33,12 +33,14 @@ const pageMeta: Record<SitePage, Pick<PageMeta, 'title' | 'description'>> = {
   },
 }
 
-export function getPageMeta(page: SitePage, target: DeploymentTarget): PageMeta {
+export function getPageMeta(page: SitePage, _target: DeploymentTarget): PageMeta {
   return {
     ...pageMeta[page],
     canonical: `https://zhangnanai.com${sitePath(page)}`,
     ogImage: 'https://zhangnanai.com/social-cover.png',
-    robots: target === 'pages' ? 'noindex' : undefined,
+    // GitHub Pages also serves the zhangnanai.com custom domain, so this
+    // shared artifact must remain indexable and canonicalize to the domain.
+    robots: undefined,
   }
 }
 

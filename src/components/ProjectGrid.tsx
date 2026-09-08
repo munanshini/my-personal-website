@@ -45,7 +45,7 @@ export function ProjectGrid({ projects }: { projects: WorkItem[] }) {
                 </ul>
                 {project.detail.isReady ? (
                   <a
-                    href={publicPath(`/work/${project.slug}/`)}
+                    href={publicPath(`/work/${project.slug}/`, '/work/')}
                     className="mt-auto inline-flex items-center gap-2 pt-6 text-xs font-semibold uppercase tracking-[0.14em] text-muted transition-all duration-300 hover:translate-x-1 hover:text-signal focus:translate-x-1 focus:text-signal focus:outline-none"
                   >
                     查看项目档案 ↗

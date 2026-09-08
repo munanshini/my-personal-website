@@ -1,4 +1,5 @@
 import heroPortraitCutout from '../assets/hero-portrait-cutout.png'
+import { assetPath } from '../lib/publicPath'
 
 const portraitComposition = 'bg-contain bg-center'
 
@@ -11,7 +12,7 @@ export function Hero() {
       <div
         data-testid="hero-portrait"
         className={`absolute inset-0 z-10 bg-no-repeat md:bg-[position:68%_center] ${portraitComposition}`}
-        style={{ backgroundImage: `url('${heroPortraitCutout}')` }}
+        style={{ backgroundImage: `url('${assetPath(heroPortraitCutout)}')` }}
         aria-hidden="true"
       />
 
