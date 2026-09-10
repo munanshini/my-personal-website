@@ -26,6 +26,14 @@ function assertNoText(path, text) {
   if (contents.includes(text)) throw new Error(`Expected ${path} not to include ${text}`)
 }
 
+function assertTextCount(path, text, expectedCount) {
+  const contents = readFileSync(resolve(root, path), 'utf8')
+  const actualCount = contents.split(text).length - 1
+  if (actualCount !== expectedCount) {
+    throw new Error(`Expected ${path} to include ${text} ${expectedCount} time(s), found ${actualCount}`)
+  }
+}
+
 for (const path of ['index.html', 'work/index.html', 'words/index.html', 'now/index.html', 'contact/index.html']) {
   assertExists(path)
 }
@@ -36,6 +44,20 @@ for (const path of [
   'work/smart-sales-center/index.html',
 ]) {
   assertExists(path)
+}
+
+for (const path of [
+  'index.html',
+  'work/index.html',
+  'words/index.html',
+  'now/index.html',
+  'contact/index.html',
+  'work/ai-ide/index.html',
+  'work/warehouse-scheduling/index.html',
+  'work/smart-sales-center/index.html',
+]) {
+  assertTextCount(path, '<title', 1)
+  assertTextCount(path, 'name="description"', 1)
 }
 
 for (const slug of ['ai-ide', 'warehouse-scheduling', 'smart-sales-center']) {
