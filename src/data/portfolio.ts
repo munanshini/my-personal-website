@@ -140,8 +140,8 @@ export const experiences: ExperienceItem[] = [
   },
 ]
 
-// 内容已根据用户提供的《0823-张楠 AI产品经理面试话术 v3.1》整理。
-// 在用户确认公开边界前，isReady 必须保持 false：详情页不会生成、不会写入 sitemap，也不会在列表页开放链接。
+// 内容已根据用户提供的《0823-张楠 AI产品经理面试话术 v3.1》整理，
+// 并于 2026-09-10 确认先以已有内容开放三个项目详情页。
 const projectDetails: Record<string, ProjectDetail> = {
   'ai-ide': {
     slug: 'ai-ide',
@@ -190,7 +190,7 @@ const projectDetails: Record<string, ProjectDetail> = {
     ],
     reflection: '企业级 AI 的关键不只是让模型“会答”，而是用私有上下文、客观校验和人工确认，把不可靠的生成能力包装成可被信任的工作流。下一阶段会更早把真实使用数据与风险分级纳入版本优先级，而不是只从功能完整度出发。',
     confidentialityNote: '基于个人在职经历整理，已省略内部代码、接口、组织细节与未公开技术实现；数据仅保留可公开说明的口径与量级。',
-    isReady: false,
+    isReady: true,
   },
   'warehouse-scheduling': {
     slug: 'warehouse-scheduling',
@@ -239,7 +239,7 @@ const projectDetails: Record<string, ProjectDetail> = {
     ],
     reflection: '“是否使用 AI”本身就是产品判断。对于路径清晰、可解释性和实时性优先的场景，先把业务规则、数据质量和人工责任边界做好，比引入更自由的模型能力更有价值。',
     confidentialityNote: '基于个人项目经历整理，已省略客户现场、系统参数、规则细节和未公开业务数据；不展示未经确认的仓库规模或效率百分比。',
-    isReady: false,
+    isReady: true,
   },
   'smart-sales-center': {
     slug: 'smart-sales-center',
@@ -288,7 +288,7 @@ const projectDetails: Record<string, ProjectDetail> = {
     ],
     reflection: 'B 端产品不能只停留在“使用者觉得方便”。必须把一线动作和数据沉淀，翻译成采购决策人关心的线索、跟单和交付效率；这也是后来我把采纳率、人工调整率作为关键指标的起点。',
     confidentialityNote: '基于个人项目经历整理，已省略客户名称、项目配置、业务数据和未公开交付细节；仅保留可公开验证的项目范围与产品方法。',
-    isReady: false,
+    isReady: true,
   },
 }
 

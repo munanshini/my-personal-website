@@ -25,8 +25,21 @@ describe('siteRoute', () => {
     expect(sitePageFromPath('/unknown/')).toBe('index')
   })
 
-  it('exposes only first-batch public routes', () => {
-    expect(publicSitePaths()).toEqual(['/', '/work/', '/words/', '/now/', '/contact/'])
-    expect(publishedProjectPaths()).toEqual([])
+  it('exposes the five primary routes and three content-ready project routes', () => {
+    expect(publicSitePaths()).toEqual([
+      '/',
+      '/work/',
+      '/words/',
+      '/now/',
+      '/contact/',
+      '/work/ai-ide/',
+      '/work/warehouse-scheduling/',
+      '/work/smart-sales-center/',
+    ])
+    expect(publishedProjectPaths()).toEqual([
+      '/work/ai-ide/',
+      '/work/warehouse-scheduling/',
+      '/work/smart-sales-center/',
+    ])
   })
 })

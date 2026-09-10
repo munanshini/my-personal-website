@@ -28,3 +28,13 @@ it('adds Person structured data only to the home page', async () => {
 
   await waitFor(() => expect(document.head.querySelector('script[type="application/ld+json"]')?.textContent).toContain('"@type":"Person"'))
 })
+
+it('uses project metadata and CreativeWork structured data on a detail page', async () => {
+  render(<HelmetProvider><PageMeta page="work" pathname="/work/ai-ide/" target="aliyun" /></HelmetProvider>)
+
+  await waitFor(() => expect(document.title).toBe('AI IDE 研发助手 · 张楠 AI 产品经理'))
+  expect(document.head.querySelector('meta[name="description"]')?.getAttribute('content')).toContain('RAG')
+  expect(document.head.querySelector('link[rel="canonical"]')).toHaveAttribute('href', 'https://zhangnanai.com/work/ai-ide/')
+  expect(document.head.querySelector('meta[property="og:type"]')).toHaveAttribute('content', 'article')
+  expect(document.head.querySelector('script[type="application/ld+json"]')?.textContent).toContain('"@type":"CreativeWork"')
+})

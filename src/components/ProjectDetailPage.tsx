@@ -15,7 +15,7 @@ function ProjectPager({ project }: { project: WorkItem }) {
   const currentPath = detailPath(project.slug)
 
   return (
-    <nav className="mt-20 border-t border-line/15 pt-6 md:mt-28" aria-label="项目切换">
+    <nav className="detail-pager" aria-label="项目切换">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         <a href={publicPath(detailPath(previous.slug), currentPath)} className="group flex items-center gap-3 text-sm font-semibold text-ink transition-colors hover:text-signal">
           <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
@@ -51,6 +51,7 @@ export function ProjectDetailPage({ project }: { project: WorkItem }) {
   const { detail } = project
   const currentPath = detailPath(project.slug)
   const leadOutcome = detail.outcomes[0]
+  const chapterHref = (id: string) => `${publicPath(currentPath, currentPath)}#${id}`
 
   return (
     <main id="project-detail" className="site-page bg-paper text-ink transition-colors duration-700">
@@ -63,26 +64,30 @@ export function ProjectDetailPage({ project }: { project: WorkItem }) {
         </nav>
 
         <header className="detail-header">
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-signal">{project.category}</p>
-            <h1 className="page-title mt-5">{project.title}</h1>
-            <p className="mt-6 max-w-2xl text-lg font-medium leading-8 text-muted md:text-xl">{detail.heroTagline}</p>
-            <p className="mt-6 text-sm font-medium text-muted">{project.company} · {project.companyPeriod} · {project.companyFocus}</p>
+          <div className="detail-hero-copy">
+            <p className="detail-kicker"><span>CASE STUDY {project.number}</span>{project.category}</p>
+            <h1>{project.title}</h1>
+            <p className="detail-tagline">{detail.heroTagline}</p>
+            <dl className="detail-meta-list" aria-label="项目概览">
+              <div><dt>公司</dt><dd>{project.company}</dd></div>
+              <div><dt>时间</dt><dd>{project.companyPeriod}</dd></div>
+              <div><dt>领域</dt><dd>{project.companyFocus}</dd></div>
+            </dl>
           </div>
           <div className="detail-lead-result">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted">核心结果</p>
+            <p>核心结果 / KEY IMPACT</p>
             <strong>{leadOutcome.metric}</strong>
-            <p className="mt-4 text-sm leading-7 text-muted">{leadOutcome.note}</p>
+            <span>{leadOutcome.note}</span>
           </div>
         </header>
 
         <div className="project-flow" aria-label="项目工作流程">
-          <p className="text-xs font-semibold tracking-widest text-muted">WORKFLOW / 工作流程</p>
+          <p>WORKFLOW / 工作流程</p>
           <ol>{projectFlows[project.slug]?.map((step, index) => <li key={step}><span>0{index + 1}</span>{step}</li>)}</ol>
         </div>
-        <details className="detail-mobile-directory"><summary className="text-sm font-medium">本页目录</summary><nav aria-label="移动端章节导航">{projectChapters.map(([id, label]) => <a key={id} href={`#${id}`}>{label}</a>)}</nav></details>
+        <details className="detail-mobile-directory"><summary className="text-sm font-medium">本页目录</summary><nav aria-label="移动端章节导航">{projectChapters.map(([id, label]) => <a key={id} href={chapterHref(id)}>{label}</a>)}</nav></details>
         <div className="detail-layout">
-        <nav className="detail-directory" aria-label="章节导航"><p className="mb-3 text-[11px] tracking-widest text-muted">IN THIS PROJECT</p>{projectChapters.map(([id, label]) => <a key={id} href={`#${id}`}>{label}</a>)}</nav>
+        <nav className="detail-directory" aria-label="章节导航"><p className="mb-3 text-[11px] tracking-widest text-muted">IN THIS PROJECT</p>{projectChapters.map(([id, label]) => <a key={id} href={chapterHref(id)}>{label}</a>)}</nav>
         <div className="detail-content">
         <section id="project-background" className="detail-section" aria-label="问题背景">
           <SectionHeading index="01" eyebrow="CONTEXT" title="问题背景" />
@@ -94,10 +99,10 @@ export function ProjectDetailPage({ project }: { project: WorkItem }) {
         <section id="project-role" className="detail-section" aria-label="我的角色">
           <SectionHeading index="02" eyebrow="MY ROLE" title="我的角色" />
           <div className="detail-section-body detail-role">
-            <p className="max-w-3xl text-lg font-semibold leading-8">{detail.role.scope}</p>
-            <ul className="mt-6 grid gap-4 border-t border-line/15 pt-6">
+            <p className="detail-role-scope">{detail.role.scope}</p>
+            <ul className="detail-role-list">
               {detail.role.bullets.map((bullet, index) => (
-                <li key={bullet} className="flex gap-3 text-base leading-8 text-muted"><span className="font-mono text-xs text-signal">0{index + 1}</span>{bullet}</li>
+                <li key={bullet}><span>0{index + 1}</span><p>{bullet}</p></li>
               ))}
             </ul>
           </div>
@@ -108,11 +113,11 @@ export function ProjectDetailPage({ project }: { project: WorkItem }) {
           <div className="detail-section-body">
             {detail.decisions.map((decision, index) => (
               <article key={decision.title} className="decision-card">
-                <div className="flex items-start gap-4"><span className="font-mono text-xs text-signal">0{index + 1}</span><h3 className="min-w-0">{decision.title}</h3></div>
+                <div className="decision-title"><span>DECISION 0{index + 1}</span><h3>{decision.title}</h3></div>
                 <dl className="decision-parts">
-                  <div><dt>当时的问题</dt><dd>{decision.problem}</dd></div>
-                  <div><dt>我怎么判断</dt><dd>{decision.approach}</dd></div>
-                  <div><dt>取舍了什么</dt><dd>{decision.tradeoff}</dd></div>
+                  <div><dt><span>01 /</span>当时的问题</dt><dd>{decision.problem}</dd></div>
+                  <div><dt><span>02 /</span>我怎么判断</dt><dd>{decision.approach}</dd></div>
+                  <div><dt><span>03 /</span>取舍了什么</dt><dd>{decision.tradeoff}</dd></div>
                 </dl>
               </article>
             ))}
@@ -130,10 +135,10 @@ export function ProjectDetailPage({ project }: { project: WorkItem }) {
 
         <section id="project-reflection" className="detail-section" aria-label="复盘">
           <SectionHeading index="05" eyebrow="REFLECTION" title="复盘" />
-          <p className="detail-section-body reading-copy">{detail.reflection}</p>
+          <blockquote className="detail-section-body detail-reflection">{detail.reflection}</blockquote>
         </section>
 
-        {detail.confidentialityNote && <p className="mt-12 text-xs leading-6 text-muted">脱敏说明：{detail.confidentialityNote}</p>}
+        {detail.confidentialityNote && <p className="detail-confidentiality">脱敏说明：{detail.confidentialityNote}</p>}
         <ProjectPager project={project} />
         </div>
         </div>

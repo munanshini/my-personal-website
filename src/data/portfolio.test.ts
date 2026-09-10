@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest'
 import { experiences, projects, workItemBySlug, workItems } from './portfolio'
 
 describe('portfolio project readiness', () => {
-  it('keeps detail pages out of production until each project copy is ready', () => {
-    expect(workItems.map((item) => item.detail.isReady)).toEqual([false, false, false])
+  it('publishes all three details now that the sourced copy is ready', () => {
+    expect(workItems.map((item) => item.detail.isReady)).toEqual([true, true, true])
   })
 
   it('fills every local preview detail with sourced project content instead of placeholders', () => {

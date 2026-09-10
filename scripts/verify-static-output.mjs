@@ -35,12 +35,17 @@ for (const path of [
   'work/warehouse-scheduling/index.html',
   'work/smart-sales-center/index.html',
 ]) {
-  assertMissing(path)
+  assertExists(path)
 }
 
 for (const slug of ['ai-ide', 'warehouse-scheduling', 'smart-sales-center']) {
-  assertNoText('sitemap.xml', `https://zhangnanai.com/work/${slug}/`)
+  assertText('sitemap.xml', `https://zhangnanai.com/work/${slug}/`)
 }
+
+assertText('work/ai-ide/index.html', 'AI IDE 研发助手 · 张楠 AI 产品经理')
+assertText('work/ai-ide/index.html', '把不可靠的模型输出')
+assertText('work/warehouse-scheduling/index.html', '把管理员经验')
+assertText('work/smart-sales-center/index.html', '把一线顾问的讲盘经验')
 
 if (target === 'aliyun') {
   assertExists('sitemap.xml')
@@ -56,6 +61,8 @@ if (target === 'aliyun') {
   assertText('work/index.html', '<base href="../">')
   assertText('work/index.html', 'href="./assets/')
   assertText('work/index.html', 'href="./work/"')
+  assertText('work/ai-ide/index.html', 'href="./work/ai-ide/#project-decisions"')
+  assertNoText('work/ai-ide/index.html', 'href="#project-')
   assertNoText('index.html', "url('/assets/")
   assertNoText('contact/index.html', 'src="/assets/')
 }

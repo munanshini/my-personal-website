@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { getPageMeta } from './siteMeta'
+import { getPageMeta, getProjectPageMeta } from './siteMeta'
 
 describe('siteMeta', () => {
   it('uses an absolute canonical URL and sharing image for the main site', () => {
@@ -21,5 +21,13 @@ describe('siteMeta', () => {
     expect(work.title).not.toBe(index.title)
     expect(work.description).not.toBe(index.description)
     expect(work.description.length).toBeGreaterThanOrEqual(80)
+  })
+
+  it('gives a project its own canonical metadata', () => {
+    const meta = getProjectPageMeta('ai-ide', 'aliyun')
+
+    expect(meta?.title).toBe('AI IDE 研发助手 · 张楠 AI 产品经理')
+    expect(meta?.canonical).toBe('https://zhangnanai.com/work/ai-ide/')
+    expect(meta?.ogType).toBe('article')
   })
 })

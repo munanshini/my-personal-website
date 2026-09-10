@@ -25,19 +25,31 @@ describe('ProjectGrid', () => {
     expect(within(rows[2]).getByText('10 家房企、100+ 个售楼处')).toBeInTheDocument()
   })
 
-  it('does not create a project link without a real detailHref', () => {
+  it('opens every content-ready project from its card', () => {
     render(<ProjectGrid projects={workItems} />)
-    expect(screen.queryByRole('link', { name: '查看项目档案 ↗' })).not.toBeInTheDocument()
-    screen.getAllByTestId('work-row').forEach((row) => {
-      expect(row).not.toHaveAttribute('tabindex')
-    })
+    expect(screen.getAllByRole('link', { name: /项目档案$/ })).toHaveLength(3)
+    expect(screen.queryByText('项目档案 · 内容整理中')).not.toBeInTheDocument()
+  })
+
+  it('uses the complete ready card as the single project link hot area', () => {
+    render(<ProjectGrid projects={workItems} />)
+    const [firstRow] = screen.getAllByTestId('work-row')
+
+    expect(firstRow.tagName).toBe('A')
+    expect(firstRow).toHaveAttribute('href', '../work/ai-ide/')
+    expect(firstRow).toHaveAccessibleName('查看 AI IDE 研发助手项目档案')
+    expect(within(firstRow).getByText('查看项目档案 ↗')).toBeInTheDocument()
+    expect(within(firstRow).queryByRole('link')).not.toBeInTheDocument()
   })
 
   it('uses the agreed archive link only after a project is content-ready', () => {
     const [firstProject, ...remainingProjects] = workItems
-    render(<ProjectGrid projects={[{ ...firstProject, detail: { ...firstProject.detail, isReady: true } }, ...remainingProjects]} />)
+    render(<ProjectGrid projects={[
+      { ...firstProject, detail: { ...firstProject.detail, isReady: true } },
+      ...remainingProjects.map((project) => ({ ...project, detail: { ...project.detail, isReady: false } })),
+    ]} />)
 
-    expect(screen.getByRole('link', { name: '查看项目档案 ↗' })).toHaveAttribute('href', '../work/ai-ide/')
+    expect(screen.getByRole('link', { name: '查看 AI IDE 研发助手项目档案' })).toHaveAttribute('href', '../work/ai-ide/')
   })
 
   it('uses one subtle divider contract for every company', () => {

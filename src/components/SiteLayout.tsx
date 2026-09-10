@@ -33,7 +33,7 @@ export function SiteLayout() {
   return (
     <ThemeProvider>
       <LegacyHashRedirect />
-      <PageMeta page={page} target={import.meta.env.MODE === 'pages' ? 'pages' : 'aliyun'} />
+      <PageMeta page={page} pathname={location.pathname} target={import.meta.env.MODE === 'pages' ? 'pages' : 'aliyun'} />
       <div className="page-shell min-h-screen bg-paper text-ink">
         <CustomCursor />
         <TopNav currentPage={page} currentPath={location.pathname} onNavigate={(nextPage) => navigate(sitePath(nextPage))} />

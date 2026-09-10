@@ -1,3 +1,4 @@
+import { workItemBySlug } from '../data/portfolio'
 import { sitePath, type SitePage } from './siteRoute'
 
 export type DeploymentTarget = 'aliyun' | 'pages'
@@ -7,6 +8,7 @@ export interface PageMeta {
   description: string
   canonical: string
   ogImage: string
+  ogType: 'website' | 'article'
   robots?: 'noindex'
 }
 
@@ -38,9 +40,43 @@ export function getPageMeta(page: SitePage, _target: DeploymentTarget): PageMeta
     ...pageMeta[page],
     canonical: `https://zhangnanai.com${sitePath(page)}`,
     ogImage: 'https://zhangnanai.com/social-cover.png',
+    ogType: 'website',
     // GitHub Pages also serves the zhangnanai.com custom domain, so this
     // shared artifact must remain indexable and canonicalize to the domain.
     robots: undefined,
+  }
+}
+
+export function getProjectPageMeta(slug: string, _target: DeploymentTarget): PageMeta | undefined {
+  const project = workItemBySlug(slug)
+  if (!project?.detail.isReady) return undefined
+
+  return {
+    title: project.detail.seoTitle,
+    description: project.detail.seoDescription,
+    canonical: `https://zhangnanai.com/work/${project.slug}/`,
+    ogImage: 'https://zhangnanai.com/social-cover.png',
+    ogType: 'article',
+    robots: undefined,
+  }
+}
+
+export function projectJsonLd(slug: string) {
+  const project = workItemBySlug(slug)
+  if (!project?.detail.isReady) return undefined
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: project.title,
+    headline: project.detail.heroTagline,
+    description: project.detail.seoDescription,
+    url: `https://zhangnanai.com/work/${project.slug}/`,
+    author: {
+      '@type': 'Person',
+      name: '张楠',
+      jobTitle: 'AI 产品经理',
+    },
   }
 }
 
