@@ -25,9 +25,9 @@ it('uses the saved theme before the system preference', () => {
   expect(document.documentElement.dataset.theme).toBe('dark')
 })
 
-it('follows the system when no user theme is saved and persists toggles', () => {
+it('defaults to dark even on a light system and persists toggles', () => {
   vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({
-    matches: true,
+    matches: false,
     addEventListener: vi.fn(),
     removeEventListener: vi.fn(),
   }))
@@ -55,5 +55,5 @@ it('still switches when local storage is unavailable', () => {
   vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('blocked') })
   render(<ThemeProvider><ThemeProbe /></ThemeProvider>)
   fireEvent.click(screen.getByRole('button'))
-  expect(screen.getByRole('button')).toHaveTextContent('dark')
+  expect(screen.getByRole('button')).toHaveTextContent('light')
 })

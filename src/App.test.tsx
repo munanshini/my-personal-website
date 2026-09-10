@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { createMemoryRouter, RouterProvider } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -20,6 +20,20 @@ beforeEach(() => {
 afterEach(() => vi.unstubAllGlobals())
 
 describe('App', () => {
+  it('restores a directly opened project chapter instead of resetting to the top', async () => {
+    const previousScrollIntoView = Element.prototype.scrollIntoView
+    const scrollIntoView = vi.fn()
+    Element.prototype.scrollIntoView = scrollIntoView
+    try {
+      renderApp('/work/ai-ide/#project-decisions')
+      await waitFor(() => expect(scrollIntoView).toHaveBeenCalled())
+      expect(scrollIntoView.mock.instances[0]).toBe(document.getElementById('project-decisions'))
+      expect(window.scrollTo).not.toHaveBeenCalled()
+    } finally {
+      Element.prototype.scrollIntoView = previousScrollIntoView
+    }
+  })
+
   it('renders the AI product manager identity', () => {
     const { container } = renderApp()
     expect(
@@ -39,6 +53,9 @@ describe('App', () => {
   it.each([
     ['/', 'AI PRODUCT MGR', 'index'],
     ['/work/', 'AI 不止能生成', 'work'],
+    ['/work/ai-ide/', 'AI IDE 研发助手', 'project-detail'],
+    ['/work/warehouse-scheduling/', '智能仓储调度系统', 'project-detail'],
+    ['/work/smart-sales-center/', '房企智慧案场销讲与客户接待系统', 'project-detail'],
     ['/words/', '持续思考', 'words'],
     ['/now/', '此刻，我在关注什么', 'now'],
     ['/contact/', "LET'S TALK", 'contact'],

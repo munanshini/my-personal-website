@@ -11,15 +11,15 @@ import { ThemeToggle } from './ThemeToggle'
 
 interface TopNavProps {
   currentPage: SitePage
+  currentPath?: string
   onNavigate: (page: SitePage) => void
 }
 
-export function TopNav({ currentPage, onNavigate }: TopNavProps) {
+export function TopNav({ currentPage, currentPath = sitePath(currentPage), onNavigate }: TopNavProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [utilityOpen, setUtilityOpen] = useState(false)
   const closeTimer = useRef<number | null>(null)
   const activeIndex = siteNavItems.findIndex((item) => item.page === currentPage)
-  const currentPath = sitePath(currentPage)
   const items = siteNavItems.map((item) => ({
     label: item.label,
     href: publicPath(item.path, currentPath),
@@ -44,7 +44,7 @@ export function TopNav({ currentPage, onNavigate }: TopNavProps) {
   }
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-[70] flex items-center justify-between px-5 py-4 sm:px-8 sm:py-5">
+    <nav aria-label="主导航" className="site-topnav fixed inset-x-0 top-0 z-[70] flex items-center justify-between px-5 py-4 sm:px-8 sm:py-5">
       <a href={publicPath(sitePath('index'), currentPath)} onClick={(event) => { event.preventDefault(); onNavigate('index') }} className="flex items-center gap-3 text-ink" aria-label="返回首页">
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 256 256" fill="none" aria-hidden="true">
           <path d="M 256 64 L 256 128 L 192.5 128 L 160 95 L 128 64 L 96 95 L 63.5 128 L 64 128 L 128 192 L 128 256 L 64.5 256 L 32 223 L 0 192 L 0 64 L 64 0 L 192 0 Z M 256 192 L 256 256 L 192.5 256 L 160 223 L 128 192 L 128 128 L 192 128 Z" fill="currentColor" />
@@ -52,11 +52,11 @@ export function TopNav({ currentPage, onNavigate }: TopNavProps) {
         <span className="hidden text-sm font-semibold tracking-[0.16em] sm:block">张楠 · Nan Zhang</span>
       </a>
 
-      <SpotlightCard className="spotlight-card--nav spotlight-card--glass absolute left-1/2 hidden -translate-x-1/2 md:block" spotlightColor="rgba(125, 211, 252, .38)">
+      <SpotlightCard className="spotlight-card--nav spotlight-card--glass absolute left-1/2 hidden -translate-x-1/2 xl:block" spotlightColor="rgba(125, 211, 252, .38)">
         <GooeyNav items={items} activeIndex={activeIndex} onSelect={selectNavigation} />
       </SpotlightCard>
 
-      <div className="hidden items-center gap-3 md:flex">
+      <div className="hidden items-center gap-3 xl:flex">
         <div className="relative" onMouseEnter={openUtility} onMouseLeave={closeUtilitySoon}>
           <SpotlightCard className="spotlight-card--cta spotlight-card--glass" spotlightColor="rgba(74, 222, 128, .44)"><button type="button" onClick={() => setUtilityOpen((open) => !open)} aria-expanded={utilityOpen} className="flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-medium text-ink">
               <span className="inline-block h-2 w-2 rounded-full bg-green-400" />
@@ -79,7 +79,7 @@ export function TopNav({ currentPage, onNavigate }: TopNavProps) {
         <MusicToggle />
       </div>
 
-      <div className="flex items-center gap-3 md:hidden">
+      <div className="flex items-center gap-3 xl:hidden">
       <button
         type="button"
         className="p-1 text-ink"
@@ -91,7 +91,7 @@ export function TopNav({ currentPage, onNavigate }: TopNavProps) {
       </div>
 
       {menuOpen && (
-        <div className="fixed inset-x-4 top-16 z-[-1] rounded-3xl border border-line/15 bg-surface/80 p-4 text-ink shadow-2xl backdrop-blur-xl md:hidden">
+        <div className="fixed inset-x-4 top-20 rounded-2xl border border-line/15 bg-surface p-4 text-ink shadow-2xl xl:hidden">
           {siteNavItems.map((item) => (
             <a
               key={item.page}

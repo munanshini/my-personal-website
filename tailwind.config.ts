@@ -13,7 +13,7 @@ export default {
         signal: '#e44832',
       },
       maxWidth: {
-        canvas: '1700px',
+        canvas: '1240px',
       },
     },
   },

@@ -7,3 +7,6 @@
 .spotlight-card--nav { background: rgb(17 24 39); box-shadow: 0 10px 24px rgb(15 23 42 / .22); }
 .spotlight-card--glass { background: rgb(var(--color-surface) / .78); color: rgb(var(--color-text)); backdrop-filter: blur(14px) saturate(130%); outline: 1px solid rgb(var(--color-line) / .2); }
 .spotlight-card--assistant.spotlight-card--glass { background: rgb(17 24 39); backdrop-filter: none; outline: 1px solid rgb(255 255 255 / .38); }
+.spotlight-card--nav, .spotlight-card--cta, .spotlight-card--cta:hover { box-shadow: none; }
+.spotlight-card--nav::before, .spotlight-card--cta::before { display: none; }
+.spotlight-card--glass { background: rgb(var(--color-surface)); backdrop-filter: none; }

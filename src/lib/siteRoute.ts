@@ -1,3 +1,5 @@
+import { workItems } from '../data/portfolio'
+
 export const siteNavItems = [
   { page: 'index', label: 'INDEX 首页', path: '/' },
   { page: 'work', label: 'WORK 工作', path: '/work/' },
@@ -14,6 +16,7 @@ export function sitePath(page: SitePage) {
 
 export function sitePageFromPath(pathname: string): SitePage {
   const normalizedPath = pathname === '/' ? '/' : `${pathname.replace(/\/+$/, '')}/`
+  if (normalizedPath.startsWith('/work/')) return 'work'
   return siteNavItems.find((item) => item.path === normalizedPath)?.page ?? 'index'
 }
 
@@ -23,5 +26,11 @@ export function legacyHashPath(hash: string) {
 }
 
 export function publicSitePaths() {
-  return siteNavItems.map((item) => item.path)
+  return [...siteNavItems.map((item) => item.path), ...publishedProjectPaths()]
+}
+
+export function publishedProjectPaths() {
+  return workItems
+    .filter((item) => item.detail.isReady)
+    .map((item) => `/work/${item.slug}/`)
 }

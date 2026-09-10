@@ -30,7 +30,17 @@ for (const path of ['index.html', 'work/index.html', 'words/index.html', 'now/in
   assertExists(path)
 }
 
-assertMissing('work/ai-ide/index.html')
+for (const path of [
+  'work/ai-ide/index.html',
+  'work/warehouse-scheduling/index.html',
+  'work/smart-sales-center/index.html',
+]) {
+  assertMissing(path)
+}
+
+for (const slug of ['ai-ide', 'warehouse-scheduling', 'smart-sales-center']) {
+  assertNoText('sitemap.xml', `https://zhangnanai.com/work/${slug}/`)
+}
 
 if (target === 'aliyun') {
   assertExists('sitemap.xml')

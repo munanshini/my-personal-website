@@ -4,20 +4,22 @@ interface SectionHeadingProps {
   title: string
   description?: string
   inverse?: boolean
+  level?: 1 | 2
 }
 
-export function SectionHeading({ index, eyebrow, title, description, inverse = false }: SectionHeadingProps) {
+export function SectionHeading({ index, eyebrow, title, description, inverse = false, level = 2 }: SectionHeadingProps) {
+  const Heading = level === 1 ? 'h1' : 'h2'
   return (
-    <div className={`grid gap-6 border-t pt-5 md:grid-cols-[180px_1fr] ${inverse ? 'border-white/15' : 'border-line/15'}`}>
+    <div className={`section-heading ${level === 1 ? 'section-heading--page' : ''} ${inverse ? 'text-white' : 'text-ink'}`}>
       <div className={`flex items-start gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] ${inverse ? 'text-white/60' : 'text-muted'}`}>
         <span className="text-signal">{index}</span>
         {eyebrow}
       </div>
-      <div className="grid gap-5 lg:grid-cols-[1fr_380px] lg:items-end">
-        <h2 className={`max-w-5xl text-[clamp(2.5rem,6vw,7rem)] font-semibold leading-[0.88] tracking-[-0.065em] ${inverse ? 'text-white' : 'text-ink'}`}>
+      <div className="section-heading-copy">
+        <Heading className={level === 1 ? 'page-title' : 'section-title'}>
           {title}
-        </h2>
-        {description && <p className={`max-w-md text-sm leading-7 md:text-base ${inverse ? 'text-white/65' : 'text-muted'}`}>{description}</p>}
+        </Heading>
+        {description && <p className={`reading-copy ${inverse ? 'text-white/65' : 'text-muted'}`}>{description}</p>}
       </div>
     </div>
   )

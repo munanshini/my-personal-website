@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { legacyHashPath, publicSitePaths, sitePageFromPath, sitePath } from './siteRoute'
+import { legacyHashPath, publicSitePaths, publishedProjectPaths, sitePageFromPath, sitePath } from './siteRoute'
 
 describe('siteRoute', () => {
   it.each([
@@ -21,10 +21,12 @@ describe('siteRoute', () => {
   it('normalizes known paths and falls back to the index page', () => {
     expect(sitePageFromPath('/work')).toBe('work')
     expect(sitePageFromPath('/work/')).toBe('work')
+    expect(sitePageFromPath('/work/ai-ide/')).toBe('work')
     expect(sitePageFromPath('/unknown/')).toBe('index')
   })
 
   it('exposes only first-batch public routes', () => {
     expect(publicSitePaths()).toEqual(['/', '/work/', '/words/', '/now/', '/contact/'])
+    expect(publishedProjectPaths()).toEqual([])
   })
 })

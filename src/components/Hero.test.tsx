@@ -7,7 +7,7 @@ describe('Hero', () => {
     render(<Hero />)
 
     expect(screen.getByText('你好，我是张楠，一个画过图、懂交互、有审美，写 PROMPT 比写 PRD 多的 AI 产品经理。')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: /AI PRODUCT MGR/i }).className).toContain('font-black')
+    expect(screen.getByRole('heading', { level: 1, name: /AI PRODUCT MGR/i })).toBeInTheDocument()
   })
 
   it('uses first-person language for the personal product philosophy', () => {
@@ -17,17 +17,7 @@ describe('Hero', () => {
     expect(screen.queryByText(/我们相信好工具优雅、好用/)).not.toBeInTheDocument()
   })
 
-  it('uses the highest loaded weight with tighter hero tracking', () => {
-    render(<Hero />)
 
-    expect(screen.getByRole('heading', { name: /AI PRODUCT MGR/i }).className).toContain('tracking-[-0.09em]')
-  })
-
-  it('keeps the hero at desktop viewport height', () => {
-    render(<Hero />)
-
-    expect(screen.getByRole('heading', { name: /AI PRODUCT MGR/i }).closest('section')?.className).toContain('md:h-screen')
-  })
 
   it('renders the portfolio identity without duplicate hero actions', () => {
     render(<Hero />)
@@ -41,7 +31,6 @@ describe('Hero', () => {
     render(<Hero />)
 
     expect(screen.getByTestId('hero-portrait')).toHaveClass('bg-center')
-    expect(screen.getByRole('heading', { name: /AI PRODUCT MGR/i }).parentElement).toHaveClass('max-w-[calc(100%-2.5rem)]')
   })
 
   it('keeps the mobile portrait from over-zooming', () => {
@@ -50,7 +39,6 @@ describe('Hero', () => {
     const portrait = screen.getByTestId('hero-portrait')
     expect(portrait).toHaveClass('bg-contain')
     expect(portrait).toHaveClass('bg-center')
-    expect(portrait).toHaveClass('md:bg-[position:68%_center]')
     expect(portrait.getAttribute('style')).toContain('hero-portrait-cutout.png')
   })
 

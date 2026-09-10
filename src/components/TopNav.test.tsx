@@ -9,10 +9,10 @@ declare const process: { cwd: () => string }
 
 const gooeyNavStyles = readFileSync(`${process.cwd()}/src/components/GooeyNav.css`, 'utf8')
 
-function renderNav(currentPage: SitePage = 'index', onNavigate = vi.fn()) {
+function renderNav(currentPage: SitePage = 'index', onNavigate = vi.fn(), currentPath?: string) {
   return render(
     <ThemeProvider>
-      <TopNav currentPage={currentPage} onNavigate={onNavigate} />
+      <TopNav currentPage={currentPage} onNavigate={onNavigate} currentPath={currentPath} />
     </ThemeProvider>,
   )
 }
@@ -60,6 +60,13 @@ describe('TopNav', () => {
     workLink.dispatchEvent(click)
 
     expect(click.defaultPrevented).toBe(true)
+  })
+
+  it('resolves navigation links from a nested project detail path', () => {
+    renderNav('work', vi.fn(), '/work/ai-ide/')
+
+    expect(screen.getByRole('link', { name: '返回首页' })).toHaveAttribute('href', '../../')
+    expect(screen.getByRole('link', { name: 'WORK 工作' })).toHaveAttribute('href', '../../work/')
   })
 
   it('keeps the translucent desktop navigation bar', () => {
@@ -118,9 +125,9 @@ describe('TopNav', () => {
   it('shows a theme toggle in desktop navigation and the mobile menu', () => {
     renderNav()
 
-    expect(screen.getByRole('button', { name: '切换到深色模式' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '切换到浅色模式' })).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: '打开菜单' }))
-    expect(screen.getAllByRole('button', { name: '切换到深色模式' })).toHaveLength(2)
+    expect(screen.getAllByRole('button', { name: '切换到浅色模式' })).toHaveLength(2)
   })
 
   it('uses semantic ink text on the glass Open to Work control in both themes', () => {
@@ -130,8 +137,8 @@ describe('TopNav', () => {
     expect(openToWork).toHaveClass('text-ink')
     expect(openToWork).not.toHaveClass('text-white')
 
-    fireEvent.click(screen.getByRole('button', { name: '切换到深色模式' }))
-    expect(document.documentElement).toHaveAttribute('data-theme', 'dark')
+    fireEvent.click(screen.getByRole('button', { name: '切换到浅色模式' }))
+    expect(document.documentElement).toHaveAttribute('data-theme', 'light')
     expect(openToWork).toHaveClass('text-ink')
   })
 

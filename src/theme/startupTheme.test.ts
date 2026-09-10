@@ -46,7 +46,7 @@ it('uses a saved dark theme without depending on matchMedia', () => {
   expect(root.style.colorScheme).toBe('dark')
 })
 
-it('uses a dark system preference when storage reading is blocked', () => {
+it('defaults to dark when storage reading is blocked', () => {
   const root = runStartupTheme({
     getItem: () => { throw new Error('blocked') },
     matchMedia: () => ({ matches: true }),
@@ -59,8 +59,8 @@ it('uses a dark system preference when storage reading is blocked', () => {
 it('falls back safely when the system preference API is unavailable', () => {
   const root = runStartupTheme({ getItem: () => null })
 
-  expect(root.dataset.theme).toBe('light')
-  expect(root.style.colorScheme).toBe('light')
+  expect(root.dataset.theme).toBe('dark')
+  expect(root.style.colorScheme).toBe('dark')
 })
 
 it('does not throw when the root theme properties are unavailable', () => {
@@ -80,4 +80,10 @@ it('uses the same storage key as ThemeProvider', () => {
 
   expect(startupKey).toBe('portfolio-theme')
   expect(startupKey).toBe(providerKey)
+})
+
+it('retains an explicitly saved light theme', () => {
+  const root = runStartupTheme({ getItem: () => 'light' })
+  expect(root.dataset.theme).toBe('light')
+  expect(root.style.colorScheme).toBe('light')
 })
