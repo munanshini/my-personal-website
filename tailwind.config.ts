@@ -10,7 +10,7 @@ export default {
         ink: 'rgb(var(--color-text) / <alpha-value>)',
         muted: 'rgb(var(--color-muted) / <alpha-value>)',
         line: 'rgb(var(--color-line) / <alpha-value>)',
-        signal: '#e44832',
+        signal: 'rgb(var(--color-signal) / <alpha-value>)',
       },
       maxWidth: {
         canvas: '1240px',

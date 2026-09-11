@@ -7,7 +7,7 @@ describe('CopyButton', () => {
     render(<CopyButton value="test-value" label="示例" />)
 
     const button = screen.getByRole('button', { name: '复制示例' })
-    expect(button).toHaveClass('hover:bg-ink', 'hover:text-paper')
+    expect(button).toHaveClass('hover:bg-signal', 'hover:text-white')
     expect(button).not.toHaveClass('hover:bg-black', 'hover:text-white')
   })
 })

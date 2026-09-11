@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { GRID_CELL, SPOTLIGHT_R, easeToward, getGridTarget } from './heroMotion'
+import {
+  GRID_CELL,
+  HERO_VIDEO_CUES,
+  SPOTLIGHT_R,
+  easeToward,
+  getGridTarget,
+  heroVideoTime,
+} from './heroMotion'
 
 describe('hero motion helpers', () => {
   it('exports the confirmed grid and spotlight constants', () => {
@@ -21,5 +28,16 @@ describe('hero motion helpers', () => {
     expect(
       getGridTarget(0, 0, { left: 0, top: 0, width: 0, height: 0 }),
     ).toEqual({ x: 0, y: 0 })
+  })
+
+  it('maps the pointer midpoint to each theme video\'s actual front-facing frame', () => {
+    expect(heroVideoTime(0.5, 'light')).toBe(HERO_VIDEO_CUES.light.center)
+    expect(heroVideoTime(0.5, 'dark')).toBe(HERO_VIDEO_CUES.dark.center)
+  })
+
+  it('maps and clamps the pointer edges to the usable video range', () => {
+    expect(heroVideoTime(-1, 'light')).toBe(HERO_VIDEO_CUES.light.start)
+    expect(heroVideoTime(1, 'light')).toBe(HERO_VIDEO_CUES.light.end)
+    expect(heroVideoTime(2, 'dark')).toBe(HERO_VIDEO_CUES.dark.end)
   })
 })

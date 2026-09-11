@@ -119,7 +119,7 @@ describe('TopNav', () => {
     renderNav()
     fireEvent.click(screen.getByRole('button', { name: /open to work/i }))
 
-    expect(screen.getByRole('link', { name: '简历 PDF 下载' }).className).toContain('hover:bg-gray-700')
+    expect(screen.getByRole('link', { name: '简历 PDF 下载' }).className).toContain('hover:bg-signal/90')
   })
 
   it('shows a theme toggle in desktop navigation and the mobile menu', () => {

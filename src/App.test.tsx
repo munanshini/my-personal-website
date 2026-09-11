@@ -87,20 +87,38 @@ describe('App', () => {
     expect(screen.queryByRole('link', { name: '查看经历' })).not.toBeInTheDocument()
   })
 
+  it('does not repeat the primary navigation in the footer', () => {
+    renderApp()
+
+    expect(screen.queryByRole('navigation', { name: '页脚导航' })).not.toBeInTheDocument()
+  })
+
+  it('keeps the homepage identity inside the first screen without an outer footer', () => {
+    window.history.replaceState(null, '', '/')
+    renderApp()
+
+    expect(screen.getByTestId('hero-signature')).toBeInTheDocument()
+    expect(document.querySelector('footer')).toBeNull()
+  })
+
+  it('keeps the compact footer on interior pages', () => {
+    renderApp('/work/')
+
+    expect(document.querySelector('footer')).toBeInTheDocument()
+  })
+
   it('wraps the assistant trigger in a glass spotlight card', () => {
     renderApp()
 
     expect(screen.getByRole('button', { name: '问我的 AI 助手' }).parentElement?.className).toContain('spotlight-card--glass')
   })
 
-  it('keeps the mobile assistant in document flow and fixes it on desktop', () => {
+  it('keeps the global assistant fixed at the bottom center', () => {
     renderApp()
     const assistantCard = screen.getByRole('button', { name: '问我的 AI 助手' }).parentElement
 
-    expect(assistantCard).not.toHaveClass('fixed')
-    expect(assistantCard).not.toHaveClass('bottom-5')
-    expect(assistantCard).not.toHaveClass('right-5')
-    expect(assistantCard).toHaveClass('mx-auto', 'w-fit', 'md:fixed', 'md:bottom-5', 'md:right-5')
+    expect(assistantCard).toHaveClass('fixed', 'bottom-5', 'left-1/2', '-translate-x-1/2')
+    expect(assistantCard).not.toHaveClass('right-5', 'md:right-5')
   })
 
   it('shows the compact mobile assistant label in the assistant trigger', () => {

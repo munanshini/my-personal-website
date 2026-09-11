@@ -6,7 +6,9 @@
 .spotlight-card--cta:hover { transform: translateY(-2px); box-shadow: 0 18px 34px rgb(17 24 39 / .28); }
 .spotlight-card--nav { background: rgb(17 24 39); box-shadow: 0 10px 24px rgb(15 23 42 / .22); }
 .spotlight-card--glass { background: rgb(var(--color-surface) / .78); color: rgb(var(--color-text)); backdrop-filter: blur(14px) saturate(130%); outline: 1px solid rgb(var(--color-line) / .2); }
-.spotlight-card--assistant.spotlight-card--glass { background: rgb(17 24 39); backdrop-filter: none; outline: 1px solid rgb(255 255 255 / .38); }
+:root[data-theme='light'] .spotlight-card--assistant.spotlight-card--glass { background: rgb(var(--color-surface)); color: rgb(var(--color-text)); backdrop-filter: none; outline: 1px solid rgb(var(--color-line) / .2); }
+:root[data-theme='dark'] .spotlight-card--assistant.spotlight-card--glass { background: rgb(17 24 39); color: #fff; backdrop-filter: none; outline: 1px solid rgb(255 255 255 / .38); }
 .spotlight-card--nav, .spotlight-card--cta, .spotlight-card--cta:hover { box-shadow: none; }
+.spotlight-card--assistant.spotlight-card--cta:hover { transform: translateX(-50%) translateY(-2px); }
 .spotlight-card--nav::before, .spotlight-card--cta::before { display: none; }
 .spotlight-card--glass { background: rgb(var(--color-surface)); backdrop-filter: none; }
