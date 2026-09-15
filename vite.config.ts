@@ -6,6 +6,10 @@ import { publicSitePaths } from './src/lib/siteRoute'
 
 type DeploymentTarget = 'aliyun' | 'pages'
 
+function stripSsgHydrationMarker(html: string) {
+  return html.replace(' data-server-rendered="true"', '')
+}
+
 function writeSiteFiles(target: DeploymentTarget) {
   const outDir = resolve(process.cwd(), 'dist')
   const sitemapPath = resolve(outDir, 'sitemap.xml')
@@ -16,6 +20,12 @@ function writeSiteFiles(target: DeploymentTarget) {
     .join('\n')
   writeFileSync(sitemapPath, `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`)
   writeFileSync(robotsPath, 'User-agent: *\nAllow: /\nSitemap: https://zhangnanai.com/sitemap.xml\n')
+
+  for (const path of publicSitePaths()) {
+    const filePath = path === '/' ? resolve(outDir, 'index.html') : resolve(outDir, path.replace(/^\//, ''), 'index.html')
+    const html = readFileSync(filePath, 'utf8')
+    writeFileSync(filePath, stripSsgHydrationMarker(html))
+  }
 
   if (target === 'pages') {
     const rootHtml = readFileSync(resolve(outDir, 'index.html'), 'utf8')

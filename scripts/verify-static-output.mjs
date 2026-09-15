@@ -58,6 +58,7 @@ for (const path of [
 ]) {
   assertTextCount(path, '<title', 1)
   assertTextCount(path, 'name="description"', 1)
+  assertNoText(path, 'data-server-rendered="true"')
 }
 
 for (const slug of ['ai-ide', 'warehouse-scheduling', 'smart-sales-center']) {
