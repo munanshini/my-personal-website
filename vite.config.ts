@@ -18,6 +18,23 @@ function writeSiteFiles(target: DeploymentTarget) {
   writeFileSync(robotsPath, 'User-agent: *\nAllow: /\nSitemap: https://zhangnanai.com/sitemap.xml\n')
 
   if (target === 'pages') {
+    const rootHtml = readFileSync(resolve(outDir, 'index.html'), 'utf8')
+    const pagesFallback = rootHtml
+      .replace('<head>', '<head><base href="/">')
+      .replace(
+        '</head>',
+        `<script>
+          (() => {
+            const malformedPrefix = '/work/work/'
+            const { pathname, search, hash } = window.location
+            if (pathname.startsWith(malformedPrefix)) {
+              window.location.replace(pathname.replace(malformedPrefix, '/work/') + search + hash)
+            }
+          })()
+        </script></head>`,
+      )
+    writeFileSync(resolve(outDir, '404.html'), pagesFallback)
+
     for (const path of publicSitePaths().filter((path) => path !== '/')) {
       const depth = path.split('/').filter(Boolean).length
       const filePath = resolve(outDir, path.replace(/^\//, ''), 'index.html')
