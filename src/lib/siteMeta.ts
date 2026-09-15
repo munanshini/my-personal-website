@@ -19,7 +19,7 @@ const pageMeta: Record<SitePage, Pick<PageMeta, 'title' | 'description'>> = {
   },
   work: {
     title: '工作作品 · 张楠 AI 产品经理',
-    description: '张楠的 AI 产品经理工作作品集，聚焦 AI IDE、智能仓储调度与智慧案场等真实项目，呈现从业务问题拆解、产品方案设计到跨团队协作落地的产品实践、阶段性结果与复盘线索。',
+    description: '张楠的 AI 产品经理工作作品集，聚焦 AI IDE、企业流程平台 AI 化、智能仓储调度与智慧案场等真实项目，呈现从场景定义、知识检索与评测归因到跨团队协作落地的产品实践。',
   },
   words: {
     title: '内容与思考 · 张楠 AI 产品经理',

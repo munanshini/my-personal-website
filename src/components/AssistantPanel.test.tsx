@@ -20,7 +20,7 @@ describe('AssistantPanel', () => {
     render(<AssistantPanel open onClose={vi.fn()} />)
     fireEvent.click(screen.getByRole('button', { name: '你做过哪些 AI 项目？' }))
     expect(
-      screen.getByText(/AI 创意工场、智能仓储调度和 AI IDE/),
+      screen.getByText(/AI IDE 研发助手、PDMC\+ 流程平台 AI 化和智能仓储调度/),
     ).toBeInTheDocument()
   })
 })

@@ -102,10 +102,10 @@ export function Hero() {
         </h1>
         <div className="mt-8 max-w-[34rem]">
           <p className="reading-copy text-ink">
-            你好，我是张楠，一个画过图、懂交互、有审美，写 PROMPT 比写 PRD 多的 AI 产品经理。
+            你好，我是张楠，7 年 B 端经验的 AI 产品经理。近两年半在华为负责 AI IDE 与企业流程平台 AI 化，从真实业务问题出发，设计人机协作、评测与交付闭环。
           </p>
           <p className="reading-copy mt-4">
-            我相信好工具优雅、好用，并经得起反复打磨；也坚持通过规划、协调、推进与落实，让想法最终被完美实现。
+            我擅长把模型能力变成可使用、可衡量、可追溯的产品：做场景定义、知识检索、Bad Case 归因，也负责跨团队推进与灰度落地。
           </p>
         </div>
         <div data-testid="hero-signature" className="hero-signature text-muted">

@@ -83,7 +83,7 @@ export const projects: Project[] = [
   {
     number: '01',
     title: '房企智慧案场销讲与客户接待系统',
-    year: '2019.03–2023.02',
+    year: '2019.03–2023.01',
     category: 'REAL ESTATE SALES TECH · INTERACTIVE EXPERIENCE',
     summary: '面向房企案场，将可视化销讲、来访接待、客户画像与购买意愿评估整合为置业顾问工作台，并打通云客 CRM。',
     role: '主导需求洞察、交互与流程设计，定义可视化销讲、结构化接待和意愿分级的人机协作边界，推动接待数据进入 CRM 跟单闭环。',
@@ -98,7 +98,7 @@ export const projects: Project[] = [
   {
     number: '02',
     title: '智能仓储调度系统',
-    year: '2023.04–2024.12',
+    year: '2023.02–2024.04',
     category: 'SUPPLY CHAIN · INTELLIGENT SCHEDULING',
     summary: '围绕入库、出库、拣选与搬运任务，建立任务优先级、人员与设备匹配、冲突识别和动态改派的一体化调度流程。',
     role: '主导场景与目标定义、规则和现场数据梳理、调度策略产品化及异常兜底；与研发和算法团队共同推进调度能力落地。',
@@ -109,7 +109,7 @@ export const projects: Project[] = [
   {
     number: '03',
     title: 'AI IDE 研发助手',
-    year: '2025.02 — 2026.06',
+    year: '2024.05 — 2026.08',
     category: 'AI IDE · DEVELOPER EXPERIENCE',
     summary: '围绕写代码、读代码、查问题与改 Bug，将企业代码库、API 文档和开发规范接入 AI 辅助研发工作流。',
     role: '负责高频任务定义、RAG 与 Agent 产品形态及验收标准、评测用例与 Bad Case 归因，并协同算法、研发与使用团队完成 MVP、灰度和版本迭代。',
@@ -117,26 +117,37 @@ export const projects: Project[] = [
     tags: ['AI IDE', 'RAG', 'Agent', '模型评测', '开发者体验'],
     tone: 'dark',
   },
+  {
+    number: '04',
+    title: 'PDMC+ 流程与业务架构管理平台 AI 化改造',
+    year: '2024.05 — 2026.08',
+    category: 'ENTERPRISE KNOWLEDGE · PROCESS INTELLIGENCE',
+    summary: '围绕流程查询、条文理解与流程发布，将公司级管理平台改造成自然语言问答与文档抽取协作入口。',
+    role: '负责用户分层、AI 场景拆解、查询与发布链路设计，以及知识库、混合检索、权限过滤和答案溯源等产品策略定义。',
+    results: ['查询与发布双链路', '自然语言检索、问答解释与文档抽取协同', '保留权限、溯源、人工复核与既有审核流转'],
+    tags: ['企业知识', 'RAG', '流程管理', '文档抽取', '可信 AI'],
+    tone: 'blue',
+  },
 ]
 
 export const experiences: ExperienceItem[] = [
   {
     company: '深圳市明源云科技有限公司',
     role: '产品经理',
-    period: '2019.03 — 2023.02',
+    period: '2019.03 — 2023.01',
     focus: '不动产数字营销 · 智慧案场 · 客户接待',
   },
   {
     company: '深圳丰链科技有限公司',
     role: '产品经理',
-    period: '2023.04 — 2024.12',
+    period: '2023.02 — 2024.04',
     focus: '供应链数字化 · 智能仓储调度',
   },
   {
     company: '华为技术有限公司',
     role: 'AI 产品经理',
-    period: '2025.02 — 2026.06',
-    focus: '开发者工具 · AI IDE · 智能编码',
+    period: '2024.05 — 2026.08',
+    focus: '开发者工具 · AI IDE · 流程与业务架构 AI 化',
   },
 ]
 
@@ -190,6 +201,55 @@ const projectDetails: Record<string, ProjectDetail> = {
     ],
     reflection: '企业级 AI 的关键不只是让模型“会答”，而是用私有上下文、客观校验和人工确认，把不可靠的生成能力包装成可被信任的工作流。下一阶段会更早把真实使用数据与风险分级纳入版本优先级，而不是只从功能完整度出发。',
     confidentialityNote: '基于个人在职经历整理，已省略内部代码、接口、组织细节与未公开技术实现；数据仅保留可公开说明的口径与量级。',
+    isReady: true,
+  },
+  'pdmc-ai': {
+    slug: 'pdmc-ai',
+    seoTitle: 'PDMC+ 流程与业务架构管理平台 AI 化改造 · 张楠 AI 产品经理',
+    seoDescription: '面向公司级流程与业务架构管理平台，以自然语言检索问答、企业知识 RAG 与文档抽取重构查询理解和流程发布，并保留权限过滤、答案溯源与人工复核。',
+    heroTagline: '让员工找到并读懂规定，也让流程管理员更快完成发布。',
+    background: [
+      'PDMC+ 是公司级流程与业务架构管理平台，承载流程文件的建模、发布、维护与查询。普通员工占绝大多数，却经常找不到目标流程或读不懂专业条文；流程管理员则需要按模板逐字段录入内容，发布门槛高。',
+      'AI 化改造没有从“增加一个聊天入口”开始，而是先按用户角色拆解问题，收敛为使用侧的检索问答链路与生产侧的文档抽取链路，并让两条链路共用同一套知识与权限底座。',
+    ],
+    role: {
+      scope: '负责用户分层、AI 介入优先级、查询与发布链路设计，以及知识组织、检索可信度和人工责任边界定义；算法与工程实现由研发团队负责。',
+      bullets: [
+        '将普通员工“找不到、读不懂”和流程管理员“录入门槛高”拆成两条产品链路，先解决覆盖面最大的查询与理解问题。',
+        '把首页多卡片分流入口重构为自然语言搜索入口，并设计全局 AI 问答助手支持条文解释与多轮追问。',
+        '将流程发布改为“上传文件 → AI 解析抽取 → 自动填表 → 管理员复核 → 提交审核”的协作流程。',
+        '定义按流程层级结构组织知识库、关键词与语义向量混合检索、既有角色权限前置过滤和答案来源回溯。',
+        '明确 AI 只帮助用户找到并读懂规定，不替用户判断事项能否执行；发布仍保留人工复核与原有审核流转。',
+      ],
+    },
+    decisions: [
+      {
+        title: '先改入口，再引入问答能力',
+        problem: '首页按平台功能拆分的多卡片入口要求用户先理解信息架构，普通员工即使知道要查流程，也常常找不到正确路径。',
+        approach: '将首页收敛为自然语言搜索入口，让用户用日常表达描述问题，再由系统返回流程文件、相关条文和可继续追问的解释。',
+        tradeoff: '没有保留“让用户自己浏览目录”的熟悉路径作为唯一入口。新入口需要建立搜索与答案可信度，但减少了用户理解平台结构的前置成本。',
+      },
+      {
+        title: '让查询与发布共用一套知识底座',
+        problem: '查询问答和文件录入看似是两个需求，如果各自建设知识结构，后续维护、权限和内容一致性都会变得复杂。',
+        approach: '沿用平台已有流程层级做结构化切分，查询侧采用关键词与语义向量混合检索，发布侧把解析内容映射到同一套标准字段。',
+        tradeoff: '没有按通用文档问答的字数硬切方案快速上线。结构化治理前期工作更多，但能避免上下文断裂，并让查询、发布和后续维护使用同一套内容资产。',
+      },
+      {
+        title: '把合规责任留在原有流程里',
+        problem: '流程条文涉及强合规场景，若 AI 直接替用户判断“能不能做”，错误答案会改变责任边界。',
+        approach: '答案强制附带原始流程文件出处，检索前置沿用角色与组织权限过滤；发布保留管理员复核和既有审核流转。',
+        tradeoff: '没有用自动化程度换取更短的表面链路。人工复核和来源回溯多保留一步，却能让 AI 的责任边界、内容依据和组织责任保持清晰。',
+      },
+    ],
+    outcomes: [
+      { metric: '查询与发布双链路', note: '面向员工的自然语言检索问答与面向管理员的文档抽取发布形成两条产品链路，共用同一套知识与权限底座。' },
+      { metric: '自然语言直接提问', note: '普通员工无需先理解平台的信息架构，即可定位目标流程并获得条文解释与多轮追问入口。' },
+      { metric: '上传文件自动填表', note: '流程管理员从逐字段手工录入转为上传任意格式文件、AI 抽取、人工复核后提交审核。' },
+      { metric: '约五成新路径采纳', note: '离职时新查询与发布路径采纳率约 50%；未迁移部分主要来自继续沿用旧版路径的存量用户。' },
+    ],
+    reflection: '企业知识类 AI 的关键不是让答案看起来流畅，而是把业务结构、权限体系、来源依据与人工责任一起设计进产品。若流程资产没有结构化基础，应先做资产治理，再引入模型能力。',
+    confidentialityNote: '基于个人在职经历整理，已省略内部平台细节、组织权限配置和未公开技术实现；数据仅保留可公开说明的产品方法与阶段性口径。',
     isReady: true,
   },
   'warehouse-scheduling': {
@@ -293,9 +353,10 @@ const projectDetails: Record<string, ProjectDetail> = {
 }
 
 export const workItems: WorkItem[] = [
-  { ...projects[2], number: '01', company: '华为技术有限公司', companyPeriod: '2025.02 — 2026.06', companyFocus: '开发者工具 · AI IDE · 智能编码', slug: 'ai-ide', detail: projectDetails['ai-ide'] },
-  { ...projects[1], number: '02', company: '深圳丰链科技有限公司', companyPeriod: '2023.04 — 2024.12', companyFocus: '供应链数字化 · 智能仓储调度', slug: 'warehouse-scheduling', detail: projectDetails['warehouse-scheduling'] },
-  { ...projects[0], number: '03', company: '深圳市明源云科技有限公司', companyPeriod: '2019.03 — 2023.02', companyFocus: '不动产数字营销 · 智慧案场 · 客户接待', slug: 'smart-sales-center', detail: projectDetails['smart-sales-center'] },
+  { ...projects[2], number: '01', company: '华为技术有限公司', companyPeriod: '2024.05 — 2026.08', companyFocus: '开发者工具 · AI IDE · 智能编码', slug: 'ai-ide', detail: projectDetails['ai-ide'] },
+  { ...projects[3], number: '02', company: '华为技术有限公司', companyPeriod: '2024.05 — 2026.08', companyFocus: '流程管理 · 企业知识 · AI 化改造', slug: 'pdmc-ai', detail: projectDetails['pdmc-ai'] },
+  { ...projects[1], number: '03', company: '深圳丰链科技有限公司', companyPeriod: '2023.02 — 2024.04', companyFocus: '供应链数字化 · 智能仓储调度', slug: 'warehouse-scheduling', detail: projectDetails['warehouse-scheduling'] },
+  { ...projects[0], number: '04', company: '深圳市明源云科技有限公司', companyPeriod: '2019.03 — 2023.01', companyFocus: '不动产数字营销 · 智慧案场 · 客户接待', slug: 'smart-sales-center', detail: projectDetails['smart-sales-center'] },
 ]
 
 export function workItemBySlug(slug: string) {
@@ -318,8 +379,8 @@ export const nowItems: NowItem[] = [
 ]
 
 export const capabilities = [
-  ['01', '定义问题', '从真实作业流中识别高频、高价值且适合 AI 介入的切入点。'],
-  ['02', '设计人机协作', '明确 AI 自动处理、人工确认和异常兜底的产品边界。'],
-  ['03', '评估模型效果', '将主观体验拆成可验证的生成质量与任务成功标准。'],
-  ['04', '交付业务价值', '从 MVP 推进到正式版本、业务闭环与商业化结果。'],
+  ['01', '定义 AI 场景', '从真实业务流程识别高频、高价值且适合 AI 介入的切入点。'],
+  ['02', '设计可信闭环', '明确 AI 自动处理、人工确认、权限过滤和异常兜底的边界。'],
+  ['03', '评测与归因', '用评测集和 Bad Case 分层定位检索、提示词、工作流与模型问题。'],
+  ['04', '推进产品落地', '协同算法、研发与业务团队，从 MVP 推进到灰度、正式版本和推广。'],
 ] as const

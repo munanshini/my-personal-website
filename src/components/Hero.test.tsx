@@ -14,7 +14,7 @@ describe('Hero', () => {
   it('renders the concise product-manager introduction', () => {
     renderHero()
 
-    expect(screen.getByText('你好，我是张楠，一个画过图、懂交互、有审美，写 PROMPT 比写 PRD 多的 AI 产品经理。')).toBeInTheDocument()
+    expect(screen.getByText(/7 年 B 端经验的 AI 产品经理/)).toBeInTheDocument()
     expect(screen.getByRole('heading', { level: 1, name: /AI PRODUCT MGR/i })).toBeInTheDocument()
     expect(document.getElementById('index')).toHaveClass('hero-screen')
     expect(screen.getByTestId('hero-signature')).toHaveTextContent('张楠 / AI 产品经理')
@@ -23,8 +23,8 @@ describe('Hero', () => {
   it('uses first-person language for the personal product philosophy', () => {
     renderHero()
 
-    expect(screen.getByText(/我相信好工具优雅、好用/)).toBeInTheDocument()
-    expect(screen.queryByText(/我们相信好工具优雅、好用/)).not.toBeInTheDocument()
+    expect(screen.getByText(/把模型能力变成可使用、可衡量、可追溯的产品/)).toBeInTheDocument()
+    expect(screen.queryByText(/我们擅长/)).not.toBeInTheDocument()
   })
 
 
@@ -64,7 +64,7 @@ describe('Hero', () => {
 
     expect(screen.getByTestId('hero-portrait').getAttribute('style')).not.toContain('gradient')
     expect(screen.getByText('AI PRODUCT · EXPERIENCE · DELIVERY')).toHaveClass('text-muted')
-    expect(screen.getByText('你好，我是张楠，一个画过图、懂交互、有审美，写 PROMPT 比写 PRD 多的 AI 产品经理。')).toHaveClass('text-ink')
+    expect(screen.getByText(/7 年 B 端经验的 AI 产品经理/)).toHaveClass('text-ink')
     expect(screen.getByText(/Shenzhen · China/i)).toHaveClass('text-muted')
   })
 

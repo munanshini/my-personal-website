@@ -43,6 +43,7 @@ const projectChapters = [
 
 const projectFlows: Record<string, string[]> = {
   'ai-ide': ['理解任务与代码上下文', '检索与生成修改建议', '编译验证与差异审查', '人工确认与反馈迭代'],
+  'pdmc-ai': ['自然语言定位流程', '检索条文与多轮解释', '上传文件与内容抽取', '人工复核与审核发布'],
   'warehouse-scheduling': ['汇集任务与资源状态', '优先级与规则匹配', '异常识别与动态改派', '人工确认与执行反馈'],
   'smart-sales-center': ['客户接待与需求识别', '可视化讲解与内容复用', '客户意向评估与跟进', 'CRM 回流与持续运营'],
 }

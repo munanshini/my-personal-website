@@ -9,7 +9,7 @@ export function Experience() {
           index="02"
           eyebrow="EXPERIENCE"
           title="从体验出发， 以产品结果落地。"
-          description="交互体验设计经理背景，增强了我对专业用户、复杂工作流和产品细节的判断；我的主身份始终是 AI 产品经理。"
+          description="7 年 B 端产品经验，近两年半在华为负责 AI IDE 与企业流程平台 AI 化；我从真实业务流程出发，定义场景、设计可信闭环，并推进跨团队落地。"
         />
 
         <div className="mt-20 grid gap-16 xl:grid-cols-[.85fr_1.15fr]">

@@ -25,7 +25,7 @@ describe('siteRoute', () => {
     expect(sitePageFromPath('/unknown/')).toBe('index')
   })
 
-  it('exposes the five primary routes and three content-ready project routes', () => {
+  it('exposes the five primary routes and four content-ready project routes', () => {
     expect(publicSitePaths()).toEqual([
       '/',
       '/work/',
@@ -33,11 +33,13 @@ describe('siteRoute', () => {
       '/now/',
       '/contact/',
       '/work/ai-ide/',
+      '/work/pdmc-ai/',
       '/work/warehouse-scheduling/',
       '/work/smart-sales-center/',
     ])
     expect(publishedProjectPaths()).toEqual([
       '/work/ai-ide/',
+      '/work/pdmc-ai/',
       '/work/warehouse-scheduling/',
       '/work/smart-sales-center/',
     ])

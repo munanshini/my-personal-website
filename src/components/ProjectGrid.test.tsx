@@ -8,7 +8,7 @@ describe('ProjectGrid', () => {
     render(<ProjectGrid projects={workItems} />)
 
     expect(screen.getByRole('heading', { name: /AI 不止能生成/ })).toBeInTheDocument()
-    expect(screen.getByText(/三个企业级场景/)).toBeInTheDocument()
+    expect(screen.getByText(/四个企业级场景/)).toBeInTheDocument()
     expect(screen.queryByText(/PROJECT GALLERY/)).not.toBeInTheDocument()
     expect(screen.queryByText(/SELECTED WORK/)).not.toBeInTheDocument()
   })
@@ -16,18 +16,20 @@ describe('ProjectGrid', () => {
   it('renders work in newest-to-oldest directory rows', () => {
     render(<ProjectGrid projects={workItems} />)
     const rows = screen.getAllByTestId('work-row')
-    expect(rows).toHaveLength(3)
+    expect(rows).toHaveLength(4)
     expect(within(rows[0]).getByText('华为技术有限公司')).toBeInTheDocument()
-    expect(within(rows[0]).getByText('2025.02 — 2026.06')).toBeInTheDocument()
-    expect(within(rows[1]).getByText('深圳丰链科技有限公司')).toBeInTheDocument()
-    expect(within(rows[2]).getByText('深圳市明源云科技有限公司')).toBeInTheDocument()
-    expect(within(rows[1]).getByText('秒级给出调度建议与推荐依据')).toBeInTheDocument()
-    expect(within(rows[2]).getByText('10 家房企、100+ 个售楼处')).toBeInTheDocument()
+    expect(within(rows[0]).getByText('2024.05 — 2026.08')).toBeInTheDocument()
+    expect(within(rows[1]).getByText(/流程与业务架构管理平台/)).toBeInTheDocument()
+    expect(within(rows[2]).getByText('深圳丰链科技有限公司')).toBeInTheDocument()
+    expect(within(rows[3]).getByText('深圳市明源云科技有限公司')).toBeInTheDocument()
+    expect(within(rows[2]).getByText('秒级给出调度建议与推荐依据')).toBeInTheDocument()
+    expect(within(rows[3]).getByText('10 家房企、100+ 个售楼处')).toBeInTheDocument()
+    expect(within(rows[1]).getByText('查询与发布双链路')).toBeInTheDocument()
   })
 
   it('opens every content-ready project from its card', () => {
     render(<ProjectGrid projects={workItems} />)
-    expect(screen.getAllByRole('link', { name: /项目档案$/ })).toHaveLength(3)
+    expect(screen.getAllByRole('link', { name: /项目档案$/ })).toHaveLength(4)
     expect(screen.queryByText('项目档案 · 内容整理中')).not.toBeInTheDocument()
   })
 

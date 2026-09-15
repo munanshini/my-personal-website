@@ -65,7 +65,7 @@ export function ProjectGrid({ projects }: { projects: WorkItem[] }) {
             </h1>
           </div>
           <p className="reading-copy">
-            三个企业级场景，展示我如何从用户问题出发，定义 AI 能力边界，并把产品推进到可使用、可衡量的结果。
+            四个企业级场景，展示我如何从用户问题出发，定义 AI 能力边界，并把产品推进到可使用、可衡量的结果。
           </p>
         </div>
 
