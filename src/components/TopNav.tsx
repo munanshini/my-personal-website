@@ -1,5 +1,6 @@
 import { Menu, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
+import siteLogo from '../assets/site-logo.png'
 import wechatQr from '../assets/wechat-qr.jpg'
 import { assetPath, publicPath } from '../lib/publicPath'
 import { siteNavItems, sitePath, type SitePage } from '../lib/siteRoute'
@@ -46,9 +47,7 @@ export function TopNav({ currentPage, currentPath = sitePath(currentPage), onNav
   return (
     <nav aria-label="主导航" className="site-topnav fixed inset-x-0 top-0 z-[70] flex items-center justify-between px-5 py-4 sm:px-8 sm:py-5">
       <a href={publicPath(sitePath('index'), currentPath)} onClick={(event) => { event.preventDefault(); onNavigate('index') }} className="flex items-center gap-3 text-ink" aria-label="返回首页">
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 256 256" fill="none" aria-hidden="true">
-          <path d="M 256 64 L 256 128 L 192.5 128 L 160 95 L 128 64 L 96 95 L 63.5 128 L 64 128 L 128 192 L 128 256 L 64.5 256 L 32 223 L 0 192 L 0 64 L 64 0 L 192 0 Z M 256 192 L 256 256 L 192.5 256 L 160 223 L 128 192 L 128 128 L 192 128 Z" fill="currentColor" />
-        </svg>
+        <img src={assetPath(siteLogo)} alt="" aria-hidden="true" data-testid="site-logo" className="site-logo h-7 w-7 object-contain" />
         <span className="hidden text-sm font-semibold tracking-[0.16em] sm:block">张楠 · Nan Zhang</span>
       </a>
 

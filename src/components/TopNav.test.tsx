@@ -76,6 +76,14 @@ describe('TopNav', () => {
     expect(navCard).toHaveClass('spotlight-card--glass')
   })
 
+  it('renders the supplied site logo without stretching it', () => {
+    renderNav()
+
+    const logo = screen.getByTestId('site-logo')
+    expect(logo).toHaveAttribute('src', expect.stringContaining('site-logo'))
+    expect(logo).toHaveClass('site-logo', 'h-7', 'w-7', 'object-contain')
+  })
+
   it('gives inactive desktop navigation items an inset outline on hover', () => {
     expect(gooeyNavStyles).toMatch(/a:not\(\.active\):hover/)
     expect(gooeyNavStyles).toMatch(/box-shadow:\s*inset 0 0 0 1px/)
