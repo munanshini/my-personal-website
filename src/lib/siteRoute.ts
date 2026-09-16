@@ -1,4 +1,4 @@
-import { workItems } from '../data/portfolio'
+import { wordArticles, workItems } from '../data/portfolio'
 
 export const siteNavItems = [
   { page: 'index', label: 'INDEX 首页', path: '/' },
@@ -26,7 +26,11 @@ export function legacyHashPath(hash: string) {
 }
 
 export function publicSitePaths() {
-  return [...siteNavItems.map((item) => item.path), ...publishedProjectPaths()]
+  return [...siteNavItems.map((item) => item.path), ...publishedWordArticlePaths(), ...publishedProjectPaths()]
+}
+
+export function publishedWordArticlePaths() {
+  return wordArticles.map((article) => `/words/${article.slug}/`)
 }
 
 export function publishedProjectPaths() {

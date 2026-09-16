@@ -70,6 +70,27 @@ export interface WordItem {
   href?: string
 }
 
+export interface WordArticleSection {
+  heading: string
+  paragraphs: string[]
+  bullets?: string[]
+}
+
+export interface WordArticle {
+  slug: string
+  title: string
+  description: string
+  lead: string
+  date: string
+  author: string
+  sourceUrl: string
+  mirrorUrl: string
+  sourceLabel: string
+  keyInsight: string
+  sections: WordArticleSection[]
+  takeaway: string
+}
+
 export interface NowItem {
   date: string
   city: string
@@ -363,13 +384,105 @@ export function workItemBySlug(slug: string) {
   return workItems.find((item) => item.slug === slug)
 }
 
+export const wordArticles: WordArticle[] = [
+  {
+    slug: 'openai-designers-ai-era',
+    title: 'OpenAI 设计总监：设计师是科技行业最惨的人',
+    description: '把一篇关于 AI 时代设计工作的访谈，整理成一份面向 AI 产品实践者的阅读笔记。',
+    lead: '设计师真正需要重新定义的，不是工具熟练度，而是在不确定性里做判断、组织系统并推动结果的方式。',
+    date: '2026.09',
+    author: '张楠整理',
+    sourceUrl: 'https://mp.weixin.qq.com/s/wL7k-NCyeIl6dbrCRbrcsQ',
+    mirrorUrl: 'https://www.uisdc.com/designer-hardest-hit',
+    sourceLabel: '觉之设计 · 公开访谈整理',
+    keyInsight: '角色会变，判断力更重要',
+    sections: [
+      {
+        heading: '设计师的焦虑不是个例',
+        paragraphs: [
+          '这篇文章整理自 Ian Silber（OpenAI 设计负责人）在 Lenny’s Podcast 中谈 AI 与设计的内容。它讨论的重点不是设计师会不会被 AI 替代，而是工作判断、协作方式和责任如何重新分配。',
+          '访谈中提到的焦虑，在设计团队里并不少见：当工程师可以借助 AI 快速扩大产出，设计师会同时面对更高的速度期待、更模糊的角色边界和更强的职业不确定感。',
+        ],
+      },
+      {
+        heading: '三层压力叠在一起',
+        paragraphs: ['设计师的不安并非单一工具问题，而是三种变化同时发生，彼此放大。'],
+        bullets: [
+          '产出速度的差距：代码、原型和实现越来越快，设计交付却不只是画面产出，还包含研究、判断和对齐。',
+          '角色定义的真空：产品、设计和工程都能直接使用 AI，过去清晰的边界被打散，却还没有新的协作规则。',
+          '信心表演的噪音：社交平台上“已经全面掌握 AI”的叙事很多，反而让真实的学习曲线和不确定性无处安放。',
+        ],
+      },
+      {
+        heading: '岗位边界会变，但核心职责不会消失',
+        paragraphs: [
+          'AI 会让产品经理、工程师和设计师更早参与彼此的工作，但角色融合不等于角色消失。产品经理仍需定义问题与成功标准，工程师仍需负责系统质量，设计师仍需理解用户、组织体验并做出可解释的取舍。',
+          '真正变化的是协作时点：设计师可以更早把想法变成可运行的东西，工程师和产品经理也能更早参与体验判断。边界变得流动，责任反而需要被说得更清楚。',
+        ],
+      },
+      {
+        heading: 'AI 让设计进入更好的时代',
+        paragraphs: [
+          '当实现一个想法的成本降低，设计师就不必只停留在静态稿和交接文档里。可以更快验证交互、比较方案、观察真实使用，再把时间花在理解用户和建立产品判断上。',
+          '这也意味着“会不会使用某个工具”只是起点。越容易实现，越需要有人判断什么值得做、为什么这样做，以及结果是否真的改善了用户任务。',
+        ],
+      },
+      {
+        heading: '把焦虑换成探索',
+        paragraphs: [
+          'AI 的进步会让新人更容易开始，也会让旧的经验更快失效。与其把注意力放在追赶某个工具，不如保持对新能力的好奇，把每次尝试都当成理解产品和工作方式的机会。',
+          '探索不等于盲目追新，而是用小成本实验验证假设，再决定是否进入正式流程。',
+        ],
+      },
+      {
+        heading: '用“双轨”安排工作',
+        paragraphs: [
+          '访谈里给出的实用方法，是把工作分成两条轨道。核心、长期和高风险的产品问题，需要深度研究、验证与迭代；探索性的新功能，则可以快速做出可用版本，从真实反馈中学习。',
+          '双轨的价值在于把速度和质量放进同一个系统：不是所有事情都用同一套流程，也不是所有事情都可以跳过判断。',
+        ],
+      },
+      {
+        heading: '原型变成思考工具',
+        paragraphs: [
+          '在 AI 工具的帮助下，原型不再只是交付给开发的中间产物，也可以直接成为团队讨论问题的共同对象。一个能运行的实验，往往比一组静态页面更快暴露流程、内容和状态上的矛盾。',
+          '这要求设计师把原型当作思考工具：先表达关键假设，再用真实交互观察哪里成立、哪里需要调整。',
+        ],
+      },
+      {
+        heading: 'AI 时代需要什么样的设计师',
+        paragraphs: ['文章最后归纳的能力，和“熟练掌握更多工具”并不完全相同：'],
+        bullets: [
+          '保持好奇，持续理解新能力能改变哪一段工作流。',
+          '形成自己的观点，能够解释为什么选择一个方向。',
+          '具备系统思维，看到界面背后的流程、约束和组织关系。',
+          '保持适应力，在工具和边界快速变化时仍能推进工作。',
+          '关注结果，把注意力放在用户任务和业务影响，而不是产出数量。',
+        ],
+      },
+      {
+        heading: '我的产品经理视角',
+        paragraphs: [
+          '对 AI 产品经理而言，这份访谈最有价值的提醒是：探索性原型和生产级承诺必须分开管理。前者允许快速试错，后者必须明确成功标准、验证方式、权限边界和责任归属。',
+          'AI 能力应该被做得足够可见，让团队知道它能帮什么、不能帮什么；但最终的判断、复核和结果责任，仍然要回到具体的人和流程里。',
+        ],
+      },
+    ],
+    takeaway: '设计师不会消失，但工作会更像在不确定性里做判断、组织系统与推动结果。对产品团队来说，真正要升级的是协作方式和责任边界。',
+  },
+]
+
+export function wordArticleBySlug(slug: string) {
+  return wordArticles.find((article) => article.slug === slug)
+}
+
 export const words: WordItem[] = [
-  { index: '01', type: 'ARTICLE', title: 'AI 产品文章', description: '记录模型能力如何进入真实场景，以及产品经理在其中如何做判断。', accent: 'bg-[#e7dfcf]' },
+  { index: '01', type: 'ARTICLE', title: 'AI 产品文章', description: '记录模型能力如何进入真实场景，以及产品经理在其中如何做判断。', accent: 'bg-[#e7dfcf]', href: '/words/openai-designers-ai-era/' },
   { index: '02', type: 'VIDEO', title: '视频与公开表达', description: '把复杂问题讲清楚，分享 AI 产品、体验设计与职业转型中的真实思考。', accent: 'bg-[#d5e0e1]' },
   { index: '03', type: 'VIBE CODING', title: 'Vibe Coding 实验室', description: '记录个人网站、原型和工具搭建，把想法快速变成可用的产品体验。', accent: 'bg-[#d9d1c8]' },
 ]
 
 export const nowItems: NowItem[] = [
+  { date: '2026.09', city: '深圳', type: 'READING', title: '整理 OpenAI 设计总监关于 AI 时代设计的访谈', description: '把设计师的焦虑、岗位边界与可执行的工作方法，整理成一篇 AI 产品视角的阅读笔记。', href: '/words/openai-designers-ai-era/' },
   { date: '2026.07', city: '深圳', type: 'THINKING', title: 'AI 产品如何从 Demo 走到真实工作流', description: '关注能力边界、任务成功标准，以及人机协作中的最后一公里。' },
   { date: '2026.07', city: '深圳', type: 'MAKING', title: '个人网站 1.0 与 Vibe Coding', description: '持续打磨自己的作品集，也把搭建过程沉淀成可复用的方法。' },
   { date: '2026.06', city: '深圳', type: 'LIVING', title: '跑步、摄影与保持感受力', description: '在工作之外保持对具体生活的观察，给产品判断留出呼吸。' },

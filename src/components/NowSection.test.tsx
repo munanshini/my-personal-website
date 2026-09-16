@@ -16,4 +16,10 @@ describe('NowSection', () => {
     fireEvent.click(screen.getByRole('button', { name: '下一页' }))
     expect(screen.getByText('为个人网站增加可交互的信息入口')).toBeInTheDocument()
   })
+
+  it('links the current article entry to its internal reading page', () => {
+    render(<NowSection items={[nowItems.find((item) => item.href) ?? nowItems[0]]} />)
+
+    expect(screen.getByRole('link', { name: /整理 OpenAI 设计总监/ })).toHaveAttribute('href', '../words/openai-designers-ai-era/')
+  })
 })

@@ -1,4 +1,4 @@
-import { workItemBySlug } from '../data/portfolio'
+import { wordArticleBySlug, workItemBySlug } from '../data/portfolio'
 import { sitePath, type SitePage } from './siteRoute'
 
 export type DeploymentTarget = 'aliyun' | 'pages'
@@ -61,6 +61,20 @@ export function getProjectPageMeta(slug: string, _target: DeploymentTarget): Pag
   }
 }
 
+export function getWordArticlePageMeta(slug: string, _target: DeploymentTarget): PageMeta | undefined {
+  const article = wordArticleBySlug(slug)
+  if (!article) return undefined
+
+  return {
+    title: `${article.title} · 张楠 AI 产品经理`,
+    description: article.description,
+    canonical: `https://zhangnanai.com/words/${article.slug}/`,
+    ogImage: 'https://zhangnanai.com/social-cover.png',
+    ogType: 'article',
+    robots: undefined,
+  }
+}
+
 export function projectJsonLd(slug: string) {
   const project = workItemBySlug(slug)
   if (!project?.detail.isReady) return undefined
@@ -77,6 +91,22 @@ export function projectJsonLd(slug: string) {
       name: '张楠',
       jobTitle: 'AI 产品经理',
     },
+  }
+}
+
+export function wordArticleJsonLd(slug: string) {
+  const article = wordArticleBySlug(slug)
+  if (!article) return undefined
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    description: article.description,
+    url: `https://zhangnanai.com/words/${article.slug}/`,
+    author: { '@type': 'Person', name: '张楠' },
+    datePublished: article.date.replace('.', '-'),
+    isBasedOn: article.sourceUrl,
   }
 }
 

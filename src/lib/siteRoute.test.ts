@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { legacyHashPath, publicSitePaths, publishedProjectPaths, sitePageFromPath, sitePath } from './siteRoute'
+import { legacyHashPath, publicSitePaths, publishedProjectPaths, publishedWordArticlePaths, sitePageFromPath, sitePath } from './siteRoute'
 
 describe('siteRoute', () => {
   it.each([
@@ -25,13 +25,14 @@ describe('siteRoute', () => {
     expect(sitePageFromPath('/unknown/')).toBe('index')
   })
 
-  it('exposes the five primary routes and four content-ready project routes', () => {
+  it('exposes the five primary routes, the article route, and four content-ready project routes', () => {
     expect(publicSitePaths()).toEqual([
       '/',
       '/work/',
       '/words/',
       '/now/',
       '/contact/',
+      '/words/openai-designers-ai-era/',
       '/work/ai-ide/',
       '/work/pdmc-ai/',
       '/work/warehouse-scheduling/',
@@ -43,5 +44,6 @@ describe('siteRoute', () => {
       '/work/warehouse-scheduling/',
       '/work/smart-sales-center/',
     ])
+    expect(publishedWordArticlePaths()).toEqual(['/words/openai-designers-ai-era/'])
   })
 })

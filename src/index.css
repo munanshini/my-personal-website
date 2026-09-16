@@ -116,6 +116,13 @@ p, li { overflow-wrap: anywhere; }
 .detail-reflection { padding: 8px 0 8px 28px; max-width: 820px; border-left: 3px solid rgb(var(--color-signal)); font-size: clamp(20px, 2.4vw, 28px); font-weight: 500; line-height: 1.8; letter-spacing: -.02em; }
 .detail-confidentiality { margin-top: -44px; padding-top: 24px; border-top: 1px solid rgb(var(--color-line)/.12); font-size: 12px; line-height: 1.8; color: rgb(var(--color-muted)); }
 .detail-pager { margin-top: 64px; padding: 32px; border: 1px solid rgb(var(--color-line)/.13); border-radius: 18px; background: rgb(var(--color-surface)/.45); }
+.word-article-source { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 28px; padding: 22px 0; border-block: 1px solid rgb(var(--color-line)/.14); font-size: 12px; line-height: 1.7; color: rgb(var(--color-muted)); }
+.word-article-source a { display: inline-flex; align-items: center; gap: 5px; color: rgb(var(--color-text)); transition: color 180ms ease; }
+.word-article-source a:hover { color: rgb(var(--color-signal)); }
+.word-article-bullets { display: grid; gap: 14px; color: rgb(var(--color-muted)); }
+.word-article-bullets li { position: relative; padding-left: 24px; line-height: 1.9; }
+.word-article-bullets li::before { content: '—'; position: absolute; left: 0; color: rgb(var(--color-signal)); }
+.word-article-section .section-heading { max-width: 780px; }
 .contact-intro { background: #15191e; color: #f3f0e9; }
 .contact-intro p { color: #c0c5cd; }
 .contact-intro a { border-color: #ffffff30; }
@@ -176,6 +183,7 @@ p, li { overflow-wrap: anywhere; }
   .detail-reflection { padding-left: 20px; font-size: 20px; }
   .detail-confidentiality { margin-top: -28px; }
   .detail-pager { padding: 24px; }
+  .word-article-source { align-items: flex-start; flex-direction: column; }
 }
 
 html {

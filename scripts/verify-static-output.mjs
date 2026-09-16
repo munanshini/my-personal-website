@@ -34,7 +34,7 @@ function assertTextCount(path, text, expectedCount) {
   }
 }
 
-for (const path of ['index.html', 'work/index.html', 'words/index.html', 'now/index.html', 'contact/index.html']) {
+for (const path of ['index.html', 'work/index.html', 'words/index.html', 'words/openai-designers-ai-era/index.html', 'now/index.html', 'contact/index.html']) {
   assertExists(path)
 }
 
@@ -42,6 +42,7 @@ for (const path of [
   'work/ai-ide/index.html',
   'work/warehouse-scheduling/index.html',
   'work/smart-sales-center/index.html',
+  'words/openai-designers-ai-era/index.html',
 ]) {
   assertExists(path)
 }
@@ -55,6 +56,7 @@ for (const path of [
   'work/ai-ide/index.html',
   'work/warehouse-scheduling/index.html',
   'work/smart-sales-center/index.html',
+  'words/openai-designers-ai-era/index.html',
 ]) {
   assertTextCount(path, '<title', 1)
   assertTextCount(path, 'name="description"', 1)
@@ -64,11 +66,14 @@ for (const path of [
 for (const slug of ['ai-ide', 'warehouse-scheduling', 'smart-sales-center']) {
   assertText('sitemap.xml', `https://zhangnanai.com/work/${slug}/`)
 }
+assertText('sitemap.xml', 'https://zhangnanai.com/words/openai-designers-ai-era/')
 
 assertText('work/ai-ide/index.html', 'AI IDE 研发助手 · 张楠 AI 产品经理')
 assertText('work/ai-ide/index.html', '把不可靠的模型输出')
 assertText('work/warehouse-scheduling/index.html', '把管理员经验')
 assertText('work/smart-sales-center/index.html', '把一线顾问的讲盘经验')
+assertText('words/openai-designers-ai-era/index.html', 'OpenAI 设计总监：设计师是科技行业最惨的人')
+assertText('words/openai-designers-ai-era/index.html', 'https://mp.weixin.qq.com/s/wL7k-NCyeIl6dbrCRbrcsQ')
 
 if (target === 'aliyun') {
   assertExists('sitemap.xml')
@@ -89,6 +94,7 @@ if (target === 'aliyun') {
   assertText('work/index.html', 'href="./work/"')
   assertText('work/ai-ide/index.html', 'href="./work/ai-ide/#project-decisions"')
   assertNoText('work/ai-ide/index.html', 'href="#project-')
+  assertText('words/openai-designers-ai-era/index.html', 'href="./words/"')
   assertNoText('index.html', "url('/assets/")
   assertNoText('contact/index.html', 'src="/assets/')
 }

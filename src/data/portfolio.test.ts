@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { experiences, projects, workItemBySlug, workItems } from './portfolio'
+import { experiences, nowItems, projects, wordArticleBySlug, words, workItemBySlug, workItems } from './portfolio'
 
 describe('portfolio project readiness', () => {
   it('publishes all four details now that the sourced copy is ready', () => {
@@ -51,5 +51,16 @@ describe('portfolio project readiness', () => {
     expect(experiences.find((experience) => experience.company === '深圳市明源云科技有限公司')?.period).toBe('2019.03 — 2023.01')
     expect(workItemBySlug('pdmc-ai')?.company).toBe('华为技术有限公司')
     expect(workItemBySlug('pdmc-ai')?.detail.background.join(' ')).toContain('流程与业务架构管理平台')
+  })
+
+  it('publishes the AI design leadership article with a source and structured sections', () => {
+    const article = wordArticleBySlug('openai-designers-ai-era')
+
+    expect(article?.title).toBe('OpenAI 设计总监：设计师是科技行业最惨的人')
+    expect(article?.sourceUrl).toBe('https://mp.weixin.qq.com/s/wL7k-NCyeIl6dbrCRbrcsQ')
+    expect(article?.sections.length).toBeGreaterThanOrEqual(6)
+    expect(article?.sections.some((section) => section.heading.includes('双轨'))).toBe(true)
+    expect(words[0].href).toBe('/words/openai-designers-ai-era/')
+    expect(nowItems.some((item) => item.href === '/words/openai-designers-ai-era/')).toBe(true)
   })
 })

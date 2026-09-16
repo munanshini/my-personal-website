@@ -6,6 +6,7 @@ import { NowSection } from './components/NowSection'
 import { ProjectGrid } from './components/ProjectGrid'
 import { ProjectDetailRoute } from './components/ProjectDetailPage'
 import { SiteLayout } from './components/SiteLayout'
+import { WordArticleRoute } from './components/WordArticlePage'
 import { nowItems, workItems, words } from './data/portfolio'
 
 export const routes: RouteRecord[] = [{
@@ -16,6 +17,7 @@ export const routes: RouteRecord[] = [{
     { path: 'work/', element: <ProjectGrid projects={workItems} /> },
     { path: 'work/:slug/', element: <ProjectDetailRoute /> },
     { path: 'words/', element: <ContentFeed items={words} /> },
+    { path: 'words/:slug/', element: <WordArticleRoute /> },
     { path: 'now/', element: <NowSection items={nowItems} /> },
     { path: 'contact/', element: <Contact /> },
   ],

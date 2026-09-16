@@ -20,4 +20,10 @@ describe('ContentFeed', () => {
     expect(screen.getByRole('link', { name: /AI 产品文章/ })).toHaveAttribute('href', 'https://example.com/article')
     expect(screen.queryByRole('link', { name: /视频与公开表达/ })).not.toBeInTheDocument()
   })
+
+  it('turns the internal AI article card into a site-relative link', () => {
+    render(<ContentFeed items={[words[0]]} />)
+
+    expect(screen.getByRole('link', { name: /AI 产品文章/ })).toHaveAttribute('href', '../words/openai-designers-ai-era/')
+  })
 })
