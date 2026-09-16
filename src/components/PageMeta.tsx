@@ -10,7 +10,7 @@ interface PageMetaProps {
 
 export function PageMeta({ page, pathname = '', target }: PageMetaProps) {
   const projectSlug = pathname.match(/^\/work\/([^/]+)\/?$/)?.[1]
-  const wordArticleSlug = pathname.match(/^\/words\/([^/]+)\/?$/)?.[1]
+  const wordArticleSlug = pathname.match(/^\/words\/articles\/([^/]+)\/?$/)?.[1] || pathname.match(/^\/words\/([^/]+)\/?$/)?.[1]
   const meta = (projectSlug && getProjectPageMeta(projectSlug, target)) || (wordArticleSlug && getWordArticlePageMeta(wordArticleSlug, target)) || getPageMeta(page, target)
   const structuredData = projectSlug ? projectJsonLd(projectSlug) : wordArticleSlug ? wordArticleJsonLd(wordArticleSlug) : page === 'index' ? personJsonLd : undefined
 

@@ -6,9 +6,9 @@ import { WordArticleRoute } from './WordArticlePage'
 describe('WordArticlePage', () => {
   it('renders the article title, source, and structured reading sections', () => {
     render(
-      <MemoryRouter initialEntries={['/words/openai-designers-ai-era/']}>
-        <Routes>
-          <Route path="/words/:slug/" element={<WordArticleRoute />} />
+        <MemoryRouter initialEntries={['/words/articles/openai-designers-ai-era/']}>
+          <Routes>
+            <Route path="/words/articles/:slug/" element={<WordArticleRoute />} />
         </Routes>
       </MemoryRouter>,
     )

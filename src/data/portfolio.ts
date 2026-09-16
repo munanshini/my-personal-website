@@ -70,6 +70,21 @@ export interface WordItem {
   href?: string
 }
 
+export type WordChannelSlug = 'articles' | 'videos' | 'vibe-coding'
+
+export interface WordChannel extends WordItem {
+  slug: WordChannelSlug
+}
+
+export interface WordChannelEntry {
+  slug: string
+  type: string
+  title: string
+  description: string
+  date: string
+  href: string
+}
+
 export interface WordArticleSection {
   heading: string
   paragraphs: string[]
@@ -475,14 +490,30 @@ export function wordArticleBySlug(slug: string) {
   return wordArticles.find((article) => article.slug === slug)
 }
 
+export const wordChannels: WordChannel[] = [
+  { slug: 'articles', index: '01', type: 'ARTICLE', title: 'AI 产品文章', description: '记录模型能力如何进入真实场景，以及产品经理在其中如何做判断。', accent: 'bg-[#e7dfcf]', href: '/words/articles/' },
+  { slug: 'videos', index: '02', type: 'VIDEO', title: '视频与公开表达', description: '把复杂问题讲清楚，分享 AI 产品、体验设计与职业转型中的真实思考。', accent: 'bg-[#d5e0e1]', href: '/words/videos/' },
+  { slug: 'vibe-coding', index: '03', type: 'VIBE CODING', title: 'Vibe Coding 实验室', description: '记录个人网站、原型和工具搭建，把想法快速变成可用的产品体验。', accent: 'bg-[#d9d1c8]', href: '/words/vibe-coding/' },
+]
+
+export const wordChannelEntries: Record<WordChannelSlug, WordChannelEntry[]> = {
+  articles: [
+    { slug: 'openai-designers-ai-era', type: 'ARTICLE', title: wordArticles[0].title, description: wordArticles[0].description, date: wordArticles[0].date, href: '/words/articles/openai-designers-ai-era/' },
+  ],
+  videos: [],
+  'vibe-coding': [],
+}
+
+export function wordChannelBySlug(slug: string) {
+  return wordChannels.find((channel) => channel.slug === slug)
+}
+
 export const words: WordItem[] = [
-  { index: '01', type: 'ARTICLE', title: 'AI 产品文章', description: '记录模型能力如何进入真实场景，以及产品经理在其中如何做判断。', accent: 'bg-[#e7dfcf]', href: '/words/openai-designers-ai-era/' },
-  { index: '02', type: 'VIDEO', title: '视频与公开表达', description: '把复杂问题讲清楚，分享 AI 产品、体验设计与职业转型中的真实思考。', accent: 'bg-[#d5e0e1]' },
-  { index: '03', type: 'VIBE CODING', title: 'Vibe Coding 实验室', description: '记录个人网站、原型和工具搭建，把想法快速变成可用的产品体验。', accent: 'bg-[#d9d1c8]' },
+  ...wordChannels,
 ]
 
 export const nowItems: NowItem[] = [
-  { date: '2026.09', city: '深圳', type: 'READING', title: '整理 OpenAI 设计总监关于 AI 时代设计的访谈', description: '把设计师的焦虑、岗位边界与可执行的工作方法，整理成一篇 AI 产品视角的阅读笔记。', href: '/words/openai-designers-ai-era/' },
+  { date: '2026.09', city: '深圳', type: 'READING', title: '整理 OpenAI 设计总监关于 AI 时代设计的访谈', description: '把设计师的焦虑、岗位边界与可执行的工作方法，整理成一篇 AI 产品视角的阅读笔记。', href: '/words/articles/openai-designers-ai-era/' },
   { date: '2026.07', city: '深圳', type: 'THINKING', title: 'AI 产品如何从 Demo 走到真实工作流', description: '关注能力边界、任务成功标准，以及人机协作中的最后一公里。' },
   { date: '2026.07', city: '深圳', type: 'MAKING', title: '个人网站 1.0 与 Vibe Coding', description: '持续打磨自己的作品集，也把搭建过程沉淀成可复用的方法。' },
   { date: '2026.06', city: '深圳', type: 'LIVING', title: '跑步、摄影与保持感受力', description: '在工作之外保持对具体生活的观察，给产品判断留出呼吸。' },

@@ -68,7 +68,7 @@ export function getWordArticlePageMeta(slug: string, _target: DeploymentTarget):
   return {
     title: `${article.title} · 张楠 AI 产品经理`,
     description: article.description,
-    canonical: `https://zhangnanai.com/words/${article.slug}/`,
+    canonical: `https://zhangnanai.com/words/articles/${article.slug}/`,
     ogImage: 'https://zhangnanai.com/social-cover.png',
     ogType: 'article',
     robots: undefined,
@@ -103,7 +103,7 @@ export function wordArticleJsonLd(slug: string) {
     '@type': 'Article',
     headline: article.title,
     description: article.description,
-    url: `https://zhangnanai.com/words/${article.slug}/`,
+    url: `https://zhangnanai.com/words/articles/${article.slug}/`,
     author: { '@type': 'Person', name: '张楠' },
     datePublished: article.date.replace('.', '-'),
     isBasedOn: article.sourceUrl,

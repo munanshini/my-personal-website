@@ -14,16 +14,16 @@ describe('ContentFeed', () => {
   })
 
   it('only creates links when href exists', () => {
-    const linked = [{ ...words[0], href: 'https://example.com/article' }, words[1]]
+    const linked = [{ ...words[0], href: 'https://example.com/article' }, { ...words[1], href: undefined }]
     render(<ContentFeed items={linked} />)
 
     expect(screen.getByRole('link', { name: /AI 产品文章/ })).toHaveAttribute('href', 'https://example.com/article')
     expect(screen.queryByRole('link', { name: /视频与公开表达/ })).not.toBeInTheDocument()
   })
 
-  it('turns the internal AI article card into a site-relative link', () => {
+  it('turns the article channel card into a site-relative list link', () => {
     render(<ContentFeed items={[words[0]]} />)
 
-    expect(screen.getByRole('link', { name: /AI 产品文章/ })).toHaveAttribute('href', '../words/openai-designers-ai-era/')
+    expect(screen.getByRole('link', { name: /AI 产品文章/ })).toHaveAttribute('href', '../words/articles/')
   })
 })

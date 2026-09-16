@@ -20,6 +20,6 @@ describe('NowSection', () => {
   it('links the current article entry to its internal reading page', () => {
     render(<NowSection items={[nowItems.find((item) => item.href) ?? nowItems[0]]} />)
 
-    expect(screen.getByRole('link', { name: /整理 OpenAI 设计总监/ })).toHaveAttribute('href', '../words/openai-designers-ai-era/')
+    expect(screen.getByRole('link', { name: /整理 OpenAI 设计总监/ })).toHaveAttribute('href', '../words/articles/openai-designers-ai-era/')
   })
 })

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { experiences, nowItems, projects, wordArticleBySlug, words, workItemBySlug, workItems } from './portfolio'
+import { experiences, nowItems, projects, wordArticleBySlug, wordChannels, words, workItemBySlug, workItems } from './portfolio'
 
 describe('portfolio project readiness', () => {
   it('publishes all four details now that the sourced copy is ready', () => {
@@ -60,7 +60,8 @@ describe('portfolio project readiness', () => {
     expect(article?.sourceUrl).toBe('https://mp.weixin.qq.com/s/wL7k-NCyeIl6dbrCRbrcsQ')
     expect(article?.sections.length).toBeGreaterThanOrEqual(6)
     expect(article?.sections.some((section) => section.heading.includes('双轨'))).toBe(true)
-    expect(words[0].href).toBe('/words/openai-designers-ai-era/')
-    expect(nowItems.some((item) => item.href === '/words/openai-designers-ai-era/')).toBe(true)
+    expect(wordChannels.map((channel) => channel.href)).toEqual(['/words/articles/', '/words/videos/', '/words/vibe-coding/'])
+    expect(words[0].href).toBe('/words/articles/')
+    expect(nowItems.some((item) => item.href === '/words/articles/openai-designers-ai-era/')).toBe(true)
   })
 })

@@ -57,6 +57,8 @@ describe('App', () => {
     ['/work/warehouse-scheduling/', '智能仓储调度系统', 'project-detail'],
     ['/work/smart-sales-center/', '房企智慧案场销讲与客户接待系统', 'project-detail'],
     ['/words/', '持续思考', 'words'],
+    ['/words/articles/', 'AI 产品文章', 'word-channel'],
+    ['/words/articles/openai-designers-ai-era/', 'OpenAI 设计总监', 'word-article'],
     ['/now/', '此刻，我在关注什么', 'now'],
     ['/contact/', "LET'S TALK", 'contact'],
   ])('renders only the target page for %s', (path, heading, page) => {

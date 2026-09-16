@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { getPageMeta, getProjectPageMeta } from './siteMeta'
+import { getPageMeta, getProjectPageMeta, getWordArticlePageMeta } from './siteMeta'
 
 describe('siteMeta', () => {
   it('uses an absolute canonical URL and sharing image for the main site', () => {
@@ -28,6 +28,13 @@ describe('siteMeta', () => {
 
     expect(meta?.title).toBe('AI IDE 研发助手 · 张楠 AI 产品经理')
     expect(meta?.canonical).toBe('https://zhangnanai.com/work/ai-ide/')
+    expect(meta?.ogType).toBe('article')
+  })
+
+  it('gives a word article its own canonical metadata', () => {
+    const meta = getWordArticlePageMeta('openai-designers-ai-era', 'pages')
+
+    expect(meta?.canonical).toBe('https://zhangnanai.com/words/articles/openai-designers-ai-era/')
     expect(meta?.ogType).toBe('article')
   })
 })

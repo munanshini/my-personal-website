@@ -1,4 +1,4 @@
-import { wordArticles, workItems } from '../data/portfolio'
+import { wordArticles, wordChannels, workItems } from '../data/portfolio'
 
 export const siteNavItems = [
   { page: 'index', label: 'INDEX 首页', path: '/' },
@@ -17,6 +17,7 @@ export function sitePath(page: SitePage) {
 export function sitePageFromPath(pathname: string): SitePage {
   const normalizedPath = pathname === '/' ? '/' : `${pathname.replace(/\/+$/, '')}/`
   if (normalizedPath.startsWith('/work/')) return 'work'
+  if (normalizedPath.startsWith('/words/')) return 'words'
   return siteNavItems.find((item) => item.path === normalizedPath)?.page ?? 'index'
 }
 
@@ -26,11 +27,15 @@ export function legacyHashPath(hash: string) {
 }
 
 export function publicSitePaths() {
-  return [...siteNavItems.map((item) => item.path), ...publishedWordArticlePaths(), ...publishedProjectPaths()]
+  return [...siteNavItems.map((item) => item.path), ...publishedWordChannelPaths(), ...publishedWordArticlePaths(), ...publishedProjectPaths()]
+}
+
+export function publishedWordChannelPaths() {
+  return wordChannels.map((channel) => `/words/${channel.slug}/`)
 }
 
 export function publishedWordArticlePaths() {
-  return wordArticles.map((article) => `/words/${article.slug}/`)
+  return [...wordArticles.map((article) => `/words/articles/${article.slug}/`), ...wordArticles.map((article) => `/words/${article.slug}/`)]
 }
 
 export function publishedProjectPaths() {

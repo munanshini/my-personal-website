@@ -38,3 +38,12 @@ it('uses project metadata and CreativeWork structured data on a detail page', as
   expect(document.head.querySelector('meta[property="og:type"]')).toHaveAttribute('content', 'article')
   expect(document.head.querySelector('script[type="application/ld+json"]')?.textContent).toContain('"@type":"CreativeWork"')
 })
+
+it('uses article metadata and Article structured data on the third-level word page', async () => {
+  render(<HelmetProvider><PageMeta page="words" pathname="/words/articles/openai-designers-ai-era/" target="pages" /></HelmetProvider>)
+
+  await waitFor(() => expect(document.title).toBe('OpenAI 设计总监：设计师是科技行业最惨的人 · 张楠 AI 产品经理'))
+  expect(document.head.querySelector('link[rel="canonical"]')).toHaveAttribute('href', 'https://zhangnanai.com/words/articles/openai-designers-ai-era/')
+  expect(document.head.querySelector('meta[property="og:type"]')).toHaveAttribute('content', 'article')
+  expect(document.head.querySelector('script[type="application/ld+json"]')?.textContent).toContain('"@type":"Article"')
+})
