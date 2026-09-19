@@ -106,7 +106,7 @@ export function wordArticleJsonLd(slug: string) {
     url: `https://zhangnanai.com/words/articles/${article.slug}/`,
     author: { '@type': 'Person', name: '张楠' },
     datePublished: article.date.replace('.', '-'),
-    isBasedOn: article.sourceUrl,
+    ...(article.sourceUrl ? { isBasedOn: article.sourceUrl } : {}),
   }
 }
 

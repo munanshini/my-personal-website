@@ -38,7 +38,9 @@ describe('siteRoute', () => {
       '/words/videos/',
       '/words/vibe-coding/',
       '/words/articles/openai-designers-ai-era/',
+      '/words/articles/ai-pm-agent-nine-step-design/',
       '/words/openai-designers-ai-era/',
+      '/words/ai-pm-agent-nine-step-design/',
       '/work/ai-ide/',
       '/work/pdmc-ai/',
       '/work/warehouse-scheduling/',
@@ -51,6 +53,11 @@ describe('siteRoute', () => {
       '/work/smart-sales-center/',
     ])
     expect(publishedWordChannelPaths()).toEqual(['/words/articles/', '/words/videos/', '/words/vibe-coding/'])
-    expect(publishedWordArticlePaths()).toEqual(['/words/articles/openai-designers-ai-era/', '/words/openai-designers-ai-era/'])
+    expect(publishedWordArticlePaths()).toEqual([
+      '/words/articles/openai-designers-ai-era/',
+      '/words/articles/ai-pm-agent-nine-step-design/',
+      '/words/openai-designers-ai-era/',
+      '/words/ai-pm-agent-nine-step-design/',
+    ])
   })
 })

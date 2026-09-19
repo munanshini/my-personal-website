@@ -98,9 +98,10 @@ export interface WordArticle {
   lead: string
   date: string
   author: string
-  sourceUrl: string
-  mirrorUrl: string
+  sourceUrl?: string
+  mirrorUrl?: string
   sourceLabel: string
+  sourceNote?: string
   keyInsight: string
   sections: WordArticleSection[]
   takeaway: string
@@ -484,6 +485,131 @@ export const wordArticles: WordArticle[] = [
     ],
     takeaway: '设计师不会消失，但工作会更像在不确定性里做判断、组织系统与推动结果。对产品团队来说，真正要升级的是协作方式和责任边界。',
   },
+  {
+    slug: 'ai-pm-agent-nine-step-design',
+    title: 'AI PM 的 Agent 九步设计流程',
+    description: '从需求判断到上线评估，定义一份工程可以直接实现的 agent spec。',
+    lead: '这是一份设计手册，不是学习脚手架：当需求确认适合用 agent 后，产品经理需要把目标、能力、边界、护栏和评估逐项交付清楚。',
+    date: '2026.09',
+    author: '张楠整理',
+    sourceLabel: '张楠整理 · AI PM Agent 设计手册',
+    sourceNote: '这份手册服务于真实交付：它回答 AI 产品经理接到需求、判断要用 agent 之后，具体该定义和交付哪些东西。',
+    keyInsight: '先定义边界，再给能力',
+    sections: [
+      {
+        heading: '该不该做成 agent',
+        paragraphs: [
+          '动手设计前先做减法。这一步是设计的前置闸门：agent 贵、慢、不可预测，只有当任务的执行路径事前无法确定，且必须根据运行中的反馈动态决定下一步时，才值得使用。',
+          '如果步骤和分支可以事前写死，就优先做 workflow；如果确实需要动态判断，再继续往下定义 agent，或者采用“决策层 agent + 执行层确定性流程”的组合。',
+        ],
+        bullets: [
+          '先问步骤和分支能不能事前写死，再问是否必须看到中间结果才知道下一步。',
+          '步数不定、分支爆炸、需要响应意外反馈，是 workflow 的三堵墙。',
+          '产出物是一句话结论，并标出哪一层使用 agent、哪一层使用确定性工具。',
+        ],
+      },
+      {
+        heading: '定义目标与边界',
+        paragraphs: [
+          '把 agent 的唯一任务和明确不做什么钉死。目标越聚焦，agent 越稳；边界越模糊，它越容易乱伸手、乱兜底和乱承诺。',
+          '用“它负责 X，不负责 Y”的句式收紧职责。宁可先做窄而可迭代的 agent，也不要一开始就把所有售后、运营或知识问答都塞进同一个职责里。',
+        ],
+        bullets: [
+          '职责陈述：一句话说明 agent 唯一负责的任务。',
+          '明确不做清单：列出越权、越界和不承诺的场景。',
+          '把灰色地带提前写出来，避免 agent 自由发挥。',
+        ],
+      },
+      {
+        heading: '设计工具集（能力）',
+        paragraphs: [
+          'agent 能干什么，完全由工具决定。工具是 agent 的手，也是它的风险面；没有提供的能力，它无法完成，提供过多的能力则会增加选错工具和传错参数的概率。',
+          '从目标倒推完成任务所需的最少能力，一种能力对应一个工具，并把危险工具单独标记给后续护栏设计。',
+        ],
+        bullets: [
+          '每个工具都写清名称、功能、输入和输出。',
+          '不可逆、花钱、改变权限的工具必须单独标记。',
+          '工具描述要足够明确，让模型知道何时调用、如何传参。',
+        ],
+      },
+      {
+        heading: '编写指令与 System Prompt',
+        paragraphs: [
+          '指令是 agent 的行为准则，负责把目标边界、工具用法、判断优先级、语气和边界处理翻译成可执行的自然语言。',
+          '重点写清“如果……就……”的条件分支，例如命中金额阈值转人工、不同状态走不同工具。指令负责引导，但不能替代真正的安全控制。',
+        ],
+        bullets: [
+          '定义角色、判断规则、优先级、语气和边界处理。',
+          '明确工具的调用条件、参数要求和结果解释方式。',
+          '把危险动作交给代码层护栏，不把安全只寄托在 prompt 上。',
+        ],
+      },
+      {
+        heading: '设计记忆',
+        paragraphs: [
+          '先判断需求是否真的需要跨轮或跨会话记忆。单次任务可以闭环时，不要为了“像 agent”而增加长期记忆；只有需要记住用户身份、上次进度或稳定偏好时，才引入长期记忆。',
+          '需要记忆时，继续明确记什么、存在哪里、保留多久，以及如何处理过时信息。长期记忆通常依靠检索实现，本质上会把 RAG 的准确性和新鲜度问题带进来。',
+        ],
+        bullets: [
+          '判断是否需要记忆，以及是短期任务记忆还是长期记忆。',
+          '定义记忆内容、存储位置、保留期限和更新规则。',
+          '避免把不必要的历史信息带入当前判断，污染任务上下文。',
+        ],
+      },
+      {
+        heading: '设定循环控制：停止与步数',
+        paragraphs: [
+          '产品经理不需要编写执行循环，但要定义“怎么算完成”和“最多转几圈”。这两个参数决定 agent 是停得太早，还是出问题后持续空转。',
+          '完成条件从目标倒推，最大步数、超时和预算上限则应根据真实任务的步数分布实测确定，既覆盖正常任务，也能及时兜住异常。',
+        ],
+        bullets: [
+          '完成条件：描述什么状态算任务达成。',
+          '循环护栏：定义最大步数、超时和预算上限。',
+          '参数要覆盖正常复杂度，不能放任异常任务无限消耗。',
+        ],
+      },
+      {
+        heading: '设计护栏与人机确认',
+        paragraphs: [
+          '把危险的、不可逆的、花钱的动作设成“暂停，等待人工确认，再执行”。agent 会犯错，也可能被诱导，护栏直接决定它能不能进入生产。',
+          '先把工具按“禁止、需确认、放行”分级，再为每类动作定义触发阈值。代码层必须强制执行，不能只在 prompt 中提醒。',
+        ],
+        bullets: [
+          '禁止：绝对不能自动执行的动作和红线行为。',
+          '需确认：涉及资金、权限、不可逆影响或高影响面的动作。',
+          '放行：风险可控、可回滚且不改变外部状态的动作。',
+          '产出物是一张动作分级表，以及每类动作的触发阈值。',
+        ],
+      },
+      {
+        heading: '设计兜底与转人工',
+        paragraphs: [
+          '一个能上生产的 agent，必须有一条清晰的“我不行了 → 转人工”的路。工具报错、绕圈、置信度低或命中边界时，应安全退出，而不是硬撑、乱编或卡死。',
+          '转人工不是失败，而是产品流程的一部分。交接时要把已经收集的信息、调用结果和失败原因一并带过去，避免用户重复描述问题。',
+        ],
+        bullets: [
+          '触发条件：超最大步数、工具连续报错、低置信度或超出职责边界。',
+          '兜底动作：转人工、给出明确话术，或安全退出。',
+          '交接内容：用户诉求、已确认信息、工具结果、失败原因和建议下一步。',
+        ],
+      },
+      {
+        heading: '定义评估指标与上线红线',
+        paragraphs: [
+          '上线前必须能回答：这个 agent 是否靠谱地完成任务、成本是否可接受、失败时是否能恢复，以及多少任务需要人工兜底。',
+          '评估不能只看最终答案对不对，还要检查是否编造、是否走过危险路径、调用次数是否合理，以及失败是否被正确交接。',
+        ],
+        bullets: [
+          '质量：任务完成率、事实可靠性和关键场景通过率。',
+          '可靠性：工具出错率、失败恢复率和异常退出率。',
+          '成本：每次任务的调用数、token 和时间成本。',
+          '人工介入率：最终需要 escalate 的任务比例。',
+          '为每项指标设上线红线，不达标就不进入正式发布。',
+        ],
+      },
+    ],
+    takeaway: '九步可以记成一条动作链：①判断该不该做 → ②钉死目标边界 → ③列工具 → ④写指令 → ⑤判断要不要记忆 → ⑥设完成条件与最大步数 → ⑦给危险动作上护栏 → ⑧设计失败兜底与转人工 → ⑨定评估指标与上线红线。②③⑦⑧是 PM 的主战场：工程师实现循环，你负责边界、能力、护栏和兜底。',
+  },
 ]
 
 export function wordArticleBySlug(slug: string) {
@@ -499,9 +625,12 @@ export const wordChannels: WordChannel[] = [
 export const wordChannelEntries: Record<WordChannelSlug, WordChannelEntry[]> = {
   articles: [
     { slug: 'openai-designers-ai-era', type: 'ARTICLE', title: wordArticles[0].title, description: wordArticles[0].description, date: wordArticles[0].date, href: '/words/articles/openai-designers-ai-era/' },
+    { slug: 'ai-pm-agent-nine-step-design', type: 'ARTICLE', title: wordArticles[1].title, description: wordArticles[1].description, date: wordArticles[1].date, href: '/words/articles/ai-pm-agent-nine-step-design/' },
   ],
   videos: [],
-  'vibe-coding': [],
+  'vibe-coding': [
+    { slug: 'agent-loop', type: 'INTERACTIVE LAB', title: 'Agent Loop 策略地图', description: '跟随 Coding Agent 的决策、执行与反馈循环，点击节点查看数据，逐步观察代码修复、测试与交付。', date: '2026.09', href: '/words/vibe-coding/agent-loop/index.html' },
+  ],
 }
 
 export function wordChannelBySlug(slug: string) {
@@ -513,6 +642,7 @@ export const words: WordItem[] = [
 ]
 
 export const nowItems: NowItem[] = [
+  { date: '2026.09', city: '深圳', type: 'MAKING', title: 'AI PM 的 Agent 九步设计流程', description: '把 agent 设计从“会不会用模型”推进到可交付的 spec：先判断是否该用 agent，再定义目标、工具、护栏、兜底与评估。', href: '/words/articles/ai-pm-agent-nine-step-design/' },
   { date: '2026.09', city: '深圳', type: 'READING', title: '整理 OpenAI 设计总监关于 AI 时代设计的访谈', description: '把设计师的焦虑、岗位边界与可执行的工作方法，整理成一篇 AI 产品视角的阅读笔记。', href: '/words/articles/openai-designers-ai-era/' },
   { date: '2026.07', city: '深圳', type: 'THINKING', title: 'AI 产品如何从 Demo 走到真实工作流', description: '关注能力边界、任务成功标准，以及人机协作中的最后一公里。' },
   { date: '2026.07', city: '深圳', type: 'MAKING', title: '个人网站 1.0 与 Vibe Coding', description: '持续打磨自己的作品集，也把搭建过程沉淀成可复用的方法。' },

@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Agent Loop 策略地图 · 张楠</title>
+<meta name="description" content="跟随 Coding Agent 的决策、执行与反馈循环，通过交互流程、节点数据和代码测试理解 Agent Loop。">
+<style>
+:root{--bg:#0b111b;--panel:#111a27;--panel2:#152131;--line:#29374a;--fg:#e9eff6;--muted:#9aaabd;--mint:#8ceec5;--mint-soft:#182f2d;--amber:#ffcf86;--blue:#9cbeff;--red:#ffaca8;--mono:ui-monospace,SFMono-Regular,Consolas,monospace}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;font-size:14px;line-height:1.6}button,input,select{font:inherit}button{cursor:pointer}button:disabled{cursor:default;opacity:.35}button,select{touch-action:manipulation}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--blue);outline-offset:4px}button{color:inherit}a{color:var(--mint)}.shell{max-width:1512px;margin:auto;padding:30px 42px 24px}.topline{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}.brand{display:flex;align-items:center;gap:10px;font:600 12px var(--mono);letter-spacing:2px}.brand-mark{width:22px;height:22px;border:1px solid var(--mint);border-radius:7px;display:grid;place-items:center;color:var(--mint)}.badge{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:30px;padding:4px 11px;color:var(--muted);font-size:11px;letter-spacing:.4px}.badge i{width:6px;height:6px;background:var(--mint);border-radius:50%}.hero{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:23px}h1{font-size:clamp(26px,3vw,38px);line-height:1.25;letter-spacing:-1px;margin:0 0 10px;font-weight:650}h1 span{color:var(--mint)}.hero p{margin:0;color:var(--muted);font-size:14px}.hero-note{white-space:nowrap;font:11px var(--mono);color:#7e90a5;padding-bottom:3px}.task{display:flex;gap:15px;align-items:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:15px 0;margin-bottom:20px}.task-tag{font:10px var(--mono);color:var(--mint);letter-spacing:1.4px;border:1px solid #36534d;padding:5px 8px;border-radius:5px;white-space:nowrap}.task strong{font-weight:550}.task small{color:var(--muted);display:block;font-size:12px;margin-top:3px}.task .task-meta{margin-left:auto;color:var(--muted);font:11px var(--mono);white-space:nowrap}.rounds{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;margin:0 0 18px}.round-button{display:flex;flex-direction:column;align-items:flex-start;gap:5px;padding:10px 11px;background:transparent;border:1px solid transparent;border-radius:8px;color:#94a4b8;text-align:left;font-size:12px;position:relative}.round-button .round-index{font:10px var(--mono);color:#75879e}.round-button:hover{background:#131e2d}.round-button.current{background:#1b302e;border-color:#345e50;color:var(--mint)}.round-button.current .round-index{color:#8bc7ad}.round-button.complete:after{content:"";position:absolute;right:9px;top:12px;width:4px;height:4px;background:#83b7a2;border-radius:50%}.workspace{display:grid;grid-template-columns:minmax(0,1fr) 332px;gap:18px;align-items:stretch}.canvas-panel{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel)}.canvas-header{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:16px 20px 0}.canvas-header span{font:11px var(--mono);letter-spacing:1.3px;color:#96a9bf}.canvas-header small{color:#8599ad;font-size:11px}.graph{position:relative;height:485px;background-image:radial-gradient(#35435955 .8px,transparent .8px);background-size:22px 22px;isolation:isolate}.wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:0}.wire{fill:none;stroke:#3b4b5e;stroke-width:1.4}.wire.back{stroke-dasharray:5 5;stroke:#3d5b58}.wire.active{stroke:var(--mint);stroke-width:2}.wire.active.warn{stroke:var(--amber)}.wire.visited{stroke:#587366}.flow-trail{fill:none;stroke:var(--mint);stroke-width:3;stroke-linecap:round;opacity:.9}.flow-dot{fill:#d8ffed;filter:drop-shadow(0 0 6px #8ceec5)}.flow-halo{fill:var(--mint);opacity:.17}.node{position:absolute;width:25%;height:104px;padding:14px 15px;background:#141f2e;border:1px solid #3b485b;border-radius:12px;text-align:left;display:flex;flex-direction:column;justify-content:center;transition:border-color .2s,box-shadow .25s,background .25s;z-index:2}.node:hover{border-color:#7c99a6;background:#192737}.node-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}.node-letter{font:11px var(--mono);color:#8a9aad}.node-dot{height:5px;width:5px;border-radius:50%;background:#415169}.node b{font-size:15px;font-weight:550;letter-spacing:.1px;white-space:nowrap}.node small{font-size:10px;font-family:var(--mono);color:#96a7bc;margin-top:3px;white-space:nowrap}.node.live{border-color:var(--mint);background:#19322f;box-shadow:0 0 0 3px #8ceec50b,0 0 29px #8ceec51a}.node.live .node-letter,.node.live .node-dot{color:var(--mint)}.node.live .node-dot{background:var(--mint);box-shadow:0 0 10px var(--mint)}.node.live.warn{border-color:var(--amber);background:#342c21;box-shadow:0 0 27px #ffcf8619}.node.live.warn .node-dot{background:var(--amber);box-shadow:0 0 10px var(--amber)}.node.selected{outline:2px solid var(--blue);outline-offset:4px}.node.past .node-letter{color:#9cbcac}#node-a{left:5%;top:89px}#node-b{left:37.5%;top:89px}#node-c{left:70%;top:89px}#node-d{left:70%;top:332px}#node-e{left:37.5%;top:332px}#node-f{left:5%;top:332px}.terminal-node{position:absolute;top:24px;height:33px;padding:0 12px;border-radius:7px;border:1px solid #3c4d60;background:#192536;display:flex;align-items:center;gap:8px;font-size:11px;z-index:2;color:#abbacc}.terminal-node i{font-style:normal;font-size:12px}.terminal-node.live{color:var(--mint);border-color:var(--mint);box-shadow:0 0 18px #8ceec51a}#node-user{left:5%;width:25%;justify-content:center}#node-done{left:70%;width:25%;justify-content:center;opacity:.57}#node-done.live{opacity:1;background:#19322f}.loop-center{position:absolute;left:23%;width:54%;top:220px;text-align:center;pointer-events:none}.loop-eyebrow{font:10px var(--mono);color:#8fa6a0;letter-spacing:1.8px;margin-bottom:8px}.loop-center h2{margin:0;font-size:21px;font-weight:550;line-height:1.4}.loop-center p{margin:6px 0 0;color:#95a8bc;font-size:12px;line-height:1.7}.packet{position:absolute;left:50%;top:0;transform:translate(-50%,-50%);font:10px var(--mono);line-height:1.3;color:var(--mint);border:1px solid #416258;background:#152724;padding:5px 8px;border-radius:6px;pointer-events:none;z-index:4;white-space:nowrap;opacity:0;max-width:170px;text-align:center}.packet.warn{color:var(--amber);border-color:#786346;background:#2e281f}.controls{border-top:1px solid var(--line);padding:16px 18px;background:#101a27}.control-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.control{background:#1a2738;border:1px solid #344258;border-radius:7px;padding:7px 12px;font-size:12px;min-height:36px;transition:background .15s}.control:hover:not(:disabled){background:#27394c}.control.primary{background:var(--mint);color:#0f2722;border-color:var(--mint);font-weight:600;min-width:104px}.control.primary:hover{background:#b0ffdf}.control.flat{background:transparent;color:var(--muted);border-color:transparent}.control svg{vertical-align:-2px;margin-right:5px}.speed-wrap{display:flex;align-items:center;gap:6px;margin-left:auto;color:var(--muted);font-size:11px}.speed-wrap select{background:#152133;color:#d7e4f2;border:1px solid #344258;border-radius:5px;padding:4px 5px;min-height:32px}.progress-row{margin-top:13px;display:flex;align-items:center;gap:12px}.progress-row input{width:100%;accent-color:var(--mint);height:4px;cursor:pointer;margin:8px 0}.step-counter{white-space:nowrap;font:10px var(--mono);color:var(--muted);min-width:55px}.control-help{display:flex;justify-content:space-between;gap:10px;color:#8b9eb4;font-size:10px;margin-top:4px}.inspector{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:20px;display:flex;flex-direction:column;min-width:0}.inspector-top{display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--muted);font-size:10px;letter-spacing:.8px}.live-label{display:flex;align-items:center;gap:6px}.live-label i{width:5px;height:5px;border-radius:50%;background:var(--mint)}.back-live{font-size:10px;border:0;background:transparent;color:var(--blue);padding:0;text-decoration:underline}.inspector h2{font-size:19px;margin:13px 0 7px;line-height:1.4;font-weight:550;letter-spacing:-.3px}.explanation{color:#a8b7ca;font-size:12px;min-height:57px;line-height:1.8;margin:0 0 16px}.tabs{display:flex;border-bottom:1px solid var(--line);margin-bottom:15px;gap:16px}.tab{background:none;border:0;padding:0 0 10px;font-size:11px;color:var(--muted);border-bottom:2px solid transparent}.tab[aria-selected=true]{color:var(--mint);border-bottom-color:var(--mint)}.pane[hidden]{display:none!important}.data-label{font:10px var(--mono);letter-spacing:1px;color:#92a8ba;display:flex;align-items:center;gap:7px;margin-bottom:7px}.data-label .tiny-dot{width:4px;height:4px;border-radius:50%;background:#6d8c9f}.data-label.output{color:var(--mint)}pre{margin:0;font-family:var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;line-height:1.8;font-size:11px;background:#0c1420;border:1px solid #273649;border-radius:7px;padding:12px;color:#bfcedf}#incoming{margin-bottom:16px}#outgoing{color:#c1efda;border-color:#30463e;background:#101d20}.flow-caption{margin-top:16px;padding-top:13px;border-top:1px solid var(--line);font-size:11px;color:#a9bacb;line-height:1.8}.flow-caption strong{font-weight:500;color:var(--mint)}.inspector-bottom{margin-top:auto;padding-top:15px;color:#8195ab;font-size:10px;line-height:1.7}.file-head{display:flex;justify-content:space-between;gap:10px;margin-bottom:8px;font:11px var(--mono);color:#a2b7c9}.version-badge{color:var(--mint)}.test-head{display:flex;justify-content:space-between;margin:17px 0 8px;font-size:11px;color:#adc0d2}.test-row{display:grid;grid-template-columns:1fr 25px 55px;align-items:center;gap:6px;padding:7px 0;border-bottom:1px solid #263548;font:10px var(--mono);color:#adbed0}.test-row .result{text-align:right}.result.pass{color:var(--mint)}.result.fail{color:var(--amber)}.result.wait{color:#8395aa}.state-mini{margin-top:13px;display:flex;justify-content:space-between;color:#93a6b9;font-size:10px;gap:10px}.state-mini b{color:#c2d5df;font-weight:400}.node-purpose{font-size:12px;color:#acbccd;line-height:1.9;margin:0 0 16px}.callout{border-left:2px solid #8ceec588;padding:0 0 0 12px;color:#c5d3df;font-size:12px;line-height:1.9;margin-top:17px}.footer{display:flex;justify-content:space-between;align-items:center;gap:20px;color:#889cb3;margin-top:19px;font-size:11px}.footer strong{color:#b5c8d7;font-weight:400}.legend{display:flex;align-items:center;gap:13px;white-space:nowrap}.legend span{display:flex;align-items:center;gap:5px}.legend i{width:5px;height:5px;border-radius:50%;background:var(--mint)}.legend .amber{background:var(--amber)}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}[hidden]{display:none!important}.noscript{padding:20px;border:1px solid var(--amber);color:var(--amber)}
+@media(min-width:1400px){.workspace{grid-template-columns:minmax(0,1fr) 358px}.graph{height:502px}#node-d,#node-e,#node-f{top:347px}.loop-center{top:229px}.node{height:110px}}
+@media(max-width:1120px){.shell{padding:25px}.workspace{grid-template-columns:minmax(0,1fr) 302px;gap:12px}.node{padding:11px}.node b{font-size:13px}.node small{font-size:9px}.round-button{padding:9px 7px}.inspector{padding:17px}.hero-note{display:none}.loop-center h2{font-size:18px}.loop-center p{font-size:11px}.loop-center{left:24%;width:52%}.control{padding:7px 9px}}
+@media(max-width:960px){.workspace{grid-template-columns:1fr}.inspector{display:block;min-height:340px}.inspector-bottom{margin-top:14px}.explanation{min-height:0}.rounds{gap:2px}.hero p{font-size:13px}.task .task-meta{display:none}.node b{font-size:15px}.node small{font-size:10px}.pane-data-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}#incoming{margin-bottom:0}.data-col{min-width:0}.inspector h2{margin-top:10px}.file-pane-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.test-head{margin-top:0}.control-help{font-size:11px}}
+@media(max-width:600px){.shell{padding:20px 15px}.topline{margin-bottom:24px}.brand{font-size:10px;letter-spacing:1.3px}.badge{font-size:9px;padding:4px 8px}.hero{margin-bottom:20px}.hero h1{font-size:28px;letter-spacing:-.8px}.hero p{font-size:12px;max-width:31em}.task{gap:10px;align-items:flex-start}.task strong{font-size:12px}.task small{font-size:10px}.task-tag{font-size:9px;padding:4px}.rounds{grid-template-columns:repeat(4,minmax(0,1fr));gap:3px}.round-button{padding:8px;font-size:11px;gap:3px}.round-button .round-index{font-size:9px}.canvas-header{padding:15px 13px 0}.canvas-header span{font-size:10px}.canvas-header small{font-size:9px}.graph{height:473px}.node{width:27%;height:91px;padding:9px 8px;border-radius:9px}.node b{font-size:12px;letter-spacing:-.4px}.node small{font-size:8px;letter-spacing:-.15px}.node-top{margin-bottom:6px}.node-letter{font-size:10px}#node-a,#node-f{left:3%}#node-b,#node-e{left:36.5%}#node-c,#node-d{left:70%}#node-a,#node-b,#node-c{top:95px}#node-d,#node-e,#node-f{top:345px}#node-user{left:3%;width:27%}#node-done{left:70%;width:27%}.terminal-node{font-size:10px;padding:0 5px;top:29px}.loop-center{left:17%;width:66%;top:226px}.loop-center h2{font-size:18px}.loop-center p{font-size:11px}.loop-eyebrow{font-size:9px}.controls{padding:14px 12px}.control{min-height:40px;padding:7px 10px}.control.primary{min-width:96px}.speed-wrap{margin-left:0;font-size:10px}.speed-wrap select{min-height:37px}.control-row{gap:6px}.control.flat{padding:7px 6px}.control-help span:last-child{display:none}.control-help{font-size:10px}.packet{font-size:9px;max-width:116px;padding:4px 5px}.pane-data-grid,.file-pane-grid{grid-template-columns:1fr}.test-head{margin-top:14px}.footer{align-items:flex-start;flex-direction:column;gap:10px;font-size:10px}.inspector{padding:17px}.explanation{font-size:12px}.tabs{gap:23px}.tab{padding:3px 0 11px;font-size:12px}.flow-caption{font-size:12px}.legend{font-size:10px}}
+@media(max-width:420px){h1 span{display:block;margin-top:4px}.node b{white-space:normal;line-height:1.45}.node small{display:none}.node{justify-content:flex-start;padding-top:12px}.node-top{margin-bottom:8px}.loop-center{left:19%;width:62%}.loop-center h2{font-size:16px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.flow-halo{display:none}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <nav aria-label="返回网站" style="margin-bottom:20px;font-size:12px"><a href="../" style="text-decoration:none">← 返回 Vibe Coding 实验室</a></nav>
+  <div class="topline"><div class="brand"><span class="brand-mark" aria-hidden="true">↻</span>AGENT LOOP LAB</div><div class="badge"><i></i>单 Agent · 教学模拟</div></div>
+  <header class="hero"><div><h1>Agent Loop <span>策略地图</span></h1><p>跟着一束光，走过一次决策、执行与反馈。点击节点，打开它正在传递的数据。</p></div><div class="hero-note">REQUEST → ACTION → OBSERVATION → REPEAT</div></header>
+  <section class="task" aria-label="本次任务"><span class="task-tag">THE TASK</span><div><strong>修复记账程序：只统计支出，返回非负的支出总额。</strong><small>收入为正数 · 支出为负数 · 保持函数接口不变 · 空列表返回 0</small></div><span class="task-meta">ledger.py / Python</span></section>
+  <nav id="rounds" class="rounds" aria-label="跳转任务阶段"></nav>
+  <div class="workspace">
+    <section class="canvas-panel" aria-label="Coding Agent 动态数据流">
+      <div class="canvas-header"><span>THE AGENT LOOP</span><small>运行时持续调度整个循环</small></div>
+      <div class="graph" id="graph">
+        <svg id="wires" class="wires" aria-hidden="true"><defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="#728d97" stroke-width="1.5"/></marker></defs><g id="paths"></g><path class="flow-trail" id="trail"/><circle id="halo" class="flow-halo" r="13" visibility="hidden"/><circle id="dot" class="flow-dot" r="4.2" visibility="hidden"/></svg>
+        <button type="button" id="node-user" class="terminal-node" data-node="user"><i aria-hidden="true">↳</i> 用户需求</button>
+        <button type="button" id="node-done" class="terminal-node" data-node="done"><i aria-hidden="true">✓</i> 完成交付</button>
+        <button type="button" id="node-a" class="node" data-node="a"><span class="node-top"><span class="node-letter">A</span><span class="node-dot"></span></span><b>组织上下文</b><small>Context</small></button>
+        <button type="button" id="node-b" class="node" data-node="b"><span class="node-top"><span class="node-letter">B</span><span class="node-dot"></span></span><b>模型决策</b><small>LLM · Decide</small></button>
+        <button type="button" id="node-c" class="node" data-node="c"><span class="node-top"><span class="node-letter">C</span><span class="node-dot"></span></span><b>执行控制</b><small>Check · Dispatch</small></button>
+        <button type="button" id="node-d" class="node" data-node="d"><span class="node-top"><span class="node-letter">D</span><span class="node-dot"></span></span><b>工具与工作区</b><small>Tools · Workspace</small></button>
+        <button type="button" id="node-e" class="node" data-node="e"><span class="node-top"><span class="node-letter">E</span><span class="node-dot"></span></span><b>接收结果</b><small>Observation</small></button>
+        <button type="button" id="node-f" class="node" data-node="f"><span class="node-top"><span class="node-letter">F</span><span class="node-dot"></span></span><b>更新状态</b><small>State → Context</small></button>
+        <div class="loop-center"><div id="loop-eyebrow" class="loop-eyebrow">READY TO EXPLORE</div><h2 id="loop-title">一次任务，多轮循环。</h2><p id="loop-summary">模型决定下一步，工具实际执行，<br>结果回来后，再决定下一步。</p></div>
+        <div class="packet" id="packet" aria-hidden="true"></div>
+      </div>
+      <div class="controls">
+        <div class="control-row"><button type="button" id="play" class="control primary">▶ 播放流程</button><button type="button" id="prev" class="control" aria-label="上一步">← 上一步</button><button type="button" id="next" class="control" aria-label="下一步">下一步 →</button><button type="button" id="reset" class="control flat">↺ 重来</button><label class="speed-wrap">速度 <select id="speed" aria-label="播放速度"><option value="0.6">0.6×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label></div>
+        <div class="progress-row"><input id="scrubber" type="range" min="0" max="1" value="0" step="1" aria-label="定位流程步骤"><span id="step-counter" class="step-counter">01 / 47</span></div>
+        <div class="control-help"><span id="play-status">点击播放，或用“下一步”跟随光点。</span><span>空格 播放 / 暂停 · ← → 单步</span></div>
+      </div>
+    </section>
+    <aside class="inspector" aria-label="节点与数据详情">
+      <div class="inspector-top"><span class="live-label"><i></i><span id="inspect-mode">当前步骤</span></span><button id="back-live" class="back-live" type="button" hidden>返回当前步骤</button></div>
+      <h2 id="inspect-title">从一个具体需求开始</h2><p class="explanation" id="explanation"></p>
+      <div class="tabs" role="tablist" aria-label="查看内容"><button id="tab-data" class="tab" type="button" role="tab" aria-selected="true" aria-controls="pane-data" data-tab="data">传递的数据</button><button id="tab-workspace" class="tab" type="button" role="tab" aria-selected="false" aria-controls="pane-workspace" data-tab="workspace">代码与测试</button><button id="tab-about" class="tab" type="button" role="tab" aria-selected="false" aria-controls="pane-about" data-tab="about">节点职责</button></div>
+      <div class="pane" id="pane-data" role="tabpanel" aria-labelledby="tab-data"><div class="pane-data-grid"><div class="data-col"><div class="data-label"><i class="tiny-dot"></i>INPUT / 收到什么</div><pre id="incoming"></pre></div><div class="data-col"><div class="data-label output"><i class="tiny-dot"></i>OUTPUT / 发出什么</div><pre id="outgoing"></pre></div></div><div class="flow-caption" id="flow-caption"></div></div>
+      <div class="pane" id="pane-workspace" role="tabpanel" aria-labelledby="tab-workspace" hidden><div class="file-pane-grid"><div><div class="file-head"><span>ledger.py</span><span class="version-badge" id="version-label">v0 · 原始代码</span></div><pre id="code-view"></pre><div class="state-mini"><span>工作区 <b id="workspace-status">尚未修改</b></span><span>检查 <b id="review-status">尚未审查</b></span></div></div><div><div class="test-head"><span>四项行为测试</span><span id="test-summary">尚未运行</span></div><div id="test-rows"></div><div class="state-mini"><span id="evidence-status">当前版本还没有验证证据</span></div></div></div></div>
+      <div class="pane" id="pane-about" role="tabpanel" aria-labelledby="tab-about" hidden><p id="node-purpose" class="node-purpose"></p><div class="data-label">在本案例里</div><p id="node-example" class="node-purpose"></p><div class="callout" id="node-boundary"></div></div>
+      <div class="inspector-bottom">光点表示一次信息传递。每经过一个节点，数据的内容或用途都可能改变。</div>
+    </aside>
+  </div>
+  <footer class="footer"><div><strong>读懂这个循环：</strong>每次工具反馈都会触发下一轮决策；测试通过后，还要审查改动才能交付。<br>预设教学演示，不连接真实模型，不执行系统命令。单文件，可离线打开。</div><div class="legend"><span><i></i>正常流转</span><span><i class="amber"></i>失败反馈</span><span>点击节点查看详情</span></div></footer>
+  <p id="announcement" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+  <noscript><p class="noscript">请启用 JavaScript 查看动画。运行顺序：需求 → 上下文 → 模型 → 执行控制 → 工具 → 结果 → 状态 → 下一轮上下文，最终通过验证和审查后交付。</p></noscript>
+</main>
+<script>
+'use strict';
+// All data and animation are local. This is an educational simulation.
+const $ = id => document.getElementById(id);
+const codeVersions = [
+  'def total_spend(amounts):\n    return sum(amounts)',
+  'def total_spend(amounts):\n    return sum(a for a in amounts\n               if a < 0)',
+  'def total_spend(amounts):\n    return -sum(a for a in amounts\n                if a < 0)'
+];
+const nodeInfo = {
+  user:{name:'用户需求',purpose:'给出要完成的目标、边界和验收标准。运行时据此初始化任务，再准备第一次模型输入。',example:'只统计负数支出，结果返回非负值；保留函数名和参数。',boundary:'需求描述的是希望得到的结果，不是已经发生的修复。'},
+  a:{name:'组织上下文',purpose:'把这一轮真正需要的信息交给模型：用户目标、工具说明、相关代码、最新结果和关键约束。',example:'失败后，把“实际 −25、预期 25”和当前代码放入下一轮输入。',boundary:'Context 是模型这一次看见的材料；State 是系统保存的任务记录。两者不是同一份东西。'},
+  b:{name:'模型决策',purpose:'模型根据当前证据选择下一步。它可以请求读文件、修改代码、运行测试，也可以在证据充分时提出最终答复。',example:'先请求读取文件；看到符号错误后，再请求修正代码。',boundary:'模型发出的是行动请求。此时文件还没有被修改，命令也没有运行。'},
+  c:{name:'执行控制',purpose:'运行时检查参数与权限、调度工具，并控制超时和停止条件。这里突出执行前检查；运行时实际上贯穿整个循环。',example:'确认补丁只改 ledger.py、测试在项目范围内执行；交付前核对当前版本证据。',boundary:'权限检查不等于每次都要用户点确认。已授权的操作可以继续；新的授权需求才需要暂停。'},
+  d:{name:'工具与工作区',purpose:'真正执行读文件、应用补丁和测试命令。工作区是代码与进程实际存在的地方。',example:'编辑工具将补丁写入 ledger.py；测试进程再运行四项行为测试。',boundary:'这是代码实际变化的节点。模型提出修改、运行时允许修改，都不等于文件已经改变。'},
+  e:{name:'接收结果',purpose:'接收工具返回的 Observation，并根据结果类型整理证据。读文件得到代码；测试得到实际输出、失败详情和退出码。',example:'第一次修复后，测试返回 2 失败、2 通过；第二次修复后返回 4 通过。',boundary:'“补丁已应用”只代表写入成功。只有真的运行验证，才有相应测试证据。'},
+  f:{name:'更新状态',purpose:'保存进度、当前代码版本、最近结果和下一步需要的证据，再把相关信息送回上下文。',example:'记录“v1 测试失败：返回了负值”，下一轮修正符号，不重复原样测试。',boundary:'State 可以保留失败经验，但记录本身不会自动禁止错误动作；需要模型利用信息或程序执行明确约束。'},
+  done:{name:'完成交付',purpose:'当前版本通过需求验证，改动范围也经过审查后，运行时结束任务并交付改动与证据。',example:'v2 的四项测试全部通过；只修改 ledger.py；函数接口保持不变。',boundary:'结束运行不一定是成功。本演示展示成功出口；真实系统也会因等待信息、取消或预算用尽而暂停或未完成停止。'}
+};
+const rounds = [
+  {id:'read',label:'读取代码',heading:'先看清楚，代码是什么。',summary:'先获取证据，不凭函数名猜实现。',context:'目标：修复支出统计\n约束：接口不变；返回非负总额\n工具：read_files / apply_patch\n      run_command / review_changes',action:'read_files([\n  "ledger.py",\n  "test_ledger.py"\n])',reason:'模型还不知道项目里的真实实现，先请求读取函数与验收测试。',command:'读取 ledger.py 与 test_ledger.py',output:codeVersions[0]+'\n\n测试约定：\n[-20,-5,100] → 25\n[-20,-5] → 25\n[100,0] → 0\n[] → 0',feedback:'发现现状：直接累加所有金额。\n四项测试明确了预期行为。\n下一步：运行基线测试。',state:'phase: reproduce\ncode_version: v0\ntests: not_run\nnext: 复现错误',phase:'复现问题',toolType:'read',tone:'normal'},
+  {id:'baseline',label:'复现问题',heading:'让错误变成可见的证据。',summary:'原始代码得到 75，正确结果应是 25。',context:'目标：只统计支出，返回非负总额\n当前代码：return sum(amounts)\n已读取四项测试\n尚未运行验证',action:'run_command({\n  "command": "python -m pytest -q test_ledger.py"\n})',reason:'模型请求运行现有测试，确认错误并建立修复前的比较基线。',command:'python -m pytest -q test_ledger.py',output:'exit_code: 1\n3 failed, 1 passed\n\n混合金额：actual 75 / expected 25\n纯支出：actual -25 / expected 25\n无支出：actual 100 / expected 0',feedback:'验证失败 · v0\n收入被纳入求和；符号也不符合约定。\n需要修改实现。',state:'phase: repairing\ncode_version: v0\ntests: 3 failed, 1 passed\nnext: 先排除收入',phase:'等待修复',toolType:'test',tone:'warn',testValues:[75,-25,100,0],testVersion:0},
+  {id:'edit1',label:'第一次修改',heading:'补丁写入，不代表做对。',summary:'先排除收入，留下一个待验证的候选实现。',context:'基线：3 failed, 1 passed\n当前版本：v0\n混合金额 actual 75 / expected 25\n约束：仍需返回非负总额',action:'apply_patch({\n  "path": "ledger.py",\n  "change": "只累计 a < 0 的金额"\n})',reason:'这里特意演示一个不完整的修复：模型只过滤了收入，遗漏了返回值符号。',command:'将候选补丁写入 ledger.py',output:'patch_applied: true\nfile: ledger.py\nworkspace_version: v1\n\nreturn sum(a for a in amounts\n           if a < 0)',feedback:'写入成功，业务正确性尚未验证。\nv0 的测试不能证明 v1 正确。\n下一步：测试新版本。',state:'phase: testing\ncode_version: v1\nvalidation: pending\nnext: 运行四项测试',phase:'等待验证',toolType:'edit',tone:'normal',editVersion:1},
+  {id:'test1',label:'失败反馈',heading:'失败不是终点，是新输入。',summary:'收入过滤正确了，但结果仍是 −25。',context:'当前版本：v1\nreturn sum(a for a in amounts if a < 0)\n补丁已应用，尚未测试\n要求：支出总额为非负数',action:'run_command({\n  "command": "python -m pytest -q test_ledger.py"\n})',reason:'模型请求验证第一次修改。测试会揭示哪些要求满足了、哪些仍未满足。',command:'python -m pytest -q test_ledger.py',output:'exit_code: 1\n2 failed, 2 passed\n\n混合金额：actual -25 / expected 25\n纯支出：actual -25 / expected 25\n无支出、空列表：通过',feedback:'验证失败 · v1\n收入过滤已生效；支出总额符号错误。\n应修改代码，再运行测试。',state:'phase: repairing\ncode_version: v1\ntests: 2 failed, 2 passed\nnext: 修正结果符号',phase:'修正符号',toolType:'test',tone:'warn',testValues:[-25,-25,0,0],testVersion:1},
+  {id:'edit2',label:'再次修复',heading:'依据反馈，改变下一步。',summary:'从错误证据出发，修正支出总额的符号。',context:'当前版本：v1\n最近测试：2 failed, 2 passed\n关键证据：actual -25 / expected 25\n原因：负数支出之和仍是负值',action:'apply_patch({\n  "path": "ledger.py",\n  "change": "对负数金额的和取负"\n})',reason:'模型利用上一轮的失败信息，保留收入过滤，并修正返回值的符号。',command:'将修正后的补丁写入 ledger.py',output:'patch_applied: true\nfile: ledger.py\nworkspace_version: v2\n\nreturn -sum(a for a in amounts\n            if a < 0)',feedback:'修正已写入 v2。\nv1 的失败记录仍保留，但已不是当前版本。\n下一步：重新验证。',state:'phase: testing\ncode_version: v2\nvalidation: pending\nnext: 验证修正后的行为',phase:'等待验证',toolType:'edit',tone:'normal',editVersion:2},
+  {id:'test2',label:'验证通过',heading:'通过测试，还要检查改动。',summary:'四项行为正确；先回传证据，再决定是否完成。',context:'当前版本：v2\nreturn -sum(a for a in amounts if a < 0)\n修改已写入，等待当前版本验证\n四项验收行为保持不变',action:'run_command({\n  "command": "python -m pytest -q test_ledger.py"\n})',reason:'模型请求测试 v2，不能把以前版本的验证结果当作本次成功的证据。',command:'python -m pytest -q test_ledger.py',output:'exit_code: 0\n4 passed\n\n混合金额：25 ✓\n纯支出：25 ✓\n无支出、空列表：0 ✓',feedback:'行为验证通过 · v2\n四项测试全部通过。\n下一步：审查差异与任务范围。',state:'phase: reviewing\ncode_version: v2\ntests: 4 passed\nnext: 审查变更，不立即停止',phase:'审查改动',toolType:'test',tone:'normal',testValues:[25,25,0,0],testVersion:2},
+  {id:'review',label:'审查改动',heading:'确认修复，也确认边界。',summary:'检查接口、测试与文件范围，补齐交付证据。',context:'当前版本：v2\n四项行为测试通过\n待检查：函数接口、文件范围、测试保留\n任务要求：最小范围修复',action:'review_changes({\n  "checks": ["status", "diff",\n    "staged", "untracked",\n    "signature", "tests"]\n})',reason:'模型请求审查完整变更范围。只看测试通过，还不能证明没有改动无关文件。',command:'查看状态、差异与接口；确认测试保留',output:'changed_files: ["ledger.py"]\npublic_signature: unchanged\ntests: preserved\nstaged_or_untracked_extra: none\n\n- return sum(amounts)\n+ return -sum(a for a in amounts if a < 0)',feedback:'范围检查通过 · v2\n只修改必要实现，接口保持不变。\n当前版本的测试与审查证据齐全。',state:'phase: ready_to_finish\ncode_version: v2\ntests: 4 passed\nreview: passed\nnext: 交付结果',phase:'准备交付',toolType:'review',tone:'normal'},
+  {id:'finish',label:'完成交付',heading:'有证据，才走向完成。',summary:'最终答复通过完成检查，循环在这里停止。',context:'当前版本：v2\n行为验证：4 passed\n范围检查：passed\n函数接口不变；测试保留',action:'final_answer({\n  "result": "支出统计已修复",\n  "evidence": "v2 的 4 项测试通过；改动已审查"\n})',reason:'模型根据已有证据提出最终答复。本轮不再请求工具，由运行时检查是否满足完成条件。',phase:'完成交付',tone:'normal'}
+];
+const events = [];
+const pendingCopy = {
+  baseline:['运行一次基线测试。','在原始版本上复现问题，等待工具返回。'],
+  test1:['候选修复，需要验证。','运行 v1 的四项测试，等待实际结果。'],
+  test2:['验证当前代码版本。','运行 v2 的四项测试，等待实际结果。'],
+  finish:['有证据，才走向完成。','当前版本的证据已备齐，正在核验交付条件。']
+};
+const add = e => events.push(e);
+add({node:'user',round:0,title:'从一个具体需求开始',why:'运行时接收目标、约束和验收标准，初始化任务。随后开始组织第一次输入。',input:'用户：\n“这个程序把收入也算进支出了，\n请修复，并验证。”',output:'目标：只累计负数支出\n返回：非负的支出总额\n约束：函数接口不变\n验收：四项行为测试',packet:'需求 + 约束',hint:'接下来，运行时启动任务，准备第一次上下文。'});
+rounds.forEach((r,index)=>{
+  r.start=events.length;
+  add({node:'a',round:index,title:'组织这一轮的上下文',why:'把本轮所需证据交给模型。信息会随运行变化，而不是每次从空白开始。',input:r.context,output:'给模型的输入：\n'+r.context,packet:'Context / 本轮输入',hint:'下一站：模型只根据它实际获得的信息作决定。'});
+  add({node:'b',round:index,title:index===7?'模型提出最终答复':'模型选择下一步行动',why:r.reason,input:r.context,output:r.action,packet:index===7?'Final / 最终答复':'Tool Call / 行动请求',hint:index===7?'下一站：运行时核验完成证据。':'下一站：检查请求是否允许执行；此时工具尚未运行。'});
+  if(index===7){
+    add({node:'c',round:index,title:'运行时检查完成条件',why:'核对测试对应当前版本，确认需求与改动范围都已检查。只有通过后才能标记为成功。',input:r.action,output:'completion_gate:\n  code_version: v2\n  tests_version: v2\n  tests: 4 passed\n  review: passed\n  result: allow_complete',packet:'交付说明 + 证据',hint:'证据齐全且有效，前往完成出口。'});
+    return;
+  }
+  add({node:'c',round:index,title:'检查请求，再调度工具',why:'本例的读写和测试已在授权范围内。运行时检查参数与执行边界，允许后才交给工具。',input:r.action,output:'参数检查：通过\n权限范围：项目内\n执行策略：已授权\n调度：'+r.command,packet:'已检查的执行请求',hint:'下一站：工具真正执行操作。权限通过不代表业务正确。'});
+  add({node:'d',round:index,title:r.toolType==='edit'?'工具把补丁写入工作区':r.toolType==='test'?'测试工具实际运行':r.toolType==='review'?'工具检查真实改动':'工具读取真实文件',why:r.toolType==='edit'?'直到这个节点，文件才真正改变。可切换“代码与测试”查看版本变化。':r.toolType==='test'?'在当前代码版本上执行四项测试，生成退出码和逐项结果。':r.toolType==='review'?'结合文件状态与差异检查范围，不只看一条 git diff。':'从工作区读取文件，返回代码和测试约定；不会修改文件。',input:r.command,output:r.output,packet:'Tool Result / 工具结果',hint:'下一站：接收真实执行结果，而不是模型的预测。',mutation:r.editVersion!==undefined?{version:r.editVersion}:null});
+  add({node:'e',round:index,title:r.toolType==='test'?(r.tone==='warn'?'收到测试失败的证据':'收到当前版本的通过证据'):'把工具结果整理成观察',why:r.toolType==='test'?(r.tone==='warn'?'失败结果提供了具体差距。这份证据会沿回路进入下一轮，改变模型的行动。':'这次测试通过，但仍需检查任务的其他要求，不能直接跳过审查。'):'Observation 可以是文件内容、补丁写入结果或审查结论，不只指报错。',input:r.output,output:r.feedback,packet:r.tone==='warn'?'失败证据 / Observation':'观察结果 / Observation',tone:r.tone,hint:'下一站：保存当前结果及其对应的代码版本。',mutation:r.testValues?{tests:r.testValues,testsVersion:r.testVersion}:r.toolType==='review'?{reviewed:true}:null});
+  add({node:'f',round:index,title:r.tone==='warn'?'保存失败，带回下一轮':'更新任务状态，继续循环',why:r.tone==='warn'?'保留失败原因和当前进度。下一轮应修正实现，不会靠原样重复测试解决逻辑错误。':'运行时保存关键事实，再选择相关信息组成下一次模型输入。',input:r.feedback,output:r.state,packet:'State + 最新证据',tone:r.tone,hint:'沿左侧回路，重新进入上下文。一次工具反馈就会带来下一轮决策。',mutation:{phase:r.phase}});
+});
+add({node:'done',round:7,title:'任务完成，循环停止',why:'修复与验证证据一起交付。本演示的成功来自当前版本的检查结果，而不是一句“我完成了”。',input:'v2：4 passed\n改动审查：通过\n仅修改 ledger.py\n函数接口不变',output:'已修复支出统计。\n只累计负数金额，并返回非负总额。\n四项行为测试通过，改动范围已审查。\n\nstatus: completed',packet:'',hint:'本例只演示四项测试；真实项目还需按任务要求完成相关回归检查。',mutation:{phase:'已完成'}});
+const state={cursor:0,elapsed:0,playing:false,single:false,speed:1,selected:null,tab:'data',lastTime:0};
+const expected=[25,25,0,0];
+const testInputs=['[-20,-5,100]','[-20,-5]','[100,0]','[]'];
+const paths=new Map();
+const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+const duration=2600, dwell=1050;
+const routeKeys=['user-a','a-b','b-c','c-d','d-e','e-f','f-a','c-done'];
+const svgNS='http://www.w3.org/2000/svg';
+routeKeys.forEach(key=>{const path=document.createElementNS(svgNS,'path');path.setAttribute('class','wire'+(key==='f-a'?' back':''));path.setAttribute('marker-end','url(#arrow)');path.id='edge-'+key;$('paths').appendChild(path);paths.set(key,path)});
+rounds.forEach((r,i)=>{const btn=document.createElement('button');btn.className='round-button';btn.type='button';btn.dataset.round=i;btn.setAttribute('aria-label','跳转到第 '+(i+1)+' 轮：'+r.label);const index=document.createElement('span');index.className='round-index';index.textContent=String(i+1).padStart(2,'0');const label=document.createElement('span');label.textContent=r.label;btn.append(index,label);btn.addEventListener('click',()=>jump(r.start));$('rounds').appendChild(btn)});
+$('scrubber').max=events.length-1;
+function current(){return events[state.cursor]}
+function snapshot(){
+  const s={version:0,tests:null,testsVersion:null,reviewed:false,phase:'等待开始'};
+  for(let i=0;i<=state.cursor;i++){if(events[i].mutation)Object.assign(s,events[i].mutation)}
+  return s;
+}
+function bounds(id){const a=$('node-'+id).getBoundingClientRect(),b=$('graph').getBoundingClientRect();return{x:a.left-b.left,y:a.top-b.top,w:a.width,h:a.height}}
+function drawPaths(){
+  const w=$('graph').clientWidth,h=$('graph').clientHeight;$('wires').setAttribute('viewBox',`0 0 ${w} ${h}`);
+  paths.forEach((path,key)=>{const [a,b]=key.split('-'),s=bounds(a),t=bounds(b);let x1,y1,x2,y2;
+    if(['a-b','b-c'].includes(key)){x1=s.x+s.w+2;y1=s.y+s.h/2;x2=t.x-5;y2=t.y+t.h/2}
+    else if(['d-e','e-f'].includes(key)){x1=s.x-2;y1=s.y+s.h/2;x2=t.x+t.w+5;y2=t.y+t.h/2}
+    else if(key==='f-a'||key==='c-done'){x1=s.x+s.w/2;y1=s.y-2;x2=t.x+t.w/2;y2=t.y+t.h+5}
+    else{x1=s.x+s.w/2;y1=s.y+s.h+2;x2=t.x+t.w/2;y2=t.y-5}
+    path.setAttribute('d',`M${x1},${y1} L${x2},${y2}`);
+  });paintMotion();
+}
+function setPlaybackButtons(){
+  $('play').textContent=state.playing?'Ⅱ 暂停':state.cursor===events.length-1?'↺ 再播放':state.cursor===0&&state.elapsed===0?'▶ 播放流程':'▶ 继续播放';
+  $('play').setAttribute('aria-label',state.playing?'暂停动画':'播放动画');
+  $('prev').disabled=state.cursor===0&&state.elapsed===0;
+  $('next').disabled=state.cursor===events.length-1||(state.playing&&state.single);
+  $('play-status').textContent=state.cursor===events.length-1?'已完成：当前版本的验证与审查均通过。':state.playing?(state.single?'正在单步传递数据…':'播放中 · 可以随时暂停或点击节点。'):state.selected?'正在查看节点 · 动画已暂停。':state.cursor===0?'点击播放，或用“下一步”跟随光点。':'已暂停 · 可以查看数据，或继续下一步。';
+}
+function render(){
+  const e=current(),r=rounds[e.round];
+  const pending=pendingCopy[r.id]&&!['e','f','done'].includes(e.node)?pendingCopy[r.id]:null;
+  document.querySelectorAll('[data-node]').forEach(el=>{const id=el.dataset.node;el.classList.toggle('live',id===e.node);el.classList.toggle('warn',id===e.node&&e.tone==='warn');el.classList.toggle('selected',id===state.selected);el.classList.toggle('past',events.slice(0,state.cursor).some(x=>x.node===id));el.setAttribute('aria-pressed',String(id===state.selected))});
+  document.querySelectorAll('[data-round]').forEach(el=>{const n=Number(el.dataset.round);el.classList.toggle('current',n===e.round);el.classList.toggle('complete',n<e.round);if(n===e.round)el.setAttribute('aria-current','step');else el.removeAttribute('aria-current')});
+  $('loop-eyebrow').textContent=state.cursor===0?'READY TO EXPLORE':e.node==='done'?'TASK COMPLETED':`ROUND ${String(e.round+1).padStart(2,'0')} / ${e.round===7?'完成检查':'决策循环'}`;
+  $('loop-title').textContent=state.cursor===0?'一次任务，多轮循环。':e.node==='done'?'修复完成，有据可查。':pending?pending[0]:r.heading;
+  $('loop-summary').textContent=state.cursor===0?'模型决定下一步，工具实际执行，结果回来后，再决定下一步。':e.node==='done'?'4 项测试通过 · 接口保持 · 改动已审查':pending?pending[1]:r.summary;
+  $('step-counter').textContent=String(state.cursor+1).padStart(2,'0')+' / '+events.length;
+  $('scrubber').value=state.cursor;
+  $('scrubber').setAttribute('aria-valuetext',`第 ${state.cursor+1} 步，共 ${events.length} 步：${e.title}`);
+  renderInspector();renderWorkspace();setPlaybackButtons();paintMotion();
+  $('announcement').textContent=`第 ${state.cursor+1} 步，${e.title}。${e.why}`;
+}
+function inspectionEvent(){
+  if(!state.selected)return current();
+  for(let i=state.cursor;i>=0;i--)if(events[i].node===state.selected)return events[i];
+  const info=nodeInfo[state.selected];return{node:state.selected,title:info.name,why:info.purpose,input:'这个节点还没有被经过。',output:'点击“返回当前步骤”，继续观察数据如何到达这里。',hint:'当前展示节点职责；运行数据将在经过节点后出现。'};
+}
+function renderInspector(){
+  const e=inspectionEvent(),info=nodeInfo[e.node];
+  $('inspect-mode').textContent=state.selected?'节点档案 · 最近一次经过':'当前步骤';$('back-live').hidden=!state.selected;
+  $('inspect-title').textContent=e.title;$('explanation').textContent=e.why;
+  $('incoming').textContent=e.input;$('outgoing').textContent=e.output;
+  $('flow-caption').textContent=e.hint;
+  $('node-purpose').textContent=info.purpose;$('node-example').textContent=info.example;$('node-boundary').textContent=info.boundary;
+}
+function renderWorkspace(){
+  const s=snapshot();$('code-view').textContent=codeVersions[s.version];$('version-label').textContent=`v${s.version} · `+['原始代码','候选修复','修正符号'][s.version];
+  $('workspace-status').textContent=s.version===0?'尚未修改':'已修改 ledger.py';$('review-status').textContent=s.reviewed?'通过':'尚未审查';
+  const pass=s.tests?s.tests.filter((v,i)=>v===expected[i]).length:0;
+  $('test-summary').textContent=s.tests?`v${s.testsVersion} · ${pass} 通过 / ${4-pass} 失败`:'尚未运行';
+  $('test-summary').style.color=s.tests?(pass===4?'var(--mint)':'var(--amber)'):'var(--muted)';
+  $('test-rows').replaceChildren();testInputs.forEach((input,i)=>{const row=document.createElement('div');row.className='test-row';const a=document.createElement('span');a.textContent=input;const b=document.createElement('span');b.textContent='→ '+expected[i];const c=document.createElement('span');c.className='result '+(!s.tests?'wait':s.tests[i]===expected[i]?'pass':'fail');c.textContent=!s.tests?'待运行':s.tests[i]===expected[i]?'✓ '+s.tests[i]:'✕ '+s.tests[i];row.append(a,b,c);$('test-rows').appendChild(row)});
+  $('evidence-status').textContent=!s.tests?'当前版本还没有验证证据':s.testsVersion!==s.version?`上次结果属于 v${s.testsVersion}；当前 v${s.version} 尚未验证。`:`结果对应当前 v${s.version}。${pass===4?'行为验证通过。':'需要根据失败证据继续修复。'}`;
+}
+function paintMotion(){
+  const e=current(),next=events[state.cursor+1],moving=!!next&&state.elapsed>=dwell;
+  const route=next?e.node+'-'+next.node:null;const progress=moving?Math.min(1,(state.elapsed-dwell)/(duration-dwell)):0;
+  paths.forEach((path,key)=>{path.classList.toggle('active',key===route&&moving);path.classList.toggle('warn',key===route&&e.tone==='warn');path.classList.toggle('visited',events.slice(0,state.cursor).some((v,i)=>events[i+1]&&v.node+'-'+events[i+1].node===key))});
+  $('node-'+e.node).classList.toggle('live',!moving||reducedMotion.matches);
+  const dot=$('dot'),halo=$('halo'),trail=$('trail'),packet=$('packet');
+  if(!moving||!paths.has(route)){dot.setAttribute('visibility','hidden');halo.setAttribute('visibility','hidden');trail.setAttribute('d','');packet.style.opacity='0';return}
+  const path=paths.get(route),length=path.getTotalLength();
+  const p=path.getPointAtLength(length*progress),color=e.tone==='warn'?'var(--amber)':'var(--mint)';
+  if(reducedMotion.matches){dot.setAttribute('visibility','hidden');halo.setAttribute('visibility','hidden');trail.setAttribute('d','');packet.style.opacity='0';return}
+  dot.setAttribute('visibility','visible');halo.setAttribute('visibility','visible');dot.setAttribute('cx',p.x);dot.setAttribute('cy',p.y);halo.setAttribute('cx',p.x);halo.setAttribute('cy',p.y);halo.style.fill=color;
+  const tail=path.getPointAtLength(Math.max(0,length*progress-28));trail.setAttribute('d',`M${tail.x},${tail.y} L${p.x},${p.y}`);trail.style.stroke=color;dot.style.fill=e.tone==='warn'?'#ffe4b9':'#dbfff0';
+  packet.textContent=e.packet;packet.classList.toggle('warn',e.tone==='warn');
+  let x=p.x,y=p.y-21;
+  if(route==='f-a'){x=p.x+72;y=p.y}
+  if(route==='c-d'){x=p.x-77;y=p.y}
+  const max=$('graph').clientWidth,half=Math.min(85,packet.offsetWidth/2||60);x=Math.max(half+5,Math.min(max-half-5,x));
+  packet.style.left=x+'px';packet.style.top=y+'px';packet.style.opacity='1';
+}
+function jump(index){state.cursor=Math.max(0,Math.min(events.length-1,index));state.elapsed=0;state.playing=false;state.single=false;state.selected=null;render()}
+function playPause(){
+  if(state.playing){state.playing=false;state.single=false}
+  else{if(state.cursor===events.length-1)jump(0);state.playing=true;state.single=false;state.selected=null;state.lastTime=performance.now()}
+  render();
+}
+function nextStep(){
+  if(state.cursor>=events.length-1)return;
+  state.selected=null;state.playing=true;state.single=true;state.elapsed=dwell;state.lastTime=performance.now();render();
+}
+function frame(now){
+  const dt=state.lastTime?Math.min(100,now-state.lastTime):0;state.lastTime=now;
+  if(state.playing){
+    state.elapsed+=dt*state.speed;
+    if(state.elapsed>=duration){
+      state.cursor=Math.min(state.cursor+1,events.length-1);state.elapsed=0;
+      if(state.single||state.cursor===events.length-1){state.playing=false;state.single=false}
+      render();
+    }else paintMotion();
+  }
+  requestAnimationFrame(frame);
+}
+$('play').addEventListener('click',playPause);$('next').addEventListener('click',nextStep);$('prev').addEventListener('click',()=>jump(state.cursor-1));$('reset').addEventListener('click',()=>jump(0));
+$('speed').addEventListener('change',e=>{state.speed=Number(e.target.value)});
+$('scrubber').addEventListener('input',e=>jump(Number(e.target.value)));
+document.querySelectorAll('[data-node]').forEach(btn=>{btn.addEventListener('click',()=>{state.playing=false;state.single=false;state.selected=btn.dataset.node;render()})});
+$('back-live').addEventListener('click',()=>{state.selected=null;render()});
+function selectTab(name){state.tab=name;document.querySelectorAll('[data-tab]').forEach(btn=>{const selected=btn.dataset.tab===name;btn.setAttribute('aria-selected',String(selected));btn.tabIndex=selected?0:-1;$('pane-'+btn.dataset.tab).hidden=!selected})}
+document.querySelectorAll('[data-tab]').forEach(btn=>{btn.addEventListener('click',()=>selectTab(btn.dataset.tab));btn.addEventListener('keydown',e=>{const names=['data','workspace','about'];let i=names.indexOf(state.tab);if(e.key==='ArrowRight')i=(i+1)%3;else if(e.key==='ArrowLeft')i=(i+2)%3;else return;e.preventDefault();selectTab(names[i]);$('tab-'+names[i]).focus()})});
+document.addEventListener('keydown',e=>{if(e.target.closest('input,select,textarea,button,a'))return;if(e.code==='Space'){e.preventDefault();playPause()}else if(e.key==='ArrowRight'){e.preventDefault();nextStep()}else if(e.key==='ArrowLeft'){e.preventDefault();jump(state.cursor-1)}});
+document.addEventListener('visibilitychange',()=>{state.lastTime=performance.now()});
+new ResizeObserver(drawPaths).observe($('graph'));
+selectTab('data');render();drawPaths();requestAnimationFrame(frame);
+</script>
+</body>
+</html>

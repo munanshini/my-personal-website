@@ -64,4 +64,15 @@ describe('portfolio project readiness', () => {
     expect(words[0].href).toBe('/words/articles/')
     expect(nowItems.some((item) => item.href === '/words/articles/openai-designers-ai-era/')).toBe(true)
   })
+
+  it('publishes the AI PM agent design handbook as a nine-step article and NOW entry', () => {
+    const article = wordArticleBySlug('ai-pm-agent-nine-step-design')
+
+    expect(article?.title).toBe('AI PM 的 Agent 九步设计流程')
+    expect(article?.sections).toHaveLength(9)
+    expect(article?.sections[0]?.heading).toContain('该不该做成 agent')
+    expect(article?.sections[1]?.heading).toContain('定义目标与边界')
+    expect(article?.takeaway).toContain('②③⑦⑧')
+    expect(nowItems.some((item) => item.href === '/words/articles/ai-pm-agent-nine-step-design/')).toBe(true)
+  })
 })

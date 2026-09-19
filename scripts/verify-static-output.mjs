@@ -77,6 +77,13 @@ for (const slug of ['ai-ide', 'warehouse-scheduling', 'smart-sales-center']) {
 assertText('sitemap.xml', 'https://zhangnanai.com/words/openai-designers-ai-era/')
 assertText('sitemap.xml', 'https://zhangnanai.com/words/articles/openai-designers-ai-era/')
 
+// Standalone interactive labs must ship as real documents, not the SPA fallback.
+assertExists('words/vibe-coding/agent-loop/index.html')
+assertText('words/vibe-coding/index.html', 'words/vibe-coding/agent-loop/index.html')
+assertText('words/vibe-coding/agent-loop/index.html', '<title>Agent Loop 策略地图 · 张楠</title>')
+assertText('words/vibe-coding/agent-loop/index.html', 'href="../"')
+assertText('words/vibe-coding/agent-loop/index.html', "$('play').addEventListener('click',playPause)")
+
 assertText('work/ai-ide/index.html', 'AI IDE 研发助手 · 张楠 AI 产品经理')
 assertText('work/ai-ide/index.html', '把不可靠的模型输出')
 assertText('work/warehouse-scheduling/index.html', '把管理员经验')
