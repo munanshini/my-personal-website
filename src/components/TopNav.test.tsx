@@ -99,16 +99,14 @@ describe('TopNav', () => {
     expect(screen.getByText('zn525347603@gmail.com')).toBeInTheDocument()
   })
 
-  it('removes mobile music and contact rows while keeping resume access', () => {
-    const { container } = renderNav()
+  it('removes mobile music and contact rows while keeping an unavailable resume button', () => {
+    renderNav()
     fireEvent.click(screen.getByRole('button', { name: '打开菜单' }))
 
     expect(screen.queryByText('MUSIC 音乐')).not.toBeInTheDocument()
-    const resumeLink = screen.getByRole('link', { name: '简历 PDF 下载' })
-    const links = Array.from(container.querySelectorAll('a'))
-    expect(resumeLink).toHaveAttribute('download')
-    expect(resumeLink).toHaveAttribute('href', './resume.pdf')
-    expect(links[links.length - 1]).toBe(resumeLink)
+    const resumeButton = screen.getByRole('button', { name: /简历 PDF 下载.*暂未开放/ })
+    expect(resumeButton).toBeDisabled()
+    expect(resumeButton).not.toHaveAttribute('href')
     expect(screen.queryByText('phone-number')).not.toBeInTheDocument()
     expect(screen.queryByText('zn525347603@gmail.com')).not.toBeInTheDocument()
   })
@@ -123,19 +121,21 @@ describe('TopNav', () => {
     expect(indexLink?.className).toContain('py-4')
   })
 
-  it('adds hover feedback to resume download actions', () => {
+  it('marks the desktop resume control as temporarily unavailable', () => {
     renderNav()
     fireEvent.click(screen.getByRole('button', { name: /open to work/i }))
 
-    expect(screen.getByRole('link', { name: '简历 PDF 下载' }).className).toContain('hover:bg-signal/90')
+    const resumeButton = screen.getByRole('button', { name: /简历 PDF 下载.*暂未开放/ })
+    expect(resumeButton).toBeDisabled()
+    expect(resumeButton.className).toContain('cursor-not-allowed')
   })
 
   it('shows a theme toggle in desktop navigation and the mobile menu', () => {
     renderNav()
 
-    expect(screen.getByRole('button', { name: '切换到浅色模式' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '切换到深色模式' })).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: '打开菜单' }))
-    expect(screen.getAllByRole('button', { name: '切换到浅色模式' })).toHaveLength(2)
+    expect(screen.getAllByRole('button', { name: '切换到深色模式' })).toHaveLength(2)
   })
 
   it('uses semantic ink text on the glass Open to Work control in both themes', () => {
@@ -145,8 +145,8 @@ describe('TopNav', () => {
     expect(openToWork).toHaveClass('text-ink')
     expect(openToWork).not.toHaveClass('text-white')
 
-    fireEvent.click(screen.getByRole('button', { name: '切换到浅色模式' }))
-    expect(document.documentElement).toHaveAttribute('data-theme', 'light')
+    fireEvent.click(screen.getByRole('button', { name: '切换到深色模式' }))
+    expect(document.documentElement).toHaveAttribute('data-theme', 'dark')
     expect(openToWork).toHaveClass('text-ink')
   })
 

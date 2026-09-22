@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 const answers = {
   '你做过哪些 AI 项目？': '我做过 AI IDE 研发助手、PDMC+ 流程平台 AI 化和智能仓储调度，覆盖开发者工具、企业知识与供应链协同场景。',
   '你在 AI IDE 中负责什么？': '我负责核心智能编码场景的产品定义与落地，主导需求设计、RAG 与 Agent 产品形态、模型效果评估与研发协同，并推动 MVP 到正式版本。',
-  '如何联系你？': '可通过页面底部的联系入口、简历下载和内容平台与我交流。',
+  '如何联系你？': '可通过页面底部的联系入口和内容平台与我交流；简历下载入口暂未开放。',
 } as const
 
 interface AssistantPanelProps {

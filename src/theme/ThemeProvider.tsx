@@ -23,15 +23,46 @@ function storeTheme(theme: Theme) {
   }
 }
 
+function systemTheme(): Theme {
+  try {
+    return globalThis.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  } catch {
+    return 'light'
+  }
+}
+
+function systemThemeQuery(): MediaQueryList | null {
+  try {
+    return globalThis.matchMedia?.('(prefers-color-scheme: dark)') ?? null
+  } catch {
+    return null
+  }
+}
+
 function initialTheme(): Theme {
   const saved = savedTheme()
   if (saved) return saved
 
-  return 'dark'
+  return systemTheme()
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(initialTheme)
+  const [followsSystem, setFollowsSystem] = useState(() => savedTheme() === null)
+
+  useEffect(() => {
+    if (!followsSystem) return
+    const query = systemThemeQuery()
+    if (!query) return
+
+    const syncTheme = (event: MediaQueryListEvent) => {
+      setTheme(event.matches ? 'dark' : 'light')
+    }
+
+    setTheme(query.matches ? 'dark' : 'light')
+    query.addEventListener?.('change', syncTheme)
+    return () => query.removeEventListener?.('change', syncTheme)
+  }, [followsSystem])
 
   useEffect(() => {
     try {
@@ -50,6 +81,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     theme,
     toggleTheme: () => setTheme((current) => {
       const next = current === 'dark' ? 'light' : 'dark'
+      setFollowsSystem(false)
       storeTheme(next)
       return next
     }),

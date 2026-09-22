@@ -32,7 +32,7 @@ const pageMeta: Record<SitePage, Pick<PageMeta, 'title' | 'description'>> = {
   },
   contact: {
     title: '联系张楠 · AI 产品经理',
-    description: '联系张楠了解 AI 产品经理岗位、项目合作或产品交流。页面提供公开邮箱、微信二维码与简历下载入口，便于招聘方、猎头和业务团队以合适方式建立进一步沟通。',
+    description: '联系张楠了解 AI 产品经理岗位、项目合作或产品交流。页面提供公开邮箱和微信二维码，便于招聘方、猎头和业务团队以合适方式建立进一步沟通。',
   },
 }
 

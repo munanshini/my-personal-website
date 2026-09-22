@@ -117,7 +117,7 @@ if (target === 'aliyun') {
 } else {
   assertExists('sitemap.xml')
   assertExists('robots.txt')
-  assertExists('resume.pdf')
+  assertMissing('resume.pdf')
   assertExists('404.html')
   assertText('sitemap.xml', 'https://zhangnanai.com/work/')
   assertText('index.html', 'href="./assets/')
@@ -132,4 +132,7 @@ if (target === 'aliyun') {
   assertText('words/articles/openai-designers-ai-era/index.html', 'href="./words/"')
   assertNoText('index.html', "url('/assets/")
   assertNoText('contact/index.html', 'src="/assets/')
+  for (const path of ['index.html', 'work/index.html', 'words/index.html', 'now/index.html', 'contact/index.html']) {
+    assertNoText(path, 'resume.pdf')
+  }
 }

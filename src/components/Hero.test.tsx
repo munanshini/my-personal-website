@@ -49,7 +49,7 @@ describe('Hero', () => {
     const portrait = screen.getByTestId('hero-portrait')
     expect(portrait).toHaveClass('bg-cover')
     expect(portrait).toHaveClass('bg-bottom')
-    expect(portrait.getAttribute('style')).toContain('hero-portrait-dark-poster.jpg')
+    expect(portrait.getAttribute('style')).toContain('hero-portrait-light-poster.jpg')
   })
 
   it('renders a static portrait without an interactive reveal or light rays', () => {
@@ -72,16 +72,16 @@ describe('Hero', () => {
     renderHero()
 
     const video = screen.getByTestId('hero-video')
-    expect(video).toHaveAttribute('src', expect.stringContaining('hero-portrait-dark.mp4'))
-
-    fireEvent.click(screen.getByRole('button', { name: '切换到浅色模式' }))
     expect(video).toHaveAttribute('src', expect.stringContaining('hero-portrait-light.mp4'))
+
+    fireEvent.click(screen.getByRole('button', { name: '切换到深色模式' }))
+    expect(video).toHaveAttribute('src', expect.stringContaining('hero-portrait-dark.mp4'))
   })
 
   it('keeps the static portrait fallback while the silent video loads', () => {
     renderHero()
 
-    expect(screen.getByTestId('hero-portrait').getAttribute('style')).toContain('hero-portrait-dark-poster.jpg')
+    expect(screen.getByTestId('hero-portrait').getAttribute('style')).toContain('hero-portrait-light-poster.jpg')
     expect(screen.getByTestId('hero-video')).toHaveAttribute('preload', 'auto')
     expect(screen.getByTestId('hero-video')).toHaveProperty('muted', true)
   })

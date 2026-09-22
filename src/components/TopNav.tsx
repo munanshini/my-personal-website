@@ -63,9 +63,9 @@ export function TopNav({ currentPage, currentPath = sitePath(currentPage), onNav
             </button></SpotlightCard>
           {utilityOpen && (
             <div className="absolute right-0 top-full mt-3 w-[360px] rounded-3xl border border-line/15 bg-surface/80 p-5 text-ink shadow-2xl backdrop-blur-xl">
-              <a href={publicPath('/resume.pdf', currentPath)} download className="flex items-center justify-between rounded-2xl bg-signal px-4 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-signal/90 hover:shadow-lg hover:shadow-signal/20">
-                简历 PDF 下载 <span aria-hidden="true">↓</span>
-              </a>
+              <button type="button" disabled aria-label="简历 PDF 下载（暂未开放）" className="flex w-full cursor-not-allowed items-center justify-between rounded-2xl bg-signal px-4 py-3 text-sm font-semibold text-white opacity-60">
+                简历 PDF 下载 <span aria-hidden="true">暂未开放</span>
+              </button>
               <div className="mt-5 divide-y divide-line/15 border-y border-line/15 text-sm">
                 <div className="grid grid-cols-[64px_minmax(0,1fr)] items-center gap-3 py-3"><span className="text-muted">邮箱</span><div className="flex min-w-0 items-center gap-2"><strong className="min-w-0 flex-1 truncate text-[13px]">zn525347603@gmail.com</strong><CopyButton value="zn525347603@gmail.com" label="邮箱" /></div></div>
                 <div className="grid grid-cols-[64px_minmax(0,1fr)] items-center gap-3 py-3"><span className="text-muted">微信</span><strong className="min-w-0 truncate">扫码添加微信</strong></div>
@@ -107,9 +107,9 @@ export function TopNav({ currentPage, currentPath = sitePath(currentPage), onNav
             </a>
           ))}
           <ThemeToggle className="mt-5 flex h-10 w-10 items-center justify-center rounded-full border border-line/15 bg-surface/80 text-ink shadow-sm transition-colors hover:bg-surface" />
-          <a href={publicPath('/resume.pdf', currentPath)} download onClick={() => setMenuOpen(false)} className="mt-6 flex items-center justify-between rounded-2xl bg-signal px-4 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-signal/90 hover:shadow-lg hover:shadow-signal/20">
-            简历 PDF 下载 <span aria-hidden="true">↓</span>
-          </a>
+          <button type="button" disabled aria-label="简历 PDF 下载（暂未开放）" className="mt-6 flex w-full cursor-not-allowed items-center justify-between rounded-2xl bg-signal px-4 py-3 text-sm font-semibold text-white opacity-60">
+            简历 PDF 下载 <span aria-hidden="true">暂未开放</span>
+          </button>
         </div>
       )}
     </nav>
