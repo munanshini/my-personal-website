@@ -1,4 +1,5 @@
 import { wordArticles, wordChannels, workItems } from '../data/portfolio'
+import { designProjects } from '../data/designProjects'
 
 export const siteNavItems = [
   { page: 'index', label: 'INDEX 首页', path: '/' },
@@ -27,7 +28,7 @@ export function legacyHashPath(hash: string) {
 }
 
 export function publicSitePaths() {
-  return [...siteNavItems.map((item) => item.path), ...publishedWordChannelPaths(), ...publishedWordArticlePaths(), ...publishedProjectPaths()]
+  return [...siteNavItems.map((item) => item.path), ...publishedWordChannelPaths(), ...publishedWordArticlePaths(), ...publishedProjectPaths(), ...designProjects.map(project => `/words/interaction-design/${project.slug}/`)]
 }
 
 export function publishedWordChannelPaths() {

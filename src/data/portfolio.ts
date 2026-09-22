@@ -1,3 +1,5 @@
+import { designProjects } from './designProjects'
+
 export interface Project {
   number: string
   title: string
@@ -70,7 +72,7 @@ export interface WordItem {
   href?: string
 }
 
-export type WordChannelSlug = 'articles' | 'videos' | 'vibe-coding'
+export type WordChannelSlug = 'articles' | 'videos' | 'vibe-coding' | 'interaction-design'
 
 export interface WordChannel extends WordItem {
   slug: WordChannelSlug
@@ -81,7 +83,7 @@ export interface WordChannelEntry {
   type: string
   title: string
   description: string
-  date: string
+  date?: string
   href: string
 }
 
@@ -620,6 +622,7 @@ export const wordChannels: WordChannel[] = [
   { slug: 'articles', index: '01', type: 'ARTICLE', title: 'AI 产品文章', description: '记录模型能力如何进入真实场景，以及产品经理在其中如何做判断。', accent: 'bg-[#e7dfcf]', href: '/words/articles/' },
   { slug: 'videos', index: '02', type: 'VIDEO', title: '视频与公开表达', description: '把复杂问题讲清楚，分享 AI 产品、体验设计与职业转型中的真实思考。', accent: 'bg-[#d5e0e1]', href: '/words/videos/' },
   { slug: 'vibe-coding', index: '03', type: 'VIBE CODING', title: 'Vibe Coding 实验室', description: '记录个人网站、原型和工具搭建，把想法快速变成可用的产品体验。', accent: 'bg-[#d9d1c8]', href: '/words/vibe-coding/' },
+  { slug: 'interaction-design', index: '04', type: 'INTERACTION DESIGN', title: '交互设计实验室', description: '从平台工具到移动体验、空间可视化与品牌组件，呈现设计作品与交互细节。', accent: 'bg-[#dce3ef]', href: '/words/interaction-design/' },
 ]
 
 export const wordChannelEntries: Record<WordChannelSlug, WordChannelEntry[]> = {
@@ -631,6 +634,7 @@ export const wordChannelEntries: Record<WordChannelSlug, WordChannelEntry[]> = {
   'vibe-coding': [
     { slug: 'agent-loop', type: 'INTERACTIVE LAB', title: 'Agent Loop 策略地图', description: '跟随 Coding Agent 的决策、执行与反馈循环，点击节点查看数据，逐步观察代码修复、测试与交付。', date: '2026.09', href: '/words/vibe-coding/agent-loop/index.html' },
   ],
+  'interaction-design': designProjects.map(project => ({ slug: project.slug, type: project.category, title: project.title, description: project.summary, href: `/words/interaction-design/${project.slug}/` })),
 }
 
 export function wordChannelBySlug(slug: string) {

@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 const target = process.argv[2]
@@ -83,6 +83,22 @@ assertText('words/vibe-coding/index.html', 'words/vibe-coding/agent-loop/index.h
 assertText('words/vibe-coding/agent-loop/index.html', '<title>Agent Loop 策略地图 · 张楠</title>')
 assertText('words/vibe-coding/agent-loop/index.html', 'href="../"')
 assertText('words/vibe-coding/agent-loop/index.html', "$('play').addEventListener('click',playPause)")
+
+assertText('words/index.html', '交互设计实验室')
+assertText('words/interaction-design/index.html', '交互设计实验室')
+const designRoutes = readdirSync(resolve(root, 'words/interaction-design'), { withFileTypes: true }).filter(entry => entry.isDirectory())
+if (designRoutes.length !== 13) throw new Error('Expected all 13 design project pages')
+for (const entry of designRoutes) {
+  const path = `words/interaction-design/${entry.name}/index.html`
+  assertExists(path)
+  assertTextCount(path, '<title', 1)
+  assertText(path, `https://zhangnanai.com/words/interaction-design/${entry.name}/`)
+  assertText('sitemap.xml', `https://zhangnanai.com/words/interaction-design/${entry.name}/`)
+  const html = readFileSync(resolve(root, path), 'utf8')
+  const images = [...html.matchAll(/(?:src|href)="[^"]*?(design-lab\/[^"<>]+\.webp)"/g)]
+  if (!images.length) throw new Error(`No design images in ${path}`)
+  for (const image of images) assertExists(image[1])
+}
 
 assertText('work/ai-ide/index.html', 'AI IDE 研发助手 · 张楠 AI 产品经理')
 assertText('work/ai-ide/index.html', '把不可靠的模型输出')

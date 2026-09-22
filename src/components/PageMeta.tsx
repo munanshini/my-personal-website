@@ -1,5 +1,5 @@
 import { Head } from 'vite-react-ssg'
-import { getPageMeta, getProjectPageMeta, getWordArticlePageMeta, personJsonLd, projectJsonLd, wordArticleJsonLd, type DeploymentTarget } from '../lib/siteMeta'
+import { getDesignPageMeta, getPageMeta, getProjectPageMeta, getWordArticlePageMeta, personJsonLd, projectJsonLd, wordArticleJsonLd, type DeploymentTarget } from '../lib/siteMeta'
 import type { SitePage } from '../lib/siteRoute'
 
 interface PageMetaProps {
@@ -11,7 +11,7 @@ interface PageMetaProps {
 export function PageMeta({ page, pathname = '', target }: PageMetaProps) {
   const projectSlug = pathname.match(/^\/work\/([^/]+)\/?$/)?.[1]
   const wordArticleSlug = pathname.match(/^\/words\/articles\/([^/]+)\/?$/)?.[1] || pathname.match(/^\/words\/([^/]+)\/?$/)?.[1]
-  const meta = (projectSlug && getProjectPageMeta(projectSlug, target)) || (wordArticleSlug && getWordArticlePageMeta(wordArticleSlug, target)) || getPageMeta(page, target)
+  const meta = getDesignPageMeta(pathname) || (projectSlug && getProjectPageMeta(projectSlug, target)) || (wordArticleSlug && getWordArticlePageMeta(wordArticleSlug, target)) || getPageMeta(page, target)
   const structuredData = projectSlug ? projectJsonLd(projectSlug) : wordArticleSlug ? wordArticleJsonLd(wordArticleSlug) : page === 'index' ? personJsonLd : undefined
 
   return (

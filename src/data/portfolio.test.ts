@@ -60,7 +60,7 @@ describe('portfolio project readiness', () => {
     expect(article?.sourceUrl).toBe('https://mp.weixin.qq.com/s/wL7k-NCyeIl6dbrCRbrcsQ')
     expect(article?.sections.length).toBeGreaterThanOrEqual(6)
     expect(article?.sections.some((section) => section.heading.includes('双轨'))).toBe(true)
-    expect(wordChannels.map((channel) => channel.href)).toEqual(['/words/articles/', '/words/videos/', '/words/vibe-coding/'])
+    expect(wordChannels.map((channel) => channel.href)).toEqual(['/words/articles/', '/words/videos/', '/words/vibe-coding/', '/words/interaction-design/'])
     expect(words[0].href).toBe('/words/articles/')
     expect(nowItems.some((item) => item.href === '/words/articles/openai-designers-ai-era/')).toBe(true)
   })

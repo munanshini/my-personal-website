@@ -8,7 +8,7 @@ export function ContentFeed({ items }: { items: WordItem[] }) {
     <section id="words" className="site-page bg-paper text-ink transition-colors duration-700">
       <div className="mx-auto max-w-canvas">
         <SectionHeading level={1} index="03" eyebrow="WORDS & MEDIA" title="持续思考， 也持续公开表达。" description="这里将连接视频号、小红书、B 站、公众号、知乎、人人都是产品经理与 GitHub。" />
-        <div className="mt-10 grid gap-4 sm:mt-16 md:grid-cols-3">
+        <div className="mt-10 grid gap-4 sm:mt-16 md:grid-cols-2">
           {items.map((item) => {
             const href = item.href?.startsWith('/') ? publicPath(item.href, '/words/') : item.href
             const content = (

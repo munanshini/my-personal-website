@@ -35,7 +35,7 @@ export function WordChannelPage({ channel }: { channel: WordChannel }) {
           {entries.length ? entries.map((entry, index) => (
             <a key={entry.slug} href={publicPath(entry.href, currentPath)} className="word-channel-entry group">
               <span className="word-channel-entry-index">0{index + 1}</span>
-              <div><span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-signal">{entry.type} · {entry.date}</span><h2>{entry.title}</h2><p>{entry.description}</p></div>
+              <div><span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-signal">{entry.type}{entry.date && ` · ${entry.date}`}</span><h2>{entry.title}</h2><p>{entry.description}</p></div>
               <ArrowUpRight className="word-channel-entry-arrow transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" size={20} aria-hidden="true" />
             </a>
           )) : (

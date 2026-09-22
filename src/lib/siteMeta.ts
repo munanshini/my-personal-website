@@ -1,4 +1,5 @@
 import { wordArticleBySlug, workItemBySlug } from '../data/portfolio'
+import { designProjects } from '../data/designProjects'
 import { sitePath, type SitePage } from './siteRoute'
 
 export type DeploymentTarget = 'aliyun' | 'pages'
@@ -72,6 +73,20 @@ export function getWordArticlePageMeta(slug: string, _target: DeploymentTarget):
     ogImage: 'https://zhangnanai.com/social-cover.png',
     ogType: 'article',
     robots: undefined,
+  }
+}
+
+export function getDesignPageMeta(pathname: string): PageMeta | undefined {
+  const normalized = `${pathname.replace(/\/+$/, '')}/`
+  if (!normalized.startsWith('/words/interaction-design/')) return undefined
+  const project = designProjects.find(item => normalized === `/words/interaction-design/${item.slug}/`)
+  if (!project && normalized !== '/words/interaction-design/') return undefined
+  return {
+    title: `${project?.title ?? '交互设计实验室'} · 张楠`,
+    description: project?.summary ?? '以项目呈现平台工具、移动体验、空间可视化与品牌组件设计。',
+    canonical: `https://zhangnanai.com${normalized}`,
+    ogImage: `https://zhangnanai.com${project?.cover ?? designProjects[0].cover}`,
+    ogType: 'website',
   }
 }
 

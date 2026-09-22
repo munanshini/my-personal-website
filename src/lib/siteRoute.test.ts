@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { designProjects } from '../data/designProjects'
 import { legacyHashPath, publicSitePaths, publishedProjectPaths, publishedWordArticlePaths, publishedWordChannelPaths, sitePageFromPath, sitePath } from './siteRoute'
 
 describe('siteRoute', () => {
@@ -27,7 +28,7 @@ describe('siteRoute', () => {
     expect(sitePageFromPath('/unknown/')).toBe('index')
   })
 
-  it('exposes the five primary routes, three word channel routes, article routes, and four project routes', () => {
+  it('exposes the five primary routes, four word channel routes, article routes, and four project routes', () => {
     expect(publicSitePaths()).toEqual([
       '/',
       '/work/',
@@ -37,6 +38,7 @@ describe('siteRoute', () => {
       '/words/articles/',
       '/words/videos/',
       '/words/vibe-coding/',
+      '/words/interaction-design/',
       '/words/articles/openai-designers-ai-era/',
       '/words/articles/ai-pm-agent-nine-step-design/',
       '/words/openai-designers-ai-era/',
@@ -45,6 +47,7 @@ describe('siteRoute', () => {
       '/work/pdmc-ai/',
       '/work/warehouse-scheduling/',
       '/work/smart-sales-center/',
+      ...designProjects.map(project => `/words/interaction-design/${project.slug}/`),
     ])
     expect(publishedProjectPaths()).toEqual([
       '/work/ai-ide/',
@@ -52,7 +55,7 @@ describe('siteRoute', () => {
       '/work/warehouse-scheduling/',
       '/work/smart-sales-center/',
     ])
-    expect(publishedWordChannelPaths()).toEqual(['/words/articles/', '/words/videos/', '/words/vibe-coding/'])
+    expect(publishedWordChannelPaths()).toEqual(['/words/articles/', '/words/videos/', '/words/vibe-coding/', '/words/interaction-design/'])
     expect(publishedWordArticlePaths()).toEqual([
       '/words/articles/openai-designers-ai-era/',
       '/words/articles/ai-pm-agent-nine-step-design/',
