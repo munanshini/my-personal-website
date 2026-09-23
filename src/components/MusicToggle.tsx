@@ -52,10 +52,7 @@ export function MusicToggle() {
   }
 
   useEffect(() => {
-    const startAfterFirstInteraction = () => { void start() }
-    window.addEventListener('pointerdown', startAfterFirstInteraction, { once: true })
     return () => {
-      window.removeEventListener('pointerdown', startAfterFirstInteraction)
       stop()
     }
   }, [])
