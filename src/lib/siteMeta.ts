@@ -16,11 +16,11 @@ export interface PageMeta {
 const pageMeta: Record<SitePage, Pick<PageMeta, 'title' | 'description'>> = {
   index: {
     title: '张楠 · AI 产品经理',
-    description: '张楠的 AI 产品经理个人网站，展示我从产品策略、用户体验到 AI 落地交付的实践方法、代表项目与持续思考，面向希望了解产品判断和协作方式的招聘方与业务伙伴。',
+    description: '张楠，有 7 年 B 端经验的 AI 产品经理，近两年半在华为负责 Coding Agent、Design Agent 与企业流程平台 AI 化，关注场景定义、人机协作、企业知识检索、评测归因与商业交付。',
   },
   work: {
     title: '工作作品 · 张楠 AI 产品经理',
-    description: '张楠的 AI 产品经理工作作品集，聚焦 AI IDE、企业流程平台 AI 化、智能仓储调度与智慧案场等真实项目，呈现从场景定义、知识检索与评测归因到跨团队协作落地的产品实践。',
+    description: '张楠的工作作品集，展示 Coding Agent、Design Agent、PDMC+ 企业流程平台 AI 化、规则引擎仓储调度与智慧案场五个项目，呈现场景定义、人机协作、评测归因和产品交付实践。',
   },
   words: {
     title: '内容与思考 · 张楠 AI 产品经理',

@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest'
 import { experiences, nowItems, projects, wordArticleBySlug, wordChannels, words, workItemBySlug, workItems } from './portfolio'
 
 describe('portfolio project readiness', () => {
-  it('publishes all four details now that the sourced copy is ready', () => {
-    expect(workItems.map((item) => item.detail.isReady)).toEqual([true, true, true, true])
+  it('publishes all five details now that the sourced copy is ready', () => {
+    expect(workItems.map((item) => item.detail.isReady)).toEqual([true, true, true, true, true])
   })
 
   it('fills every local preview detail with sourced project content instead of placeholders', () => {
@@ -18,7 +18,7 @@ describe('portfolio project readiness', () => {
     }
 
     expect(workItemBySlug('ai-ide')?.detail.outcomes[0]?.metric).toBe('约 40% → 约 80%')
-    expect(workItemBySlug('warehouse-scheduling')?.detail.outcomes[0]?.metric).toBe('秒级响应')
+    expect(workItemBySlug('warehouse-scheduling')?.detail.outcomes[0]?.metric).toBe('可解释的调度建议')
     expect(workItemBySlug('smart-sales-center')?.detail.outcomes[0]?.metric).toBe('10 家房企 · 100+ 售楼处')
     expect(workItemBySlug('pdmc-ai')?.detail.outcomes[0]?.metric).toBe('查询与发布双链路')
   })
@@ -26,6 +26,7 @@ describe('portfolio project readiness', () => {
   it('uses stable, unique project slugs for future detail routes', () => {
     expect(workItems.map((item) => item.slug)).toEqual([
       'ai-ide',
+      'design-agent',
       'pdmc-ai',
       'warehouse-scheduling',
       'smart-sales-center',
@@ -33,12 +34,12 @@ describe('portfolio project readiness', () => {
   })
 
   it('finds a preview project by its stable slug without making it public', () => {
-    expect(workItemBySlug('ai-ide')?.title).toBe('AI IDE 研发助手')
+    expect(workItemBySlug('ai-ide')?.title).toBe('Coding Agent · IDE AI 研发助手')
     expect(workItemBySlug('missing')).toBeUndefined()
   })
 
   it('keeps the Huawei project period consistent with the experience timeline', () => {
-    expect(projects.find((project) => project.title === 'AI IDE 研发助手')?.year).toBe('2024.05 — 2026.08')
+    expect(projects.find((project) => project.title === 'Coding Agent · IDE AI 研发助手')?.year).toBe('2024.05 — 2026.08')
     expect(experiences.find((experience) => experience.company === '华为技术有限公司')?.period).toBe('2024.05 — 2026.08')
   })
 

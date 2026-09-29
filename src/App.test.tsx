@@ -53,7 +53,8 @@ describe('App', () => {
   it.each([
     ['/', 'AI PRODUCT MGR', 'index'],
     ['/work/', 'AI 不止能生成', 'work'],
-    ['/work/ai-ide/', 'AI IDE 研发助手', 'project-detail'],
+    ['/work/ai-ide/', 'Coding Agent · IDE AI 研发助手', 'project-detail'],
+    ['/work/design-agent/', 'Design Agent · 设计稿智能生成助手', 'project-detail'],
     ['/work/warehouse-scheduling/', '智能仓储调度系统', 'project-detail'],
     ['/work/smart-sales-center/', '房企智慧案场销讲与客户接待系统', 'project-detail'],
     ['/words/', '持续思考', 'words'],

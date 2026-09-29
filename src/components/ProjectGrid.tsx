@@ -65,7 +65,7 @@ export function ProjectGrid({ projects }: { projects: WorkItem[] }) {
             </h1>
           </div>
           <p className="reading-copy">
-            四个企业级场景，展示我如何从用户问题出发，定义 AI 能力边界，并把产品推进到可使用、可衡量的结果。
+            五个企业级项目，从 Coding Agent、Design Agent 到企业知识与业务系统，展示我如何定义场景、设计人机协作，并推动产品落地。
           </p>
         </div>
 

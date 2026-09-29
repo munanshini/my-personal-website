@@ -23,7 +23,7 @@ describe('Hero', () => {
   it('uses first-person language for the personal product philosophy', () => {
     renderHero()
 
-    expect(screen.getByText(/把模型能力变成可使用、可衡量、可追溯的产品/)).toBeInTheDocument()
+    expect(screen.getByText(/我擅长场景定义、人机协作/)).toBeInTheDocument()
     expect(screen.queryByText(/我们擅长/)).not.toBeInTheDocument()
   })
 

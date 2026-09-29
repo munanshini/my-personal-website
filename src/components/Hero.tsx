@@ -102,15 +102,15 @@ export function Hero() {
         </h1>
         <div className="mt-8 max-w-[34rem]">
           <p className="reading-copy text-ink">
-            你好，我是张楠，7 年 B 端经验的 AI 产品经理。近两年半在华为负责 AI IDE 与企业流程平台 AI 化，从真实业务问题出发，设计人机协作、评测与交付闭环。
+            你好，我是张楠，有 7 年 B 端经验的 AI 产品经理。近两年半在华为负责 Coding Agent、Design Agent 与企业流程平台 AI 化，推动模型能力进入研发、设计与知识管理的真实工作流。
           </p>
           <p className="reading-copy mt-4">
-            我擅长把模型能力变成可使用、可衡量、可追溯的产品：做场景定义、知识检索、Bad Case 归因，也负责跨团队推进与灰度落地。
+            我擅长场景定义、人机协作、企业知识检索与评测归因，也能协调团队推进产品落地。交互设计背景和从 0 到 1 的商业交付经验，让我始终关注产品是否好用、结果是否可信。
           </p>
         </div>
         <div data-testid="hero-signature" className="hero-signature text-muted">
           <p className="text-muted">张楠 / AI 产品经理<br /><span>AI Product · Experience · Delivery</span></p>
-          <p className="text-muted">Shenzhen · China<br /><span>6+ years in enterprise products</span></p>
+          <p className="text-muted">Shenzhen · China<br /><span>7 years in enterprise products</span></p>
         </div>
       </div>
       <div className="hero-visual">

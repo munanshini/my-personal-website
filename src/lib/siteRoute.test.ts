@@ -28,7 +28,7 @@ describe('siteRoute', () => {
     expect(sitePageFromPath('/unknown/')).toBe('index')
   })
 
-  it('exposes the five primary routes, four word channel routes, article routes, and four project routes', () => {
+  it('exposes the five primary routes, four word channel routes, article routes, and five project routes', () => {
     expect(publicSitePaths()).toEqual([
       '/',
       '/work/',
@@ -44,6 +44,7 @@ describe('siteRoute', () => {
       '/words/openai-designers-ai-era/',
       '/words/ai-pm-agent-nine-step-design/',
       '/work/ai-ide/',
+      '/work/design-agent/',
       '/work/pdmc-ai/',
       '/work/warehouse-scheduling/',
       '/work/smart-sales-center/',
@@ -51,6 +52,7 @@ describe('siteRoute', () => {
     ])
     expect(publishedProjectPaths()).toEqual([
       '/work/ai-ide/',
+      '/work/design-agent/',
       '/work/pdmc-ai/',
       '/work/warehouse-scheduling/',
       '/work/smart-sales-center/',

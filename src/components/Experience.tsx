@@ -9,7 +9,7 @@ export function Experience() {
           index="02"
           eyebrow="EXPERIENCE"
           title="从体验出发， 以产品结果落地。"
-          description="7 年 B 端产品经验，近两年半在华为负责 AI IDE 与企业流程平台 AI 化；我从真实业务流程出发，定义场景、设计可信闭环，并推进跨团队落地。"
+          description="7 年 B 端经验，近两年半在华为负责 Coding Agent、Design Agent 与企业流程平台 AI 化。从交互设计与商业交付出发，持续实践场景定义、评测归因与跨团队协作。"
         />
 
         <div className="mt-20 grid gap-16 xl:grid-cols-[.85fr_1.15fr]">

@@ -137,6 +137,13 @@ p, li { overflow-wrap: anywhere; }
   .decision-parts > div + div { border-left: 0; border-top: 1px solid rgb(var(--color-line)/.12); }
   .decision-parts dt { min-height: 0; }
 }
+@media (min-width: 768px) and (max-height: 850px) {
+  .hero-copy { padding-bottom: 24px; }
+  .hero-title { font-size: clamp(58px, 9svh, 76px); }
+  .hero-copy > .mt-8 { margin-top: 24px; }
+  .hero-copy .reading-copy { font-size: 16px; line-height: 1.75; }
+  .hero-signature { margin-top: 24px; }
+}
 @media (max-width: 767px) {
   .site-page { padding: 112px 24px 64px; }
   .hero-screen { height: auto; min-height: 100svh; }
