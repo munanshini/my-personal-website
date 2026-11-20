@@ -44,7 +44,7 @@ export function SiteLayout() {
             <p className="text-sm leading-7 text-muted">张楠 / AI 产品经理<br /><span className="text-xs">AI Product · Experience · Delivery</span></p>
           </div>
         </footer>}
-        <SpotlightCard className="spotlight-card--assistant spotlight-card--cta spotlight-card--glass fixed bottom-5 left-1/2 z-[90] m-0 w-fit -translate-x-1/2" spotlightColor="rgba(56, 189, 248, .40)"><button
+        <SpotlightCard className="spotlight-card--assistant spotlight-card--cta spotlight-card--glass fixed bottom-5 right-5 z-[90] m-0 w-fit sm:right-6" spotlightColor="rgba(56, 189, 248, .40)"><button
           type="button"
           onClick={() => setAssistantOpen(true)}
           aria-label="问我的 AI 助手"

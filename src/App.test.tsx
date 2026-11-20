@@ -116,12 +116,12 @@ describe('App', () => {
     expect(screen.getByRole('button', { name: '问我的 AI 助手' }).parentElement?.className).toContain('spotlight-card--glass')
   })
 
-  it('keeps the global assistant fixed at the bottom center', () => {
+  it('keeps the global assistant fixed at the bottom right', () => {
     renderApp()
     const assistantCard = screen.getByRole('button', { name: '问我的 AI 助手' }).parentElement
 
-    expect(assistantCard).toHaveClass('fixed', 'bottom-5', 'left-1/2', '-translate-x-1/2')
-    expect(assistantCard).not.toHaveClass('right-5', 'md:right-5')
+    expect(assistantCard).toHaveClass('fixed', 'bottom-5', 'right-5')
+    expect(assistantCard).not.toHaveClass('left-1/2', '-translate-x-1/2')
   })
 
   it('shows the compact mobile assistant label in the assistant trigger', () => {

@@ -3,10 +3,10 @@ import { describe, expect, it, vi } from 'vitest'
 import { AssistantPanel } from './AssistantPanel'
 
 describe('AssistantPanel', () => {
-  it('places the theme-semantic assistant panel above the centered trigger', () => {
+  it('places the theme-semantic assistant panel above the right-aligned trigger', () => {
     render(<AssistantPanel open onClose={vi.fn()} />)
     const dialog = screen.getByRole('dialog', { name: '个人 AI 助手' })
-    expect(dialog).toHaveClass('items-end', 'justify-center', 'pb-24')
+    expect(dialog).toHaveClass('items-end', 'justify-end', 'pb-24')
     expect(dialog.className).not.toContain('backdrop-blur-sm')
     expect(screen.getByRole('complementary')).toHaveClass('max-w-[380px]', 'bg-surface', 'text-ink', 'border-line/15')
   })
