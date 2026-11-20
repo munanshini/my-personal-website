@@ -1,6 +1,6 @@
 import { Menu, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
-import siteLogo from '../assets/site-logo.png'
+import siteLogo from '../assets/site-logo-small.png'
 import wechatQr from '../assets/wechat-qr.jpg'
 import { assetPath, publicPath } from '../lib/publicPath'
 import { siteNavItems, sitePath, type SitePage } from '../lib/siteRoute'
@@ -47,7 +47,7 @@ export function TopNav({ currentPage, currentPath = sitePath(currentPage), onNav
   return (
     <nav aria-label="主导航" className="site-topnav fixed inset-x-0 top-0 z-[70] flex items-center justify-between px-5 py-4 sm:px-8 sm:py-5">
       <a href={publicPath(sitePath('index'), currentPath)} onClick={(event) => { event.preventDefault(); onNavigate('index') }} className="flex items-center gap-3 text-ink" aria-label="返回首页">
-        <img src={assetPath(siteLogo)} alt="" aria-hidden="true" data-testid="site-logo" className="site-logo h-7 w-7 object-contain" />
+        <img src={assetPath(siteLogo, currentPath)} width="28" height="28" alt="" aria-hidden="true" data-testid="site-logo" className="site-logo h-7 w-7 object-contain" />
         <span className="hidden text-sm font-semibold tracking-[0.16em] sm:block">张楠 · Nan Zhang</span>
       </a>
 
@@ -70,7 +70,7 @@ export function TopNav({ currentPage, currentPath = sitePath(currentPage), onNav
                 <div className="grid grid-cols-[64px_minmax(0,1fr)] items-center gap-3 py-3"><span className="text-muted">邮箱</span><div className="flex min-w-0 items-center gap-2"><strong className="min-w-0 flex-1 truncate text-[13px]">zn525347603@gmail.com</strong><CopyButton value="zn525347603@gmail.com" label="邮箱" /></div></div>
                 <div className="grid grid-cols-[64px_minmax(0,1fr)] items-center gap-3 py-3"><span className="text-muted">微信</span><strong className="min-w-0 truncate">扫码添加微信</strong></div>
               </div>
-              <img src={assetPath(wechatQr)} alt="张楠的微信二维码" className="mx-auto mt-5 h-32 w-32 rounded-xl object-cover" />
+              <img src={assetPath(wechatQr, currentPath)} alt="张楠的微信二维码" className="mx-auto mt-5 h-32 w-32 rounded-xl object-cover" />
             </div>
           )}
         </div>

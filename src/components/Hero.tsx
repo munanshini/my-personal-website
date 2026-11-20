@@ -4,7 +4,7 @@ import heroPortraitDarkVideo from '../assets/hero-portrait-dark.mp4'
 import heroPortraitLightPoster from '../assets/hero-portrait-light-poster.jpg'
 import heroPortraitLightVideo from '../assets/hero-portrait-light.mp4'
 import { heroVideoTime } from '../lib/heroMotion'
-import { assetPath } from '../lib/publicPath'
+import { assetPath, publicPath } from '../lib/publicPath'
 import { useTheme } from '../theme/ThemeProvider'
 
 const portraitComposition = 'bg-cover bg-bottom'
@@ -19,6 +19,7 @@ export function Hero() {
   const frameRef = useRef<number | null>(null)
   const [videoReady, setVideoReady] = useState(false)
   const [videoFailed, setVideoFailed] = useState(false)
+  const [videoEnabled, setVideoEnabled] = useState(false)
 
   const videoSource = theme === 'dark' ? heroPortraitDarkVideo : heroPortraitLightVideo
   const videoPoster = theme === 'dark' ? heroPortraitDarkPoster : heroPortraitLightPoster
@@ -60,12 +61,14 @@ export function Hero() {
   }, [])
 
   const canScrub = () => (
-    window.matchMedia?.('(hover: hover) and (pointer: fine)').matches
+    window.matchMedia?.('(min-width: 768px) and (hover: hover) and (pointer: fine)').matches
     && !window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    && !(navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData
   )
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLElement>) => {
     if (event.pointerType !== 'mouse' || !canScrub()) return
+    setVideoEnabled(true)
     const rect = sectionRef.current?.getBoundingClientRect()
     if (!rect?.width) return
     setProgress((event.clientX - rect.left) / rect.width)
@@ -89,7 +92,7 @@ export function Hero() {
       id="index"
       className="hero-screen relative w-full overflow-hidden bg-paper px-6 sm:px-8"
       onPointerMove={handlePointerMove}
-      onPointerLeave={() => setProgress(0.5)}
+      onPointerLeave={() => { if (videoEnabled) setProgress(0.5) }}
     >
       <div className="hero-layout">
       <div className="hero-copy">
@@ -102,11 +105,19 @@ export function Hero() {
         </h1>
         <div className="mt-8 max-w-[34rem]">
           <p className="reading-copy text-ink">
-            你好，我是张楠，有 7 年 B 端经验的 AI 产品经理。近两年半在华为负责 Coding Agent、Design Agent 与企业流程平台 AI 化，推动模型能力进入研发、设计与知识管理的真实工作流。
+            你好，我是张楠，有 7 年 B 端经验的 AI 产品经理。在华为负责 Coding Agent、Design Agent 与企业流程平台 AI 化，推动 AI 进入真实工作流。
           </p>
           <p className="reading-copy mt-4">
-            我擅长场景定义、人机协作、企业知识检索与评测归因，也能协调团队推进产品落地。交互设计背景和从 0 到 1 的商业交付经验，让我始终关注产品是否好用、结果是否可信。
+            我擅长场景定义、人机协作与评测归因，把交互设计经验与产品交付连接起来。
           </p>
+        </div>
+        <div className="hero-actions">
+          <a className="hero-action hero-action-primary" href={publicPath('/work/')}>
+            查看代表项目 <span aria-hidden="true">↗</span>
+          </a>
+          <a className="hero-action hero-action-secondary" href={publicPath('/contact/')}>
+            联系我 <span aria-hidden="true">→</span>
+          </a>
         </div>
         <div data-testid="hero-signature" className="hero-signature text-muted">
           <p className="text-muted">张楠 / AI 产品经理<br /><span>AI Product · Experience · Delivery</span></p>
@@ -119,11 +130,11 @@ export function Hero() {
           ref={videoRef}
           data-testid="hero-video"
           className={`hero-video${videoReady && !videoFailed ? ' is-ready' : ''}`}
-          src={assetPath(videoSource)}
+          src={videoEnabled ? assetPath(videoSource) : undefined}
           poster={assetPath(videoPoster)}
           muted
           playsInline
-          preload="auto"
+          preload={videoEnabled ? 'auto' : 'none'}
           tabIndex={-1}
           aria-hidden="true"
           onLoadedMetadata={handleLoadedMetadata}

@@ -2,11 +2,12 @@ import type { WorkItem } from '../data/portfolio'
 import { publicPath } from '../lib/publicPath'
 
 function ProjectCard({ project }: { project: WorkItem }) {
+  const featured = project.slug === 'ai-ide' || project.slug === 'design-agent'
   const cardClassName = 'work-card group relative grid overflow-hidden border border-line/15 bg-surface/35 transition duration-300 hover:-translate-y-1 hover:border-signal/50 hover:bg-surface/80 focus:border-signal/60 focus:bg-surface/80 focus:outline-none'
   const content = (
     <>
       <span aria-hidden className="absolute inset-y-6 left-0 w-1 origin-top scale-y-0 bg-signal transition-transform duration-300 group-hover:scale-y-100 group-focus:scale-y-100" />
-      <span className="work-card-number relative font-mono text-xs text-signal">{project.number}</span>
+      <span className="work-card-number relative flex items-center gap-3 font-mono text-xs text-signal">{project.number}{featured && <span className="work-featured">代表项目</span>}</span>
       <div className="work-card-meta relative">
         <p className="text-sm font-semibold leading-6">{project.company}</p>
         <p className="mt-2 text-xs text-muted">{project.companyPeriod}</p>
@@ -15,10 +16,13 @@ function ProjectCard({ project }: { project: WorkItem }) {
       <div className="work-card-main relative">
         <span className="text-[10px] font-semibold uppercase text-signal">{project.category}</span>
         <h2 className="mt-3 font-semibold transition-colors duration-300 group-hover:text-signal group-focus:text-signal">{project.title}</h2>
-        <p className="mt-4 max-w-2xl text-base leading-8 text-muted">{project.summary}</p>
+        <dl className="work-card-overview">
+          <div><dt>解决的问题</dt><dd>{project.summary}</dd></div>
+          <div><dt>我的职责</dt><dd>{project.role}</dd></div>
+        </dl>
       </div>
       <div className="work-card-result relative flex h-full flex-col border-line/15 md:border-l md:pl-6">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted">SELECTED IMPACT</p>
+        <p className="text-xs font-semibold text-muted">项目结果 / IMPACT</p>
         <p data-testid="work-result" className="mt-4 text-2xl font-semibold leading-tight text-muted transition-colors duration-300 group-hover:text-ink group-focus:text-ink md:text-3xl">{project.results[0]}</p>
         <ul className="mt-4 space-y-2">
           {project.results.slice(1).map((result) => (
@@ -65,7 +69,7 @@ export function ProjectGrid({ projects }: { projects: WorkItem[] }) {
             </h1>
           </div>
           <p className="reading-copy">
-            五个企业级项目，从 Coding Agent、Design Agent 到企业知识与业务系统，展示我如何定义场景、设计人机协作，并推动产品落地。
+            五个企业级项目，呈现场景定义、人机协作与产品交付。建议先看 Coding Agent 与 Design Agent，了解我如何把 AI 能力推进到实际使用。
           </p>
         </div>
 

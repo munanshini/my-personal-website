@@ -12,10 +12,13 @@ export function publicPath(path: string, currentPath = '/') {
   return normalizedPath ? `${prefix}${normalizedPath}` : prefix
 }
 
-export function assetPath(path: string) {
-  if (import.meta.env.MODE === 'pages' && path.startsWith('/')) {
-    const currentPath = typeof window === 'undefined' ? '/' : window.location.pathname
-    return publicPath(path, currentPath)
+export function assetPath(path: string, currentPath = '/') {
+  if (import.meta.env.MODE === 'pages') {
+    // Vite emits relative asset URLs during SSR and absolute URLs in the
+    // browser. Normalize both using the rendered route, never window state.
+    const bundledAsset = path.match(/^(?:https?:\/\/[^/]+)?(?:\.\/)?\/?(assets\/[^?#]+)([?#].*)?$/)
+    if (bundledAsset) return publicPath(`/${bundledAsset[1]}${bundledAsset[2] ?? ''}`, currentPath)
+    if (path.startsWith('/') && !path.startsWith('//')) return publicPath(path, currentPath)
   }
   return path
 }

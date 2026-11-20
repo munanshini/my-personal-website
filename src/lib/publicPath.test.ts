@@ -25,10 +25,15 @@ describe('publicPath', () => {
     expect(publicPath('/words/interaction-design/', '/words/')).toBe('../words/interaction-design/')
   })
 
-  it('keeps Pages assets rooted correctly after hydration on a nested route', () => {
+  it('uses the same asset path for SSR and browser imports on nested routes', () => {
     vi.stubEnv('MODE', 'pages')
     window.history.replaceState({}, '', '/work/')
 
-    expect(assetPath('/assets/site-logo.png')).toBe('../assets/site-logo.png')
+    for (const source of ['./assets/site-logo.png', '/assets/site-logo.png', 'https://zhangnanai.com/assets/site-logo.png']) {
+      expect(assetPath(source, '/work/')).toBe('../assets/site-logo.png')
+      expect(assetPath(source, '/work/ai-ide/')).toBe('../../assets/site-logo.png')
+      expect(assetPath(source)).toBe('./assets/site-logo.png')
+    }
+    expect(assetPath('https://example.com/portrait.jpg', '/work/')).toBe('https://example.com/portrait.jpg')
   })
 })

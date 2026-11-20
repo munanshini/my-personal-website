@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ThemeProvider } from '../theme/ThemeProvider'
 import { Hero } from './Hero'
 import { ThemeToggle } from './ThemeToggle'
@@ -10,6 +10,15 @@ function renderHero() {
 
 describe('Hero', () => {
   beforeEach(() => localStorage.clear())
+  afterEach(() => vi.unstubAllGlobals())
+
+  function moveMouse({ finePointer = true, reducedMotion = false, saveData = false } = {}) {
+    vi.stubGlobal('matchMedia', (query: string) => ({ matches: query.includes('prefers-reduced-motion') ? reducedMotion : finePointer }))
+    vi.stubGlobal('navigator', { connection: { saveData } })
+    const event = new MouseEvent('pointermove', { bubbles: true, clientX: 250 })
+    Object.defineProperty(event, 'pointerType', { value: 'mouse' })
+    fireEvent(document.getElementById('index')!, event)
+  }
 
   it('renders the concise product-manager introduction', () => {
     renderHero()
@@ -29,12 +38,11 @@ describe('Hero', () => {
 
 
 
-  it('renders the portfolio identity without duplicate hero actions', () => {
+  it('links directly to representative work and contact details', () => {
     renderHero()
     expect(screen.getByRole('heading', { name: /AI PRODUCT MGR/i })).toBeInTheDocument()
-    expect(screen.queryByRole('navigation')).not.toBeInTheDocument()
-    expect(screen.queryByRole('link', { name: '查看精选案例' })).not.toBeInTheDocument()
-    expect(screen.queryByRole('link', { name: '查看经历' })).not.toBeInTheDocument()
+    expect(screen.getByRole('link', { name: '查看代表项目' })).toHaveAttribute('href', './work/')
+    expect(screen.getByRole('link', { name: '联系我' })).toHaveAttribute('href', './contact/')
   })
 
   it('anchors the portrait to the bottom of the composition', () => {
@@ -70,7 +78,11 @@ describe('Hero', () => {
 
   it('uses the matching portrait video for each color theme', () => {
     renderHero()
-
+    // jsdom has no PointerEvent; supply pointerType on a real event.
+    vi.stubGlobal('matchMedia', (query: string) => ({ matches: !query.includes('prefers-reduced-motion') }))
+    const event = new MouseEvent('pointermove', { bubbles: true, clientX: 250 })
+    Object.defineProperty(event, 'pointerType', { value: 'mouse' })
+    fireEvent(document.getElementById('index')!, event)
     const video = screen.getByTestId('hero-video')
     expect(video).toHaveAttribute('src', expect.stringContaining('hero-portrait-light.mp4'))
 
@@ -82,7 +94,18 @@ describe('Hero', () => {
     renderHero()
 
     expect(screen.getByTestId('hero-portrait').getAttribute('style')).toContain('hero-portrait-light-poster.jpg')
-    expect(screen.getByTestId('hero-video')).toHaveAttribute('preload', 'auto')
+    expect(screen.getByTestId('hero-video')).toHaveAttribute('preload', 'none')
+    expect(screen.getByTestId('hero-video')).not.toHaveAttribute('src')
     expect(screen.getByTestId('hero-video')).toHaveProperty('muted', true)
+  })
+
+  it.each([
+    { finePointer: false, reducedMotion: false, saveData: false },
+    { finePointer: true, reducedMotion: true, saveData: false },
+    { finePointer: true, reducedMotion: false, saveData: true },
+  ])('keeps video unloaded for restricted motion or data settings: %o', (settings) => {
+    renderHero()
+    moveMouse(settings)
+    expect(screen.getByTestId('hero-video')).not.toHaveAttribute('src')
   })
 })
