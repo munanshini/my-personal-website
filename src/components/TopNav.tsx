@@ -48,7 +48,7 @@ export function TopNav({ currentPage, currentPath = sitePath(currentPage), onNav
     <nav aria-label="主导航" className="site-topnav fixed inset-x-0 top-0 z-[70] flex items-center justify-between px-5 py-4 sm:px-8 sm:py-5">
       <a href={publicPath(sitePath('index'), currentPath)} onClick={(event) => { event.preventDefault(); onNavigate('index') }} className="flex items-center gap-3 text-ink" aria-label="返回首页">
         <img src={assetPath(siteLogo, currentPath)} width="28" height="28" alt="" aria-hidden="true" data-testid="site-logo" className="site-logo h-7 w-7 object-contain" />
-        <span className="hidden text-sm font-semibold tracking-[0.16em] sm:block">张楠 · Nan Zhang</span>
+        <span className="hidden text-sm font-semibold tracking-[0.16em] sm:block">Jeff Zhang</span>
       </a>
 
       <SpotlightCard className="spotlight-card--nav spotlight-card--glass absolute left-1/2 hidden -translate-x-1/2 xl:block" spotlightColor="rgba(125, 211, 252, .38)">

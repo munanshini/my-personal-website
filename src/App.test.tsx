@@ -82,10 +82,10 @@ describe('App', () => {
     expect(directoryRule).not.toMatch(/display:\s*grid/)
   })
 
-  it('keeps one global assistant trigger and uses the Chinese name in the header', () => {
+  it('keeps one global assistant trigger and uses Jeff Zhang in the header', () => {
     renderApp()
     expect(screen.getByRole('button', { name: '问我的 AI 助手' })).toBeInTheDocument()
-    expect(screen.getByText('张楠 · Nan Zhang')).toBeInTheDocument()
+    expect(screen.getByText('Jeff Zhang')).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: '查看精选案例' })).not.toBeInTheDocument()
     expect(screen.queryByRole('link', { name: '查看经历' })).not.toBeInTheDocument()
   })
